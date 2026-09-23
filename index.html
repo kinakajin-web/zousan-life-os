@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ぞうさんの生活OS</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f5f3ed;
+  color: #3f4747;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", Meiryo, sans-serif;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #faf9f5;
+}
+
+header {
+  padding: 28px 24px 18px;
+  border-bottom: 1px solid #e7e4dc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.date {
+  color: #89908e;
+  font-size: 13px;
+}
+
+main {
+  padding: 22px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e8e5de;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(50,50,50,.035);
+}
+
+.card-title {
+  font-size: 14px;
+  color: #7a8280;
+  margin-bottom: 12px;
+}
+
+.zoosan {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.elephant {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #d9e2df;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+}
+
+.zoosan-text strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.zoosan-text span {
+  color: #858c8a;
+  font-size: 13px;
+}
+
+.next {
+  background: #eef1ed;
+  border-radius: 16px;
+  padding: 20px;
+  border-left: 4px solid #829a8b;
+}
+
+.next-label {
+  color: #718277;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.next-task {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.next-time {
+  color: #858c8a;
+  font-size: 13px;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 16px;
+  border: 0;
+  background: #6f8f84;
+  color: white;
+  padding: 13px;
+  border-radius: 12px;
+}
+
+.secondary {
+  border: 1px solid #dcded8;
+  background: white;
+  color: #59615f;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.row > * {
+  flex: 1;
+}
+
+.schedule-item {
+  display: flex;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid #efede8;
+}
+
+.schedule-item:last-child {
+  border-bottom: 0;
+}
+
+.schedule-time {
+  width: 55px;
+  color: #7e8784;
+  font-size: 13px;
+}
+
+.schedule-name {
+  font-size: 14px;
+}
+
+.quest {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #efede8;
+}
+
+.quest:last-child {
+  border-bottom: 0;
+}
+
+.quest-check {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #bdc5c0;
+  border-radius: 50%;
+  background: white;
+  flex-shrink: 0;
+}
+
+.quest.done .quest-check {
+  background: #829a8b;
+  border-color: #829a8b;
+}
+
+.quest.done .quest-name {
+  text-decoration: line-through;
+  color: #a2a7a4;
+}
+
+.quest-info {
+  flex: 1;
+}
+
+.quest-name {
+  font-size: 14px;
+}
+
+.quest-meta {
+  color: #9a9f9d;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.delete {
+  border: 0;
+  background: transparent;
+  color: #aaa;
+}
+
+textarea, input, select {
+  width: 100%;
+  border: 1px solid #deded8;
+  background: #fff;
+  border-radius: 11px;
+  padding: 12px;
+  color: #414947;
+  outline: none;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #8da59a;
+}
+
+.mode-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-buttons button {
+  flex: 1;
+  padding: 13px 5px;
+  border: 1px solid #deded8;
+  background: white;
+  border-radius: 12px;
+  color: #59615f;
+}
+
+.mode-buttons button.active {
+  background: #e7eee9;
+  border-color: #a8b9ae;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: #7f8784;
+  margin-bottom: 6px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.note {
+  font-size: 12px;
+  color: #929896;
+  line-height: 1.7;
+}
+
+.return-box {
+  background: #edf2f0;
+  border-radius: 15px;
+  padding: 18px;
+  text-align: center;
+}
+
+.return-time {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 7px 0;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: #414947;
+  color: white;
+  padding: 11px 17px;
+  border-radius: 30px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+footer {
+  padding: 15px 22px 28px;
+  color: #a0a5a3;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 16px;
+  }
+
+  header {
+    padding: 22px 17px 15px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="logo">🐘 ぞうさんの生活OS</div>
+  <div class="date" id="todayDate"></div>
+</header>
+
+<main>
+
+<!-- ぞうさん -->
+<div class="zoosan">
+  <div class="elephant">🐘</div>
+  <div class="zoosan-text">
+    <strong id="greeting">おはよう。</strong>
+    <span id="zoosanMessage">今日の生活を一緒に整えよう。</span>
+  </div>
+</div>
+
+
+<!-- 今はこれだけ -->
+<section class="card">
+  <div class="card-title">今はこれだけ</div>
+
+  <div class="next">
+    <div class="next-label">🐘 次にやること</div>
+    <div class="next-task" id="nextTask">まだ予定がありません</div>
+    <div class="next-time" id="nextTaskTime">
+      なんでもBOXに思いついたことを入れてみてね。
+    </div>
+
+    <button class="primary" onclick="completeNext()">
+      できた！
+    </button>
+  </div>
+</section>
+
+
+<!-- 明日はどうする -->
+<section class="card">
+  <div class="card-title">🌙 明日はどうする？</div>
+
+  <div class="mode-buttons">
+    <button id="workModeBtn" onclick="selectTomorrow('work')">
+      💼 仕事
+    </button>
+
+    <button id="holidayModeBtn" onclick="selectTomorrow('holiday')">
+      🌿 お休み
+    </button>
+
+    <button id="unknownModeBtn" onclick="selectTomorrow('unknown')">
+      🤷 まだ決めない
+    </button>
+  </div>
+
+  <div id="tomorrowForm" class="hidden" style="margin-top:18px;">
+
+    <div id="tomorrowWorkFields">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>出勤時間</label>
+          <input type="time" id="tomorrowStart" value="10:00">
+        </div>
+
+        <div class="field">
+          <label>退勤時間</label>
+          <input type="time" id="tomorrowEnd" value="18:00">
+        </div>
+
+        <div class="field">
+          <label>通勤時間（分）</label>
+          <input type="number" id="tomorrowCommute" value="90">
+        </div>
+
+        <div class="field">
+          <label>出発準備（分）</label>
+          <input type="number" id="tomorrowPrep" value="45">
+        </div>
+
+      </div>
+    </div>
+
+    <div id="tomorrowHolidayFields" class="hidden">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>起きたい時間</label>
+          <input type="time" id="holidayWake" value="08:00">
+        </div>
+
+        <div class="field">
+          <label>寝たい時間</label>
+          <input type="time" id="holidaySleep" value="23:00">
+        </div>
+
+      </div>
+    </div>
+
+    <button class="primary" onclick="saveTomorrow()">
+      明日の準備を保存
+    </button>
+
+  </div>
+
+  <div id="tomorrowMessage" class="note" style="margin-top:12px;"></div>
+</section>
+
+
+<!-- 今日の予定 -->
+<section class="card">
+  <div class="card-title">🗓 今日の予定</div>
+  <div id="scheduleList">
+    <div class="note">まだ予定がありません。</div>
+  </div>
+</section>
+
+
+<!-- 今日のクエスト -->
+<section class="card">
+  <div class="card-title">⚡ 今日のクエスト</div>
+  <div id="questList">
+    <div class="note">
+      やることを追加すると、ここに出てくるよ。
+    </div>
+  </div>
+</section>
+
+
+<!-- なんでもBOX -->
+<section class="card">
+  <div class="card-title">📝 なんでもBOX</div>
+
+  <textarea
+    id="brainDump"
+    placeholder="思いついたことを何でも書いてね。&#10;例：洗濯、英語やりたい、美容院14時、洗剤買う…"
+  ></textarea>
+
+  <button class="primary" onclick="addBrainDump()">
+    ぞうさんに整理してもらう
+  </button>
+
+  <div id="dumpList" style="margin-top:16px;"></div>
+</section>
+
+
+<!-- 繰り返し -->
+<section class="card">
+  <div class="card-title">🔄 繰り返すこと</div>
+
+  <div class="row">
+    <input id="routineName" placeholder="例：トリートメント">
+    <select id="routineFreq">
+      <option value="1">毎日</option>
+      <option value="2">2日に1回</option>
+      <option value="3">3日に1回</option>
+      <option value="7">週に1回</option>
+    </select>
+  </div>
+
+  <button class="primary" onclick="addRoutine()">
+    🐘 覚えておく
+  </button>
+
+  <div id="routineList" style="margin-top:16px;"></div>
+</section>
+
+
+<!-- 仕事モード -->
+<section class="card">
+  <div class="card-title">💼 今日の仕事</div>
+
+  <div class="form-grid">
+
+    <div class="field">
+      <label>出勤</label>
+      <input type="time" id="todayStart" value="10:00">
+    </div>
+
+    <div class="field">
+      <label>退勤</label>
+      <input type="time" id="todayEnd" value="18:00">
+    </div>
+
+    <div class="field">
+      <label>通勤時間（分）</label>
+      <input type="number" id="todayCommute" value="90">
+    </div>
+
+    <div class="field">
+      <label>準備時間（分）</label>
+      <input type="number" id="todayPrep" value="45">
+    </div>
+
+  </div>
+
+  <button class="secondary" style="width:100%;margin-top:14px;" onclick="buildTodayWork()">
+    今日の仕事予定を作る
+  </button>
+
+  <div id="todayWorkResult" style="margin-top:14px;"></div>
+</section>
+
+
+<!-- 帰宅 -->
+<section class="card" id="returnCard">
+  <div class="card-title">🏠 帰宅モード</div>
+
+  <div class="return-box">
+    <div>勤務先 → 自宅</div>
+    <div class="return-time" id="returnTime">--:--</div>
+    <div class="note">通勤時間から到着予定を計算します。</div>
+
+    <button class="primary" onclick="startReturn()">
+      🏠 帰宅する
+    </button>
+  </div>
+
+  <div id="returnResult" style="margin-top:14px;"></div>
+</section>
+
+</main>
+
+<footer>
+  ぞうさんと一緒に、生活を少しずつ育てよう。
+</footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* =========================
+   データ
+========================= */
+
+const STORAGE_KEY = "zoosan_life_os_v1";
+
+let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+  tomorrowMode: "",
+  tomorrow: {},
+  schedule: [],
+  quests: [],
+  dumps: [],
+  routines: [],
+  completedToday: [],
+  returnMode: false
+};
+
+
+/* =========================
+   保存
+========================= */
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+
+/* =========================
+   共通
+========================= */
+
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+
+  setTimeout(() => {
+    el.classList.remove("show");
+  }, 1800);
+}
+
+function todayKey() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function formatDate(date) {
+  return `${date.getMonth()+1}/${date.getDate()} (${["日","月","火","水","木","金","土"][date.getDay()]})`;
+}
+
+function timeToMinutes(time) {
+  const [h,m] = time.split(":").map(Number);
+  return h * 60 + m;
+}
+
+function minutesToTime(minutes) {
+  minutes = (minutes + 1440) % 1440;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+
+  return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;
+}
+
+
+/* =========================
+   初期表示
+========================= */
+
+function init() {
+
+  document.getElementById("todayDate").textContent =
+    formatDate(new Date());
+
+  const hour = new Date().getHours();
+
+  if (hour < 11) {
+    document.getElementById("greeting").textContent = "おはよう。";
+  } else if (hour < 18) {
+    document.getElementById("greeting").textContent = "こんにちは。";
+  } else {
+    document.getElementById("greeting").textContent = "おつかれさま。";
+  }
+
+  renderAll();
+}
+
+
+/* =========================
+   明日の準備
+========================= */
+
+function selectTomorrow(mode) {
+
+  data.tomorrowMode = mode;
+
+  document
+    .getElementById("workModeBtn")
+    .classList.toggle("active", mode === "work");
+
+  document
+    .getElementById("holidayModeBtn")
+    .classList.toggle("active", mode === "holiday");
+
+  document
+    .getElementById("unknownModeBtn")
+    .classList.toggle("active", mode === "unknown");
+
+  const form = document.getElementById("tomorrowForm");
+  const work = document.getElementById("tomorrowWorkFields");
+  const holiday = document.getElementById("tomorrowHolidayFields");
+  const message = document.getElementById("tomorrowMessage");
+
+  if (mode === "unknown") {
+
+    form.classList.add("hidden");
+
+    message.textContent =
+      "明日のことは、朝に聞くね。今は考えなくて大丈夫。";
+
+    return;
+  }
+
+  form.classList.remove("hidden");
+
+  if (mode === "work") {
+    work.classList.remove("hidden");
+    holiday.classList.add("hidden");
+  } else {
+    work.classList.add("hidden");
+    holiday.classList.remove("hidden");
+  }
+
+  message.textContent = "";
+}
+
+
+function saveTomorrow() {
+
+  if (data.tomorrowMode === "work") {
+
+    const start = document.getElementById("tomorrowStart").value;
+    const end = document.getElementById("tomorrowEnd").value;
+    const commute = Number(document.getElementById("tomorrowCommute").value);
+    const prep = Number(document.getElementById("tomorrowPrep").value);
+
+    data.tomorrow = {
+      start,
+      end,
+      commute,
+      prep
+    };
+
+  } else if (data.tomorrowMode === "holiday") {
+
+    data.tomorrow = {
+      wake: document.getElementById("holidayWake").value,
+      sleep: document.getElementById("holidaySleep").value
+    };
+  }
+
+  saveData();
+
+  toast("明日の予定を覚えておいたよ。");
+}
+
+
+/* =========================
+   今日の仕事
+========================= */
+
+function buildTodayWork() {
+
+  const start = document.getElementById("todayStart").value;
+  const end = document.getElementById("todayEnd").value;
+  const commute = Number(document.getElementById("todayCommute").value);
+  const prep = Number(document.getElementById("todayPrep").value);
+
+  const startMin = timeToMinutes(start);
+  const leaveMin = startMin - commute;
+  const wakeMin = leaveMin - prep;
+
+  data.schedule = [
+    {
+      time: minutesToTime(wakeMin),
+      name: "起床"
+    },
+    {
+      time: minutesToTime(leaveMin),
+      name: "出発"
+    },
+    {
+      time: start,
+      name: "出勤"
+    },
+    {
+      time: end,
+      name: "退勤"
+    }
+  ];
+
+  saveData();
+
+  document.getElementById("todayWorkResult").innerHTML =
+    `<div class="note">
+      出発 ${minutesToTime(leaveMin)}<br>
+      起床 ${minutesToTime(wakeMin)}
+    </div>`;
+
+  renderAll();
+
+  toast("今日の予定を作ったよ。");
+}
+
+
+/* =========================
+   なんでもBOX
+========================= */
+
+function addBrainDump() {
+
+  const textarea = document.getElementById("brainDump");
+  const text = textarea.value.trim();
+
+  if (!text) {
+    toast("まず思いついたことを書いてみてね。");
+    return;
+  }
+
+  const lines = text
+    .split(/\n|、|，/)
+    .map(x => x.trim())
+    .filter(Boolean);
+
+  lines.forEach(line => {
+
+    let category = "できれば";
+
+    if (
+      line.includes("美容院") ||
+      line.includes("病院") ||
+      line.match(/\d{1,2}時/)
+    ) {
+      category = "予定";
+    }
+
+    if (
+      line.includes("買") ||
+      line.includes("洗濯") ||
+      line.includes("掃除") ||
+      line.includes("予約")
+    ) {
+      category = "やること";
+    }
+
+    if (
+      line.includes("英語") ||
+      line.includes("ランニング") ||
+      line.includes("コーヒー") ||
+      line.includes("運動")
+    ) {
+      category = "できれば";
+    }
+
+    if (line.includes("2日に1回") || line.includes("毎日")) {
+      category = "繰り返し";
+    }
+
+    data.dumps.push({
+      id: Date.now() + Math.random(),
+      text: line,
+      category,
+      done: false
+    });
+
+    /* 簡単なクエスト化 */
+    if (category !== "予定" && category !== "繰り返し") {
+
+      data.quests.push({
+        id: Date.now() + Math.random(),
+        name: line,
+        category,
+        done: false
+      });
+    }
+  });
+
+  textarea.value = "";
+
+  saveData();
+  renderAll();
+
+  toast("ぞうさんが整理したよ。");
+}
+
+
+/* =========================
+   クエスト完了
+========================= */
+
+function completeQuest(id) {
+
+  const quest = data.quests.find(q => q.id === id);
+
+  if (!quest) return;
+
+  quest.done = !quest.done;
+
+  saveData();
+  renderAll();
+}
+
+
+/* =========================
+   今はこれだけ
+========================= */
+
+function getNextQuest() {
+
+  const active = data.quests.filter(q => !q.done);
+
+  if (active.length > 0) {
+    return active[0];
+  }
+
+  const routine = getDueRoutine();
+
+  if (routine) {
+    return {
+      id: "routine-" + routine.id,
+      name: routine.name,
+      category: "繰り返し"
+    };
+  }
+
+  return null;
+}
+
+
+function completeNext() {
+
+  const next = getNextQuest();
+
+  if (!next) {
+    toast("今日はもう十分。ゆっくりしてね。");
+    return;
+  }
+
+  if (String(next.id).startsWith("routine-")) {
+
+    completeRoutine(next.id.replace("routine-",""));
+    return;
+  }
+
+  completeQuest(next.id);
+}
+
+
+/* =========================
+   繰り返し
+========================= */
+
+function addRoutine() {
+
+  const name = document.getElementById("routineName").value.trim();
+  const frequency = Number(
+    document.getElementById("routineFreq").value
+  );
+
+  if (!name) {
+    toast("何を繰り返すか書いてね。");
+    return;
+  }
+
+  data.routines.push({
+    id: Date.now().toString(),
+    name,
+    frequency,
+    lastDone: null
+  });
+
+  document.getElementById("routineName").value = "";
+
+  saveData();
+  renderAll();
+
+  toast("ぞうさんが覚えたよ。");
+}
+
+
+function getDueRoutine() {
+
+  const today = new Date();
+
+  for (const routine of data.routines) {
+
+    if (!routine.lastDone) {
+      return routine;
+    }
+
+    const last = new Date(routine.lastDone);
+    const diff =
+      Math.floor((today - last) / 86400000);
+
+    if (diff >= routine.frequency) {
+      return routine;
+    }
+  }
+
+  return null;
+}
+
+
+function completeRoutine(id) {
+
+  const routine = data.routines.find(r => r.id === id);
+
+  if (!routine) return;
+
+  routine.lastDone = new Date().toISOString();
+
+  saveData();
+  renderAll();
+
+  toast(`${routine.name}、できたね。`);
+}
+
+
+function deleteRoutine(id) {
+
+  data.routines =
+    data.routines.filter(r => r.id !== id);
+
+  saveData();
+  renderAll();
+}
+
+
+/* =========================
+   帰宅
+========================= */
+
+function startReturn() {
+
+  const commute =
+    Number(document.getElementById("todayCommute").value);
+
+  const now = new Date();
+
+  const arrival =
+    new Date(now.getTime() + commute * 60000);
+
+  const time =
+    `${String(arrival.getHours()).padStart(2,"0")}:${String(arrival.getMinutes()).padStart(2,"0")}`;
+
+  data.returnMode = true;
+
+  saveData();
+
+  document.getElementById("returnTime").textContent = time;
+
+  document.getElementById("returnResult").innerHTML = `
+    <div class="return-box">
+      <strong>帰宅後のクエスト</strong>
+      <div class="quest">
+        <div class="quest-check"></div>
+        <div class="quest-info">
+          <div class="quest-name">荷物を置く</div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="quest-check"></div>
+        <div class="quest-info">
+          <div class="quest-name">着替える</div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="quest-check"></div>
+        <div class="quest-info">
+          <div class="quest-name">夜ごはん</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  toast("帰宅モードに切り替えたよ。");
+}
+
+
+/* =========================
+   表示
+========================= */
+
+function renderAll() {
+
+  renderNext();
+  renderSchedule();
+  renderQuests();
+  renderDumps();
+  renderRoutines();
+
+  const next = getNextQuest();
+
+  if (next) {
+    document.getElementById("zoosanMessage").textContent =
+      "次にやることをひとつだけ出しておいたよ。";
+  } else {
+    document.getElementById("zoosanMessage").textContent =
+      "今日はもう十分。ゆっくりしてね。";
+  }
+}
+
+
+function renderNext() {
+
+  const next = getNextQuest();
+
+  const task = document.getElementById("nextTask");
+  const time = document.getElementById("nextTaskTime");
+
+  if (!next) {
+
+    task.textContent = "今日はもう十分。";
+    time.textContent = "やることがなくなったよ。";
+
+    return;
+  }
+
+  task.textContent = next.name;
+
+  if (next.category === "繰り返し") {
+    time.textContent = "そろそろやる日だよ。";
+  } else {
+    time.textContent = "今できそうなら、これだけ。";
+  }
+}
+
+
+function renderSchedule() {
+
+  const container =
+    document.getElementById("scheduleList");
+
+  if (!data.schedule.length) {
+
+    container.innerHTML =
+      `<div class="note">まだ予定がありません。</div>`;
+
+    return;
+  }
+
+  container.innerHTML =
+    data.schedule
+      .sort((a,b) =>
+        timeToMinutes(a.time) - timeToMinutes(b.time)
+      )
+      .map(item => `
+        <div class="schedule-item">
+          <div class="schedule-time">${item.time}</div>
+          <div class="schedule-name">${escapeHtml(item.name)}</div>
+        </div>
+      `)
+      .join("");
+}
+
+
+function renderQuests() {
+
+  const container =
+    document.getElementById("questList");
+
+  if (!data.quests.length) {
+
+    container.innerHTML =
+      `<div class="note">まだクエストがありません。</div>`;
+
+    return;
+  }
+
+  container.innerHTML =
+    data.quests
+      .map(q => `
+        <div class="quest ${q.done ? "done" : ""}">
+          <button
+            class="quest-check"
+            onclick="completeQuest(${q.id})">
+          </button>
+
+          <div class="quest-info">
+            <div class="quest-name">
+              ${escapeHtml(q.name)}
+            </div>
+
+            <div class="quest-meta">
+              ${escapeHtml(q.category)}
+            </div>
+          </div>
+        </div>
+      `)
+      .join("");
+}
+
+
+function renderDumps() {
+
+  const container =
+    document.getElementById("dumpList");
+
+  if (!data.dumps.length) {
+    container.innerHTML = "";
+    return;
+  }
+
+  container.innerHTML =
+    data.dumps
+      .slice(-10)
+      .reverse()
+      .map(item => `
+        <div class="schedule-item">
+          <div class="schedule-name">
+            ${escapeHtml(item.text)}
+          </div>
+
+          <div class="note">
+            ${escapeHtml(item.category)}
+          </div>
+        </div>
+      `)
+      .join("");
+}
+
+
+function renderRoutines() {
+
+  const container =
+    document.getElementById("routineList");
+
+  if (!data.routines.length) {
+
+    container.innerHTML =
+      `<div class="note">
+        まだ登録されていません。
+      </div>`;
+
+    return;
+  }
+
+  container.innerHTML =
+    data.routines
+      .map(r => {
+
+        let freqText = "毎日";
+
+        if (r.frequency === 2) freqText = "2日に1回";
+        if (r.frequency === 3) freqText = "3日に1回";
+        if (r.frequency === 7) freqText = "週に1回";
+
+        return `
+          <div class="schedule-item">
+
+            <div style="flex:1;">
+              <div class="schedule-name">
+                ${escapeHtml(r.name)}
+              </div>
+
+              <div class="note">
+                ${freqText}
+              </div>
+            </div>
+
+            <button
+              class="delete"
+              onclick="deleteRoutine('${r.id}')">
+              ×
+            </button>
+
+          </div>
+        `;
+      })
+      .join("");
+}
+
+
+/* =========================
+   XSS対策
+========================= */
+
+function escapeHtml(str) {
+
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+init();
+</script>
+
+</body>
+</html>
