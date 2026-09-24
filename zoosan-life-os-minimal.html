@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f1e8">
+<title>ぞうさんの生活OS v2</title>
+<style>:root{
+  --bg:#F4F4F0;
+  --surface:#F9F9F6;
+  --surface-2:#ECEDE8;
+  --ink:#2C302E;
+  --muted:#7A817C;
+  --sage:#607266;
+  --sage-soft:#E4E9E4;
+  --line:#E2E2DC;
+  --white:#FBFBF8;
+  --shadow:0 10px 34px rgba(44,48,46,.055);
+  --shadow-soft:0 5px 20px rgba(44,48,46,.045);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",YuGothic,"Helvetica Neue",Arial,sans-serif;font-weight:400;letter-spacing:.035em;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;letter-spacing:.035em}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.app{max-width:720px;margin:auto;padding:0 18px 104px}
+header{padding:30px 4px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:12px;letter-spacing:.16em;font-weight:600;color:var(--sage)}
+.sub{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.08em}
+.avatar{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;background:var(--surface);font-size:20px;box-shadow:var(--shadow-soft)}
+main{padding:4px 0}
+.tab{display:none}.tab.active{display:block}
+.greeting{display:flex;gap:14px;align-items:center;padding:12px 4px 20px}
+.greeting h1{font-size:24px;font-weight:500;letter-spacing:.045em;margin:0 0 5px}.greeting p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}.ele{font-size:34px;line-height:1}
+.card{background:rgba(249,249,246,.72);border:1px solid var(--line);border-radius:24px;padding:22px;margin:14px 0;box-shadow:var(--shadow)}
+.card h2{font-size:15px;font-weight:600;letter-spacing:.06em;margin:0 0 13px}.small{font-size:11px;color:var(--muted);line-height:1.75}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.badge{display:inline-flex;align-items:center;min-height:24px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--sage);font-size:10px;letter-spacing:.06em;white-space:nowrap}
+.recommend{background:var(--surface);border-color:#DCE2DC}.rec{display:flex;justify-content:space-between;align-items:center;gap:18px}.rec-title{font-size:19px;font-weight:500;letter-spacing:.04em;line-height:1.5}.rec-icon{font-size:32px;flex:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}
+.btn{min-height:40px;border:1px solid var(--line);border-radius:999px;padding:9px 16px;background:transparent;color:var(--ink);font-size:11px;font-weight:500;letter-spacing:.055em;transition:background .18s,border-color .18s,transform .12s}.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--sage);border-color:var(--sage);color:#F8FAF7}.btn.ghost{background:var(--surface-2);border-color:transparent;color:#59625D}
+.btn:hover{border-color:#C7CEC8}.btn.primary:hover{background:#56675D}
+.task{display:flex;gap:12px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.dot{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:var(--surface);display:grid;place-items:center;flex:none}.grow{flex:1;min-width:0}.taskname{font-size:13px;font-weight:500;line-height:1.5}.timeline{display:grid;gap:8px}.timeitem{display:flex;gap:12px}.time{width:46px;color:var(--muted);font-size:10px;padding-top:12px;letter-spacing:.04em}.timebody{flex:1;background:var(--surface-2);border:1px solid transparent;border-radius:16px;padding:13px 15px;font-size:12px;line-height:1.6}.fixed{background:#E8ECE9}
+.progress{height:5px;background:#E4E5E0;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:var(--sage);border-radius:999px}
+.textarea,.input,.select{width:100%;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:rgba(251,251,248,.72);color:var(--ink);outline:none;font-size:12px}.textarea{min-height:112px;resize:vertical}.textarea:focus,.input:focus,.select:focus{border-color:#B8C2BA;box-shadow:0 0 0 3px rgba(96,114,102,.08)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
+.select{appearance:none;background-color:var(--white);background-image:linear-gradient(45deg,transparent 50%,#7A817C 50%),linear-gradient(135deg,#7A817C 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:34px}
+.habit{margin-bottom:14px}.stamps{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}.stamp{width:31px;height:31px;border:1px solid #C9CEC9;border-radius:50%;display:grid;place-items:center;font-size:9px;color:#9AA09C;background:transparent}.stamp.on{background:var(--sage-soft);border-color:#B7C4B9;color:var(--sage)}
+.world{display:grid;grid-template-columns:1fr 1fr;gap:10px}.worlditem{background:var(--surface-2);border:1px solid transparent;border-radius:18px;padding:15px}.worldicon{font-size:24px;margin-bottom:7px}
+.bottom{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:rgba(249,249,246,.94);border-top:1px solid var(--line);padding:8px 10px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nav{border:0;background:transparent;color:#929892;font-size:9px;min-height:48px;padding:4px 2px;letter-spacing:.06em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.nav.active{color:var(--sage);font-weight:600}.nav span{display:block;font-size:19px;line-height:1}
+.modal{display:none;position:fixed;z-index:30;inset:0;background:rgba(44,48,46,.28);align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modalbox{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:28px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(44,48,46,.14)}.big{font-size:52px}.choices{display:grid;gap:8px}.choices button{border:1px solid var(--line);padding:13px 15px;border-radius:999px;background:transparent;text-align:left;color:var(--ink)}
+label.small{display:block}.card .actions .btn{white-space:nowrap}
+@media(max-width:430px){.app{padding-left:15px;padding-right:15px}.card{padding:19px;border-radius:22px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.rec-title{font-size:17px}.btn{padding-left:14px;padding-right:14px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="logo">ぞうさんの生活OS</div><div class="sub">生活を育てる、ちいさな相棒</div></div><div class="avatar">🐘</div></header>
+<main>
+
+<section id="today" class="tab active">
+<div class="greeting"><div class="ele">🐘</div><div><h1>おはよう。</h1><p>今日も一緒に、ちょっとずつ。</p></div></div>
+
+<div class="card recommend"><div class="head"><h2>⚡ 今おすすめ</h2><span class="badge">今できそう</span></div>
+<div class="rec"><div><div id="recTitle" class="rec-title"></div><div id="recMeta" class="small"></div></div><div id="recIcon" class="rec-icon"></div></div>
+<div class="actions"><button class="btn primary" onclick="doRecommended()">やる</button><button class="btn" onclick="later()">あとで</button><button class="btn ghost" onclick="another()">別のこと</button></div></div>
+
+<div class="card" id="returnCard"><div class="head"><h2>🏠 帰宅</h2><span id="returnMeta" class="small"></span></div><p id="returnText" class="small" style="margin:8px 0"></p><div class="actions"><button class="btn primary" onclick="goHome()">今から帰宅する</button></div></div>
+
+<div class="card"><div class="head"><h2>✅ 今日やること</h2><span id="count" class="small"></span></div><div id="tasks"></div></div>
+<div class="card"><div class="head"><h2>🗓 今日の予定</h2><button class="btn" onclick="tab('schedule')">見る</button></div><div id="preview" class="timeline"></div></div>
+<div class="card"><h2>🌱 今日の積み重ね</h2><div class="small">小さな行動も、ちゃんと世界に残っていくよ。</div><div class="progress" style="margin-top:10px"><div id="daybar" style="width:0"></div></div></div>
+</section>
+
+<section id="input" class="tab">
+<div class="card"><h2>📝 なんでもBOX</h2><p class="small">思いついたまま書いてね。ぞうさんが整理します。</p><textarea id="brain" class="textarea" placeholder="例：今日20時から美容院&#10;明日洗濯する&#10;英語をやりたい"></textarea><div class="actions"><button class="btn primary" onclick="parseBrain()">ぞうさんに整理してもらう</button></div></div>
+<div class="card"><h2>➕ タスクを追加</h2><div class="grid"><input id="taskName" class="input full" placeholder="例：5分掃除する"><select id="cat" class="select"><option>生活</option><option>美容</option><option>健康</option><option>勉強</option><option>仕事</option><option>コーヒー</option><option>楽しみ</option></select><select id="effort" class="select"><option value="1">🫧 1〜3分</option><option value="2">🌱 3〜10分</option><option value="3">🌿 10〜30分</option><option value="4">🌳 30分以上</option></select></div><div class="actions"><button class="btn primary" onclick="addTask()">追加</button></div></div>
+<div class="card"><h2>🌱 継続を追加</h2><div class="grid"><input id="habitName" class="input full" placeholder="例：ボディクリーム"><select id="freq" class="select"><option value="1">毎日</option><option value="2">2日に1回</option><option value="3">3日に1回</option><option value="7">週1回</option></select><select id="habitTime" class="select"><option>🕐 いつでも</option><option>☀️ 朝</option><option>🌤 昼</option><option>🌙 夜</option></select></div><div class="actions"><button class="btn primary" onclick="addHabit()">継続に追加</button></div></div>
+</section>
+
+<section id="continuity" class="tab"><div class="greeting"><div class="ele">🐘</div><div><h1>積み重ね</h1><p>途切れても、今までの回数は消えないよ。</p></div></div><div id="habits"></div><div class="card"><h2>🏆 最近の積み重ね</h2><div id="summary" class="world"></div></div></section>
+
+<section id="schedule" class="tab"><div class="card"><div class="head"><h2>🗓 予定</h2><span class="badge">今日</span></div><div id="schedule" class="timeline"></div></div><div class="card"><h2>🌙 明日はどうする？</h2><div class="actions"><button class="btn primary" onclick="tomorrow('work')">💼 仕事</button><button class="btn" onclick="tomorrow('off')">🌿 休み</button><button class="btn" onclick="tomorrow('unknown')">🤷 まだ決めない</button></div><p id="tomorrowStatus" class="small"></p></div><div class="card" id="holidayCard"><div class="head"><h2>🌿 休日の予定提案</h2><span class="badge">無理しない</span></div><p class="small">休みの日は、予定を詰めすぎず「これくらいなら楽しそう」をぞうさんが考えるよ。</p><div id="holidaySuggestions"></div><div class="actions"><button class="btn primary" onclick="suggestHoliday()">休日プランを提案して</button></div></div></section>
+
+<section id="settings" class="tab"><div class="card"><h2>💼 仕事・通勤</h2><div class="grid"><input id="workplace" class="input full" placeholder="勤務先"><label class="small">家→職場<input id="cto" type="number" class="input"></label><label class="small">職場→家<input id="cfrom" type="number" class="input"></label><label class="small">出発準備<input id="prep" type="number" class="input"></label></div><div class="actions"><button class="btn primary" onclick="saveSettings()">保存</button></div></div><div class="card"><h2>🏠 いつもの生活</h2><div class="grid"><label class="small">起床<input id="wake" type="time" class="input"></label><label class="small">朝食<input id="breakfast" type="time" class="input"></label><label class="small">夕食<input id="dinner" type="time" class="input"></label><label class="small">お風呂<input id="bath" type="time" class="input"></label><label class="small">就寝<input id="sleep" type="time" class="input"></label></div><div class="actions"><button class="btn primary" onclick="saveLife()">保存</button></div></div><div class="card"><h2>🐘 ぞうさん</h2><p class="small">お世話好きで、ちょっと先回りしてくれる相棒。できない日は責めません。</p></div></section>
+</main>
+
+<nav class="bottom"><button class="nav active" data-tab="today" onclick="tab('today')"><span>🏠</span>今日</button><button class="nav" data-tab="input" onclick="tab('input')"><span>📝</span>入力</button><button class="nav" data-tab="continuity" onclick="tab('continuity')"><span>🌱</span>継続</button><button class="nav" data-tab="schedule" onclick="tab('schedule')"><span>🗓</span>予定</button><button class="nav" data-tab="settings" onclick="tab('settings')"><span>⚙️</span>設定</button></nav>
+</div>
+
+<div id="modal" class="modal"><div id="modalbox" class="modalbox"></div></div>
+
+<script>
+const KEY='zoosan-life-os-v2';
+const base={tasks:[
+{id:1,name:'布団を整える',cat:'生活',effort:1,icon:'🛏️'},
+{id:2,name:'ボディクリームを塗る',cat:'美容',effort:1,icon:'🧴'},
+{id:3,name:'英語を15分やる',cat:'勉強',effort:2,icon:'📚'}],
+habits:[
+{id:101,name:'ボディクリーム',freq:1,time:'🌙 夜',count:12,icon:'🧴'},
+{id:102,name:'布団を整える',freq:1,time:'☀️ 朝',count:18,icon:'🛏️'},
+{id:103,name:'ランニング',freq:3,time:'🌤 昼',count:7,icon:'🏃'}],
+schedule:[{time:'07:00',name:'起床',icon:'☀️',fixed:true},{time:'07:30',name:'朝食',icon:'🍞',fixed:true},{time:'20:00',name:'美容院',icon:'✂️',fixed:true}],
+history:[],tomorrow:'',settings:{workplace:'',cto:60,cfrom:60,prep:60,wake:'07:00',breakfast:'07:30',dinner:'19:00',bath:'22:00',sleep:'00:00'}};
+let s=JSON.parse(localStorage.getItem(KEY)||'null')||base, recId=null;
+
+const icons={生活:'🏠',美容:'🧴',健康:'🌿',勉強:'📚',仕事:'💼',コーヒー:'☕',楽しみ:'🎈'};
+function save(){localStorage.setItem(KEY,JSON.stringify(s))}
+function tab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));if(id==='today')renderToday();if(id==='continuity')renderHabits();if(id==='schedule')renderSchedule()}
+function esc(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function effort(n){return ['','1〜3分','3〜10分','10〜30分','30分以上'][n]}
+function candidate(){let a=s.tasks.filter(t=>!t.snooze||new Date(t.snooze)<=new Date());return a.sort((x,y)=>x.effort-y.effort)[0]||s.tasks[0]}
+function renderToday(){let r=candidate();recId=r?.id;document.getElementById('recTitle').textContent=r?r.name:'今日のクエスト全部クリア！';document.getElementById('recMeta').textContent=r?effort(r.effort)+' · '+r.cat+'の積み重ね':'ぞうさんと少し休もう。';document.getElementById('recIcon').textContent=r?.icon||'🌿';document.getElementById('count').textContent=s.tasks.length+'件';document.getElementById('tasks').innerHTML=s.tasks.length?s.tasks.map(t=>`<div class="task"><div class="dot">${t.icon}</div><div class="grow"><div class="taskname">${esc(t.name)}</div><div class="small">${t.cat} · ${effort(t.effort)}${t.snooze?' · あとで':''}</div></div><button class="btn primary" onclick="complete(${t.id})">完了</button></div>`).join(''):'<div style="text-align:center;padding:16px;color:#718078">🎉 今日のクエスト全部クリア！<br>世界が少し育ったよ。</div>';let done=Math.max(0,3-s.tasks.length);document.getElementById('daybar').style.width=Math.min(100,done/3*100)+'%';renderPreview();renderReturnCard()}
+function renderReturnCard(){let card=document.getElementById('returnCard'), meta=document.getElementById('returnMeta'), text=document.getElementById('returnText');if(!card)return;let mins=Math.max(0,Number(s.settings.cfrom)||0);if(mins>0){let eta=new Date(Date.now()+mins*60000);let hh=String(eta.getHours()).padStart(2,'0'),mm=String(eta.getMinutes()).padStart(2,'0');meta.textContent=(s.settings.workplace?esc(s.settings.workplace)+' → 自宅':'職場 → 自宅');text.textContent=`今から帰るなら、約${mins}分後の ${hh}:${mm} ごろに到着予定。`;card.style.display='block'}else{meta.textContent='帰宅時間を設定できます';text.textContent='設定で「職場→家」の時間を入れると、到着予定を計算するよ。';card.style.display='block'}}
+function goHome(){let mins=Math.max(0,Number(s.settings.cfrom)||0);if(!mins){open('<div class="big">🐘</div><h2>帰宅時間を設定しよう</h2><p>「設定」→「家に帰るまで」で、いつもの所要時間を入れてね。</p><div class="actions" style="justify-content:center"><button class="btn primary" onclick="closeModal();tab('settings')">設定する</button></div>');return}let eta=new Date(Date.now()+mins*60000);let hh=String(eta.getHours()).padStart(2,'0'),mm=String(eta.getMinutes()).padStart(2,'0');open(`<div class="big">🏠</div><h2>おかえりモードにしたよ</h2><p>約${mins}分後、<b>${hh}:${mm}</b>ごろに到着予定。</p><p class="small">帰宅後は、今日の残りから無理のないものをおすすめするよ。</p><div class="actions" style="justify-content:center"><button class="btn primary" onclick="closeModal()">いってきます！</button></div>`)}
+function renderPreview(){document.getElementById('preview').innerHTML=s.schedule.slice().sort((a,b)=>a.time.localeCompare(b.time)).slice(0,4).map(x=>`<div class="timeitem"><div class="time">${x.time}</div><div class="timebody">${x.icon} ${esc(x.name)}</div></div>`).join('')||'<div class="small">予定はまだないよ。</div>'}
+function complete(id){let i=s.tasks.findIndex(x=>x.id===id);if(i<0)return;let t=s.tasks.splice(i,1)[0];s.history.unshift({name:t.name,cat:t.cat,icon:t.icon,date:Date.now()});let h=s.habits.find(x=>x.name===t.name);if(h)h.count++;save();reward(t);renderToday()}
+function reward(t){let pool={生活:['🪴','🧺','🪑','🏡'],美容:['🌷','🪞','🧴','🕯️'],健康:['🌳','👟','🍃','☀️'],勉強:['📚','💡','🗺️','🔖'],コーヒー:['☕','🫘','🫖'],仕事:['💼','📓','👜'],楽しみ:['🎈','🍰','🎨']}[t.cat]||['🌱','✨'];let icon=pool[Math.floor(Math.random()*pool.length)], story=s.history.length%5===0;open(`<div class="big">🐘</div><div class="big">${icon}</div><h2>${story?'✨ ぞうさんの物語が進んだ！':'ぽんっ！'}</h2><p>${story?'「ねえ、見て。少しずつ、ここが私たちの場所になってきたね。」':'「できたね。小さなことも、ちゃんと残ってるよ。」'}</p><span class="badge">${t.name} · 積み重ね ${s.history.length}回</span><div class="actions" style="justify-content:center"><button class="btn primary" onclick="closeModal()">うれしい！</button></div>`)}
+function later(){if(!recId)return;open('<div class="big">🐘</div><h2>いつにする？</h2><p class="small">今できないなら大丈夫。ぞうさんが覚えておくよ。</p><div class="choices"><button onclick="snooze(1)">🌤 午後</button><button onclick="snooze(4)">🏠 帰宅後</button><button onclick="snooze(8)">🌙 夜</button><button onclick="snooze(24)">🕐 しばらくあと</button></div>')}
+function snooze(hours){let t=s.tasks.find(x=>x.id===recId);if(t)t.snooze=new Date(Date.now()+hours*3600000).toISOString();save();closeModal();renderToday()}
+function doRecommended(){if(recId)complete(recId)}
+function another(){let a=s.tasks.filter(x=>x.id!==recId);if(!a.length)return;recId=a[0].id;renderToday();document.getElementById('recTitle').textContent=a[0].name;document.getElementById('recIcon').textContent=a[0].icon}
+function addTask(){let n=document.getElementById('taskName').value.trim();if(!n)return;s.tasks.push({id:Date.now(),name:n,cat:document.getElementById('cat').value,effort:+document.getElementById('effort').value,icon:icons[document.getElementById('cat').value]||'✨'});document.getElementById('taskName').value='';save();renderToday()}
+function addHabit(){let n=document.getElementById('habitName').value.trim();if(!n)return;s.habits.push({id:Date.now(),name:n,freq:+document.getElementById('freq').value,time:document.getElementById('habitTime').value,count:0,icon:'🌱'});document.getElementById('habitName').value='';save();renderHabits()}
+function renderHabits(){document.getElementById('habits').innerHTML=s.habits.map(h=>{let mod=h.count%10, on=mod===0&&h.count>0?10:mod;return `<div class="card habit"><div class="head"><h2>${h.icon} ${esc(h.name)}</h2><span class="badge">${h.count}回</span></div><div class="small">${h.freq===1?'毎日':h.freq+'日に1回'} · ${h.time}</div><div class="stamps">${Array.from({length:10},(_,i)=>`<div class="stamp ${i<on?'on':''}">${i+1}</div>`).join('')}</div><div class="progress"><div style="width:${on*10}%"></div></div><div class="head" style="margin-top:8px"><span class="small">${on}/10</span><span class="small">次の節目まで ${10-on}回</span></div><div class="actions"><button class="btn primary" onclick="habitDone(${h.id})">今日できた！</button><button class="btn ghost" onclick="deleteHabit(${h.id})">削除</button></div></div>`}).join('');let m={};s.history.forEach(x=>m[x.cat]=(m[x.cat]||0)+1);document.getElementById('summary').innerHTML=Object.entries(m).slice(0,6).map(([k,v])=>`<div class="worlditem"><div class="worldicon">${icons[k]||'✨'}</div><b>${k}</b><div class="small">これまで ${v}回</div></div>`).join('')||'<div class="small">これから積み重なっていくよ。</div>'}
+function habitDone(id){let h=s.habits.find(x=>x.id===id);if(!h)return;h.count++;s.history.unshift({name:h.name,cat:'継続',icon:h.icon,date:Date.now()});save();open(`<div class="big">🐘</div><div class="big">${h.count%10===0?'🎁':'🟢'}</div><h2>${h.count%10===0?'スタンプがいっぱい！':'ぽんっ！'}</h2><p>${h.count%10===0?'「何か新しいものが届きそう。」':'今日の積み重ね、ちゃんと残ったよ。'}</p><div class="actions" style="justify-content:center"><button class="btn primary" onclick="closeModal()">見る！</button></div>`);renderHabits()}
+function deleteHabit(id){let h=s.habits.find(x=>x.id===id);if(!h)return;open(`<div class="big">🐘</div><h2>「${esc(h.name)}」を削除する？</h2><p class="small">今までの回数の記録も一緒に消えます。</p><div class="actions" style="justify-content:center"><button class="btn ghost" onclick="closeModal()">やめる</button><button class="btn primary" onclick="confirmDeleteHabit(${id})">削除する</button></div>`)}
+function confirmDeleteHabit(id){s.habits=s.habits.filter(x=>x.id!==id);save();closeModal();renderHabits()}
+function suggestHoliday(){let ideas=[];let names=s.tasks.map(x=>x.name);if(names.some(x=>/洗濯|掃除|片付け/.test(x)))ideas.push({icon:'🧺',title:'午前：生活リセット',text:'洗濯か片付けをひとつだけ。終わったら好きな朝ごはん。'});if(names.some(x=>/英語|勉強/.test(x)))ideas.push({icon:'📚',title:'午後：15分だけ勉強',text:'英語を15分だけやって、その後は自由時間。'});ideas.push({icon:'☕',title:'コーヒーの休日',text:'スペシャルティコーヒーのお店を1軒だけ開拓して、ゆっくり歩く。'});ideas.push({icon:'🌳',title:'外に出る休日',text:'公園や街を1時間くらい散歩。予定は詰め込まない。'});ideas.push({icon:'🛋️',title:'回復する休日',text:'午前は何もしない。午後に「やりたいこと」を1つだけ選ぶ。'});document.getElementById('holidaySuggestions').innerHTML=ideas.slice(0,3).map((x,i)=>`<div class="timebody" style="margin:8px 0"><b>${x.icon} ${x.title}</b><div class="small" style="margin-top:4px">${x.text}</div><button class="btn" style="margin-top:8px" onclick="adoptHoliday(${i})">これにする</button></div>`).join('')}
+function adoptHoliday(i){let el=document.querySelectorAll('#holidaySuggestions .timebody')[i];if(!el)return;let title=el.querySelector('b')?.textContent||'休日プラン';open(`<div class="big">🐘</div><h2>いいね。これでいこう。</h2><p>${esc(title)}</p><p class="small">必要なら「入力」から具体的な予定を追加できるよ。</p><div class="actions" style="justify-content:center"><button class="btn primary" onclick="closeModal()">休日を育てる</button></div>`)}
+function renderSchedule(){document.getElementById('schedule').innerHTML=s.schedule.slice().sort((a,b)=>a.time.localeCompare(b.time)).map(x=>`<div class="timeitem"><div class="time">${x.time}</div><div class="timebody fixed">${x.icon} ${esc(x.name)}</div></div>`).join('')||'<div class="small">予定はまだないよ。</div>';document.getElementById('tomorrowStatus').textContent=s.tomorrow?'明日は「'+({work:'仕事',off:'休み',unknown:'まだ決めない'}[s.tomorrow])+'」にしてあるよ。':'まだ決めてないよ。';document.getElementById('holidayCard').style.display=s.tomorrow==='off'?'block':'block';if(s.tomorrow==='off')suggestHoliday()}
+function tomorrow(v){s.tomorrow=v;save();renderSchedule()}
+function parseBrain(){let text=document.getElementById('brain').value.trim();if(!text)return;text.split(/\n+/).filter(Boolean).forEach((line,i)=>{let m=line.match(/(\d{1,2})(?::(\d{2}))?\s*時/);if(m){let name=line.replace(m[0],'').replace(/から/,'').trim();s.schedule.push({time:String(+m[1]).padStart(2,'0')+':'+(m[2]||'00'),name:name||'予定',icon:'📌',fixed:true})}else{s.tasks.push({id:Date.now()+i,name:line.replace(/^(今日|明日)/,'').trim(),cat:/英語|勉強/.test(line)?'勉強':/美容|クリーム|トリートメント/.test(line)?'美容':'生活',effort:1,icon:'✨'})}});document.getElementById('brain').value='';save();renderToday();renderSchedule();alert('ぞうさんが整理したよ。')}
+function open(x){document.getElementById('modalbox').innerHTML=x;document.getElementById('modal').classList.add('show')}function closeModal(){document.getElementById('modal').classList.remove('show')}
+function loadSettings(){let x=s.settings;['workplace','cto','cfrom','prep','wake','breakfast','dinner','bath','sleep'].forEach(k=>document.getElementById(k).value=x[k]??'')}
+function saveSettings(){['workplace','cto','cfrom','prep'].forEach(k=>s.settings[k]=document.getElementById(k).value);save();alert('仕事・通勤の設定を保存したよ。')}
+function saveLife(){['wake','breakfast','dinner','bath','sleep'].forEach(k=>s.settings[k]=document.getElementById(k).value);save();alert('いつもの生活を保存したよ。')}
+loadSettings();renderToday();renderHabits();renderSchedule();
+</script>
+</body>
+</html>
