@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>ぞうさんの生活OS</title>
+<style>
+:root{--bg:#f4f7fa;--card:#fff;--text:#20242a;--muted:#68727d;--line:#dce3e9;--accent:#4f7891;--accent-soft:#e4f1f8;--important:#c75a63;--normal:#d18a3c;--light:#4d9775;--shadow:0 7px 20px rgba(55,76,94,.11)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}button{font:inherit}
+.app{max-width:520px;margin:auto;min-height:100vh;background:#fff}
+header{height:80px;display:grid;grid-template-columns:56px 1fr 56px;align-items:center;border-bottom:1px solid var(--line);padding:0 10px;position:sticky;top:0;background:#fff;z-index:5}
+.brand-mark{font-size:32px;text-align:center}.title{text-align:center;font-weight:800;letter-spacing:.04em;font-size:18px}.head-btn{border:0;background:none;color:#4f5962;font-size:25px;width:50px;height:50px;border-radius:50%}
+main{padding:28px 18px 116px}.date{font-size:14px;color:var(--muted);font-weight:600}.greeting{font-size:30px;font-weight:750;margin:7px 0 8px}.partner{font-size:14px;line-height:1.8;color:#454b52;margin:0 0 22px}
+.schedule{display:grid;grid-template-columns:1fr 1fr;border:1px solid #d4e2eb;border-radius:17px;overflow:hidden;margin-bottom:13px;background:#f8fbfd;box-shadow:var(--shadow)}.schedule>div{padding:16px 15px}.schedule>div+div{border-left:1px solid var(--line)}
+.label{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px}.value{font-size:15px;font-weight:700}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+.wake{width:100%;height:44px;border:1px solid #4f7891;background:var(--accent);color:#fff;border-radius:13px;font-weight:800;margin-bottom:30px;box-shadow:0 5px 14px rgba(79,120,145,.22)}
+.section{margin-top:26px}.section-head{display:flex;align-items:center;justify-content:space-between;border-left:5px solid var(--accent);padding:7px 10px;margin-bottom:11px;background:#f5f8fa}.section-title{font-size:15px;font-weight:800}.section-meta{font-size:12px;color:var(--muted)}
+.next{border:1px solid #d5e1e8;border-radius:17px;padding:19px;background:#fff;box-shadow:var(--shadow)}.next-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:8px}.next-name{font-size:20px;font-weight:800;margin-bottom:6px}.next-info{font-size:12px;color:var(--muted);margin-bottom:15px}
+.actions{display:flex;gap:8px}.actions button{height:40px;border-radius:11px;padding:0 18px;font-weight:750}.do{border:1px solid #4f7891;background:#4f7891;color:#fff;box-shadow:0 4px 10px rgba(79,120,145,.20)}.later{border:1px solid var(--line);background:#fff;color:#555}
+.overview{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #d8e1e8;border-radius:15px;overflow:hidden;background:#fff;box-shadow:0 4px 12px rgba(55,76,94,.07)}.stat{padding:14px 8px;text-align:center}.stat+.stat{border-left:1px solid var(--line)}.num{font-size:21px;font-weight:800}.stat small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.event{display:flex;gap:14px;padding:12px 2px;border-bottom:1px solid var(--line)}.event:last-child{border-bottom:0}.time{width:52px;font-weight:800;font-size:14px}.event-title{font-size:14px;font-weight:650}.event-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.groups{border:1px solid var(--line);border-radius:15px;overflow:hidden}.group+ .group{border-top:1px solid var(--line)}.group button{width:100%;border:0;background:#fff;padding:15px 14px;display:flex;align-items:center;justify-content:space-between;color:var(--text)}.group-left{display:flex;align-items:center;gap:9px;font-weight:700}.dot{width:8px;height:8px;border-radius:50%}.red{background:var(--important)}.yellow{background:var(--normal)}.green{background:var(--light)}.items{display:none;padding:0 14px 13px 36px}.items.open{display:block}.item{font-size:13px;padding:8px 0;color:#4d535a}
+.minimum{margin-top:28px;padding:18px;border:1px solid #b9d5c7;border-radius:16px;background:#edf8f2;box-shadow:var(--shadow)}.minimum-title{font-size:13px;font-weight:800;margin-bottom:7px}.minimum p{margin:0;font-size:14px;line-height:1.75;color:#4b5359}
+.toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(15px);background:#252a2f;color:#fff;padding:11px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.22s;z-index:10;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:auto;height:86px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:6;padding-bottom:env(safe-area-inset-bottom)}nav button{border:0;background:none;color:#7b858e;font-size:13px;font-weight:700}nav button.active{color:#4f6878}.nav-icon{display:block;font-size:24px;margin-bottom:4px}
+@media(min-width:521px){body{padding:20px 0}.app{border:1px solid var(--line);border-radius:22px;overflow:hidden;min-height:calc(100vh - 40px)}nav{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+
+  .wake-row{display:flex;align-items:center;gap:10px}
+  .wake-btn{max-width:220px;margin:0}
+  .routine-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 18px rgba(55,76,94,.08)}
+  .routine-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #edf1f3}
+  .routine-item:last-child{border-bottom:0;padding-bottom:0}
+  .routine-item:first-child{padding-top:0}
+  .routine-num{width:28px;height:28px;border-radius:50%;background:#e4f1f8;color:#4f7891;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+  .routine-item.done .routine-num{background:#dcefe5;color:#4d9775}
+  .routine-item.done .routine-name{text-decoration:line-through;color:#8a959c}
+  .routine-actions{margin-left:auto;display:flex;gap:6px;flex:none}
+  .mini-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:12px;min-height:36px}
+  .next-mini{margin-top:10px;color:#4f7891;font-size:13px}
+  .task-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .task-summary>div{background:#f8fafb;border-radius:14px;padding:10px;text-align:center}
+  .task-summary strong{display:block;font-size:20px}
+  .task-summary span{font-size:11px;color:#7b8790}
+  .section-link{display:block;text-align:right;margin-top:10px;color:#4f7891;font-size:13px}
+</style>
+<style>.wake-btn{height:44px!important;font-size:14px!important;padding:0 18px!important;max-width:180px!important}</style></head>
+<body>
+<div class="app">
+<header><button class="head-btn" id="elephant">🐘</button><div class="title">ぞうさんの生活OS</div><button class="head-btn" id="settings">⚙︎</button></header>
+<main>
+<div class="date">9月25日（金）</div><h1 class="greeting">おはよう。</h1>
+<p class="partner">🐘 今日は仕事だね。まずは朝ごはん。<br>ゆっくり準備していこう。</p>
+<section class="schedule"><div><div class="label">今日の予定</div><div class="value">仕事</div><div class="sub">10:00–19:00</div></div><div><div class="label">帰宅予定</div><div class="value">20:00ごろ</div><div class="sub">目安</div></div></section>
+<button class="wake" id="wake">起きた！</button>
+<section class="section">
+  <div class="section-title">🌅 朝のルーティン</div>
+  <div class="routine-card" aria-label="朝のルーティン">
+    <div class="routine-item"><div class="routine-num">1</div><div class="routine-name"><strong>布団をたたむ</strong><div class="muted">2分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
+    <div class="routine-item"><div class="routine-num">2</div><div class="routine-name"><strong>ストレッチ</strong><div class="muted">5分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
+    <div class="routine-item"><div class="routine-num">3</div><div class="routine-name"><strong>朝ごはん</strong><div class="muted">15分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
+    <div class="routine-item"><div class="routine-num">4</div><div class="routine-name"><strong>メイク</strong><div class="muted">20分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
+    <div class="next-mini">次にやる：布団をたたむ</div>
+  </div>
+  <a class="section-link" href="#">ルーティンを編集する →</a>
+</section>
+
+<section class="section"><div class="section-head"><div class="section-title">今やる</div><div class="section-meta">NOW</div></div><div class="next"><div class="next-kicker">NOW</div><div class="next-name">洗濯する</div><div class="next-info">15分くらい　・　軽め</div><div class="actions"><button class="do" data-msg="洗濯、スタート！">やる</button><button class="later" data-msg="あとで大丈夫。">あとで</button></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title">今日の全体像</div><div class="section-meta">7件</div></div><div class="overview"><div class="stat"><div class="num">2</div><small>重要</small></div><div class="stat"><div class="num">3</div><small>できれば</small></div><div class="stat"><div class="num">2</div><small>軽め</small></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title">固定予定</div></div><div class="event"><div class="time">10:00</div><div><div class="event-title">仕事</div><div class="event-sub">19:00まで</div></div></div><div class="event"><div class="time">20:00</div><div><div class="event-title">帰宅予定</div><div class="event-sub">目安</div></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title">今日のタスク</div></div><div class="groups">
+<div class="group"><button class="group-toggle"><span class="group-left"><i class="dot red"></i>重要　2件</span><span>＋</span></button><div class="items"><div class="item">仕事</div><div class="item">洗濯する</div></div></div>
+<div class="group"><button class="group-toggle"><span class="group-left"><i class="dot yellow"></i>できれば　3件</span><span>＋</span></button><div class="items"><div class="item">英語を10分</div><div class="item">部屋を少し片づける</div><div class="item">コーヒーの勉強</div></div></div>
+<div class="group"><button class="group-toggle"><span class="group-left"><i class="dot green"></i>軽め　2件</span><span>＋</span></button><div class="items"><div class="item">メール確認</div><div class="item">明日の準備</div></div></div>
+</div></section>
+<section class="minimum"><div class="minimum-title">🐘 今日の最低ライン</div><p>「仕事」と「洗濯」ができたら、今日はもう十分。<br>ほかは余裕があればで大丈夫。</p></section>
+</main>
+<nav><button class="active"><span class="nav-icon">⌂</span>今日</button><button><span class="nav-icon">＋</span>入力</button><button><span class="nav-icon">○</span>継続</button><button><span class="nav-icon">□</span>予定</button></nav>
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const toast=document.getElementById("toast");let timer;
+function showToast(msg){toast.textContent=msg;toast.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove("show"),1800)}
+document.getElementById("wake").onclick=()=>showToast("起きた！ 今日を始めよう。");
+document.querySelectorAll("[data-msg]").forEach(b=>b.onclick=()=>showToast(b.dataset.msg));
+document.querySelectorAll(".group-toggle").forEach(b=>b.onclick=()=>{const x=b.nextElementSibling;x.classList.toggle("open");b.lastElementChild.textContent=x.classList.contains("open")?"−":"＋"});
+document.getElementById("settings").onclick=()=>showToast("設定は準備中です");
+document.getElementById("elephant").onclick=()=>showToast("🐘 ここにいるよ。");
+document.querySelectorAll("nav button").forEach((b,i)=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");showToast(["今日","入力","継続","予定"][i]+"を選択")});
+</script>
+<script>
+(function(){
+  const root=document;
+  const items=[...root.querySelectorAll('.routine-item')];
+  const next=root.querySelector('.next-mini');
+  function update(){
+    const first=items.find(i=>!i.classList.contains('done'));
+    next.textContent=first?'次にやる：'+first.querySelector('.routine-name strong').textContent:'朝のルーティン完了。よくできたね🐘';
+  }
+  items.forEach(item=>{
+    const btn=item.querySelector('.routine-done');
+    btn.addEventListener('click',()=>{
+      item.classList.toggle('done');
+      btn.textContent=item.classList.contains('done')?'戻す':'できた';
+      update();
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
