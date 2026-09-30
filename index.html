@@ -167,5 +167,66 @@ document.getElementById('addSchedule')?.addEventListener('click',()=>showToast('
 document.getElementById('workTomorrow')?.addEventListener('click',()=>showToast('明日は仕事として覚えておくね'));
 document.getElementById('offTomorrow')?.addEventListener('click',()=>showToast('明日はお休みとして覚えておくね'));
 </script>
+
+<style>
+#todayDate{display:block}.wake-row{display:flex;align-items:center;gap:10px}.wake-btn{max-width:180px!important;margin:0!important}.wake-time{font-size:12px;color:var(--muted)}
+.edit-routine-btn{width:100%;margin-top:10px;border:0;background:none;color:#4f7891;font-size:13px;text-align:right;padding:8px;cursor:pointer}
+.habit-card{margin-bottom:10px;border:1px solid #d5e1e8;border-radius:17px;padding:16px;background:#fff;box-shadow:var(--shadow)}
+.stamps{display:flex;gap:5px;margin-top:12px}.stamp{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px}.stamp.on{background:#e4f1f8;color:#4f7891;font-weight:800}
+</style>
+<script>
+(function(){
+const KEY='zousan-life-os-state-v6';
+const defaults={wakeTime:null,nowDone:false,routine:['布団をたたむ','ストレッチ','朝ごはん','メイク'],routineDone:{},habits:[{id:'english',name:'英語',detail:'10分'},{id:'running',name:'ランニング',detail:''},{id:'strength',name:'筋トレ',detail:''}],stamps:{}};
+let s;try{s=JSON.parse(localStorage.getItem(KEY))||defaults}catch(e){s=defaults}
+const save=()=>localStorage.setItem(KEY,JSON.stringify(s));
+const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const key=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return y+'-'+m+'-'+day};
+const today=()=>key(new Date());
+const toast=m=>window.showToast?showToast(m):null;
+
+// 日付・時間帯の表示
+function header(){const d=new Date(),days=['日','月','火','水','木','金','土'];const date=document.querySelector('#view-today .date');const g=document.querySelector('#view-today .greeting');const p=document.querySelector('#view-today .partner');if(date)date.textContent=(d.getMonth()+1)+'月'+d.getDate()+'日（'+days[d.getDay()]+'）';if(g){const h=d.getHours();g.textContent=h<11?'おはよう。':h<17?'こんにちは。':h<22?'こんばんは。':'おつかれさま。'}if(p)p.innerHTML='🐘 今日も、次のひとつだけ一緒にやろう。'}
+header();
+
+// 「起きた！」は実際に押した時刻を保存
+const wake=document.getElementById('wake');
+if(wake){
+  wake.onclick=function(){s.wakeTime=new Date().toISOString();save();renderWake();toast('起きた時間を記録したよ🐘')};
+  function renderWake(){const old=document.getElementById('wakeTimeLabel');if(old)old.remove();if(s.wakeTime){const d=new Date(s.wakeTime),x=document.createElement('span');x.id='wakeTimeLabel';x.className='wake-time';x.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')+' に記録';wake.insertAdjacentElement('afterend',x);}}
+  renderWake();
+}
+
+// 朝ルーティンを実データ化
+const card=document.querySelector('#view-today .routine-card');
+if(card){
+  card.innerHTML='<div id="routineList"></div><div class="next-mini" id="routineNext"></div><button id="routineEdit" class="edit-routine-btn" type="button">ルーティンを編集する →</button>';
+  function renderRoutine(){const list=document.getElementById('routineList'),day=today();list.innerHTML='';s.routine.forEach((name,i)=>{const done=!!s.routineDone[day+'-'+i],row=document.createElement('div');row.className='routine-item'+(done?' done':'');row.innerHTML='<div class="routine-num">'+(i+1)+'</div><div class="routine-name"><strong>'+esc(name)+'</strong></div><div class="routine-actions"><button class="mini-btn" type="button">'+(done?'戻す':'できた')+'</button></div>';row.querySelector('button').onclick=()=>{if(done)delete s.routineDone[day+'-'+i];else s.routineDone[day+'-'+i]=1;save();renderRoutine()};list.appendChild(row)});const next=s.routine.find((x,i)=>!s.routineDone[day+'-'+i]);document.getElementById('routineNext').textContent=next?'次にやる：'+next:'朝のルーティン完了。よくできたね🐘'}
+  renderRoutine();
+  document.getElementById('routineEdit').onclick=()=>{const entered=prompt('朝のルーティンを1行ずつ入力してください。',s.routine.map((x,i)=>(i+1)+'. '+x).join('\n'));if(entered===null)return;const a=entered.split(/\n/).map(x=>x.replace(/^\s*\d+[.)]\s*/,'').trim()).filter(Boolean);if(!a.length)return; s.routine=a;s.routineDone={};save();renderRoutine();toast('ルーティンを更新したよ🐘')};
+}
+
+// 「今やる」は完了処理まで行う
+const nowDo=document.getElementById('nowDo');
+const nowLater=document.getElementById('nowLater');
+const nowName=document.querySelector('#view-today .next-name');
+if(nowDo){
+  // 既存HTMLのボタンにIDを付けるため、data-msgを持つ最初の「やる」を拾う
+}
+const nowBox=[...document.querySelectorAll('#view-today .next')].find(x=>x.querySelector('[data-msg="洗濯、スタート！"]'));
+if(nowBox){const buttons=nowBox.querySelectorAll('button');const doBtn=buttons[0],laterBtn=buttons[1];doBtn.id='realNowDo';laterBtn.id='realNowLater';if(s.nowDone){doBtn.textContent='完了済み';doBtn.disabled=true;nowBox.querySelector('.next-name').textContent='洗濯、完了！';nowBox.querySelector('.next-info').textContent='ちゃんと積み上がったよ🐘'}doBtn.onclick=()=>{s.nowDone=true;save();doBtn.textContent='完了済み';doBtn.disabled=true;nowBox.querySelector('.next-name').textContent='洗濯、完了！';nowBox.querySelector('.next-info').textContent='ちゃんと積み上がったよ🐘';toast('完了！ちゃんと積み上がったよ🐘')};laterBtn.onclick=()=>toast('あとでにしておいたよ。')}
+
+// 継続のスタンプ
+const routineView=document.getElementById('view-routine');
+if(routineView){
+ const section=routineView.querySelector('.section');
+ if(section){section.innerHTML='<div class="section-head"><div class="section-title">継続中</div><div class="section-meta" id="habitCount"></div></div><div id="habitList"></div>';
+ function last7(){const a=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);a.push(key(d))}return a}
+ function renderHabits(){const box=document.getElementById('habitList'),days=last7();document.getElementById('habitCount').textContent=s.habits.length+'件';box.innerHTML='';s.habits.forEach(h=>{const st=s.stamps[h.id]||{},total=Object.values(st).filter(Boolean).length,row=document.createElement('div');row.className='habit-card';row.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><div class="next-name" style="font-size:17px">'+esc(h.name)+(h.detail?'　'+esc(h.detail):'')+'</div><div class="next-info">累計スタンプ '+total+'個</div></div><button class="'+(st[today()]?'later':'do')+'" style="height:40px;border-radius:11px;padding:0 14px;font-weight:750">'+(st[today()]?'今日済み':'今日のスタンプ')+'</button></div><div class="stamps">'+days.map(d=>'<span class="stamp '+(st[d]?'on':'')+'">'+(st[d]?'印':'')+'</span>').join('')+'</div>';row.querySelector('button').onclick=()=>{s.stamps[h.id] ||= {};if(s.stamps[h.id][today()])delete s.stamps[h.id][today()];else s.stamps[h.id][today()]=1;save();renderHabits()};box.appendChild(row)})}
+ renderHabits();
+ }
+}
+})();
+</script>
 </body>
 </html>
