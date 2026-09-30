@@ -1,1 +1,1457 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>ぞうさんの生活OS</title>
+<style>
+:root{--bg:#f4f7fa;--card:#fff;--text:#20242a;--muted:#68727d;--line:#dce3e9;--accent:#4f7891;--accent-soft:#e4f1f8;--important:#c75a63;--normal:#d18a3c;--light:#4d9775;--shadow:0 7px 20px rgba(55,76,94,.11)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}button{font:inherit}
+.app{max-width:520px;margin:auto;min-height:100vh;background:#fff}
+header{height:86px;display:grid;grid-template-columns:68px 1fr 68px;align-items:center;border-bottom:1px solid var(--line);padding:0 10px;position:sticky;top:0;background:#fff;z-index:5}
+.brand-mark{font-size:56px;text-align:center;line-height:1}.title{text-align:center;font-weight:800;letter-spacing:.04em;font-size:18px}.head-btn{border:0;background:#f5f8fa;color:#4f5962;font-size:36px;width:68px;height:68px;border-radius:18px;display:grid;place-items:center;justify-self:center}
+main{padding:28px 18px 116px}.date{font-size:14px;color:var(--muted);font-weight:600}.greeting{font-size:30px;font-weight:750;margin:7px 0 8px}.partner{font-size:14px;line-height:1.8;color:#454b52;margin:0 0 22px}
+.schedule{display:grid;grid-template-columns:1fr 1fr;border:1px solid #d4e2eb;border-radius:17px;overflow:hidden;margin-bottom:13px;background:#f8fbfd;box-shadow:var(--shadow)}.schedule>div{padding:16px 15px}.schedule>div+div{border-left:1px solid var(--line)}
+.label{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px}.value{font-size:15px;font-weight:700}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+.wake{width:100%;height:44px;border:1px solid #4f7891;background:var(--accent);color:#fff;border-radius:13px;font-weight:800;margin-bottom:30px;box-shadow:0 5px 14px rgba(79,120,145,.22)}
+.section{margin-top:26px}.section-head{display:flex;align-items:center;justify-content:space-between;border-left:5px solid var(--accent);padding:7px 10px;margin-bottom:11px;background:#f5f8fa}.section-title{font-size:15px;font-weight:800}.section-meta{font-size:12px;color:var(--muted)}
+.next{border:1px solid #d5e1e8;border-radius:17px;padding:19px;background:#fff;box-shadow:var(--shadow)}.next-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:8px}.next-name{font-size:20px;font-weight:800;margin-bottom:6px}.next-info{font-size:12px;color:var(--muted);margin-bottom:15px}
+.actions{display:flex;gap:8px}.actions button{height:40px;border-radius:11px;padding:0 18px;font-weight:750}.do{border:1px solid #4f7891;background:#4f7891;color:#fff;box-shadow:0 4px 10px rgba(79,120,145,.20)}.later{border:1px solid var(--line);background:#fff;color:#555}
+.overview{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #d8e1e8;border-radius:15px;overflow:hidden;background:#fff;box-shadow:0 4px 12px rgba(55,76,94,.07)}.stat{padding:14px 8px;text-align:center}.stat+.stat{border-left:1px solid var(--line)}.num{font-size:21px;font-weight:800}.stat small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.event{display:flex;gap:14px;padding:12px 2px;border-bottom:1px solid var(--line)}.event:last-child{border-bottom:0}.time{width:52px;font-weight:800;font-size:14px}.event-title{font-size:14px;font-weight:650}.event-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.groups{border:1px solid var(--line);border-radius:15px;overflow:hidden}.group+ .group{border-top:1px solid var(--line)}.group button{width:100%;border:0;background:#fff;padding:15px 14px;display:flex;align-items:center;justify-content:space-between;color:var(--text)}.group-left{display:flex;align-items:center;gap:9px;font-weight:700}.dot{width:8px;height:8px;border-radius:50%}.red{background:var(--important)}.yellow{background:var(--normal)}.green{background:var(--light)}.items{display:none;padding:0 14px 13px 36px}.items.open{display:block}.item{font-size:13px;padding:8px 0;color:#4d535a}
+.minimum{margin-top:28px;padding:18px;border:1px solid #b9d5c7;border-radius:16px;background:#edf8f2;box-shadow:var(--shadow)}.minimum-title{font-size:13px;font-weight:800;margin-bottom:7px}.minimum p{margin:0;font-size:14px;line-height:1.75;color:#4b5359}
+.toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(15px);background:#252a2f;color:#fff;padding:11px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.22s;z-index:10;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.view{display:none}.view.active{display:block}.view[hidden]{display:none!important}
+nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:auto;height:86px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:6;padding-bottom:env(safe-area-inset-bottom)}nav button{border:0;background:none;color:#7b858e;font-size:13px;font-weight:700}nav button.active{color:#4f6878}.nav-icon{display:block;font-size:24px;margin-bottom:4px}
+@media(min-width:521px){body{padding:20px 0}.app{border:1px solid var(--line);border-radius:22px;overflow:hidden;min-height:calc(100vh - 40px)}nav{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
 
+.wake-row{display:flex;align-items:center;gap:10px}
+.wake-btn{max-width:220px;margin:0}
+.routine-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 18px rgba(55,76,94,.08)}
+.routine-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #edf1f3}
+.routine-item:last-child{border-bottom:0;padding-bottom:0}
+.routine-item:first-child{padding-top:0}
+.routine-num{width:28px;height:28px;border-radius:50%;background:#e4f1f8;color:#4f7891;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.routine-item.done .routine-num{background:#dcefe5;color:#4d9775}
+.routine-item.done .routine-name{text-decoration:line-through;color:#8a959c}
+.routine-actions{margin-left:auto;display:flex;gap:6px;flex:none}
+.mini-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:12px;min-height:36px}
+.next-mini{margin-top:10px;color:#4f7891;font-size:13px}
+.task-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.task-summary>div{background:#f8fafb;border-radius:14px;padding:10px;text-align:center}
+.task-summary strong{display:block;font-size:20px}
+.task-summary span{font-size:11px;color:#7b8790}
+.section-link{display:block;text-align:right;margin-top:10px;color:#4f7891;font-size:13px}
+.wake-btn{height:44px!important;font-size:14px!important;padding:0 18px!important;max-width:180px!important}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin-bottom:10px}.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 11px;background:#fff;color:var(--text);font:inherit}.full{grid-column:1/-1}.plain-btn{border:1px solid var(--line);background:#fff;color:#4f5962;border-radius:11px;padding:9px 13px;font-weight:700}.danger-btn{border:1px solid #e7c7ca;background:#fff;color:#b14e56;border-radius:10px;padding:7px 9px;font-size:12px}.row-card{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;background:#fff}.row-top{display:flex;align-items:center;gap:8px}.row-top input{flex:1}.routine-tabs{display:flex;gap:7px;margin-bottom:12px}.routine-tabs button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 4px;font-weight:700;color:#68727d}.routine-tabs button.active{background:var(--accent-soft);border-color:#bcd5e2;color:#4f7891}.empty{padding:18px;text-align:center;color:var(--muted);font-size:13px}.habit-actions{display:flex;gap:7px;margin-top:10px}.habit-actions button{flex:1}.stamp-row{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}.stamp{width:29px;height:29px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px}.stamp.on{background:var(--accent-soft);color:var(--accent);font-weight:800}.task-row,.schedule-row{display:flex;align-items:center;gap:8px;padding:11px 0;border-bottom:1px solid #edf1f3}.task-row:last-child,.schedule-row:last-child{border-bottom:0}.small-muted{font-size:11px;color:var(--muted)}.tag{display:inline-block;font-size:11px;border-radius:20px;padding:4px 7px;background:#f1f4f6;color:#68727d;margin-left:5px}.settings-row{display:flex;justify-content:space-between;align-items:center;padding:15px 14px;background:#fff;border:0;width:100%;text-align:left}.settings-row+.settings-row{border-top:1px solid var(--line)}
+.schedule-controls{display:flex;gap:7px;margin-bottom:10px}.schedule-controls button{flex:1}.day-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}.day-choice button{height:40px;border-radius:11px}.day-choice button.active{background:var(--accent-soft);border-color:#bcd5e2;color:var(--accent)}
+.inline-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.return-card{border:1px solid #d5e1e8;border-radius:15px;padding:15px;background:#f8fbfd}.return-status{font-size:13px;color:var(--muted);margin-top:4px}.routine-move{display:flex;gap:5px}.routine-move button{width:36px;height:36px;padding:0}.emoji-input{font-size:22px;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<button class="head-btn brand-mark" id="elephant" aria-label="ぞうさん">🐘</button>
+<div class="title">ぞうさんの生活OS</div>
+<button class="head-btn" id="settings">⚙︎</button>
+</header>
+
+<main id="view-today" class="view active">
+<div class="date" id="todayDate"></div>
+<h1 class="greeting" id="greeting"></h1>
+<p class="partner">今日も、ぞうさんと一緒に生活をひとつずつ育てよう。</p>
+
+<div class="schedule">
+<div>
+<div class="label">今日</div>
+<div class="value" id="todayWorkValue">—</div>
+<div class="sub" id="todayWorkTime">—</div>
+</div>
+<div>
+<div class="label">帰宅目安</div>
+<div class="value" id="todayHomeValue">—</div>
+<div class="sub">通勤時間から計算</div>
+</div>
+</div>
+
+<div class="wake-row">
+<button class="wake wake-btn" id="wakeButton">起きた！</button>
+<button class="plain-btn" id="editWakeToday">起床時刻を入力</button>
+</div>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title">今やる</div>
+<div class="section-meta">ひとつだけ</div>
+</div>
+<div class="next">
+<div class="next-kicker">NEXT ACTION</div>
+<div class="next-name" id="nowTaskName">—</div>
+<div class="next-info" id="nowTaskInfo">—</div>
+<div class="actions">
+<button class="do" id="nowDo">やる</button>
+<button class="later" id="nowLater">あとで</button>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title">次にやる</div>
+</div>
+<div class="next">
+<div class="next-name" id="nextTaskName">—</div>
+<div class="next-info" id="nextTaskInfo">—</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title">今日の状況</div>
+</div>
+<div class="overview">
+<div class="stat"><div class="num" id="taskTotal">0</div><small>残りタスク</small></div>
+<div class="stat"><div class="num" id="importantCount">0</div><small>重要</small></div>
+<div class="stat"><div class="num" id="lightCount">0</div><small>軽め</small></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title">朝のルーティン</div>
+<button class="plain-btn" id="openRoutineEditor">編集</button>
+</div>
+<div class="routine-card" id="morningRoutineToday"></div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title">今日の予定</div>
+<button class="plain-btn" id="goSchedule">予定を見る</button>
+</div>
+<div id="todayScheduleList"></div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title">タスク</div>
+</div>
+<div class="groups" id="todayTaskGroups"></div>
+</section>
+
+<div class="minimum">
+<div class="minimum-title">最低限これだけ</div>
+<p id="minimumText">—</p>
+</div>
+</main>
+
+<main id="view-input" class="view">
+<h1 class="greeting">入力</h1>
+<p class="partner">思いついたことを、そのまま書いてね🐘</p>
+
+<section class="section" style="margin-top:0">
+<div class="section-head"><div class="section-title">なんでもBOX</div></div>
+<div class="routine-card">
+<div class="field">
+<textarea id="dumpInput" rows="5" placeholder="例：洗濯する&#10;明後日20時 美容室&#10;英語を続けたい&#10;トリートメント2日に1回"></textarea>
+</div>
+<button class="do" id="dumpAdd" style="width:100%;height:44px;border-radius:12px">追加する</button>
+<div class="small-muted" style="margin-top:9px">「明日」「明後日」「20時」なども読み取ります。</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-title">今日のタスク</div></div>
+<div class="routine-card" id="inputTaskList"></div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-title">継続</div><button class="plain-btn" id="addHabit">追加</button></div>
+<div class="routine-card" id="inputHabitList"></div>
+</section>
+</main>
+
+<main id="view-habits" class="view">
+<h1 class="greeting">継続</h1>
+<p class="partner">毎日完璧じゃなくていい。続いた日を、ぞうさんと一緒に残そう。</p>
+<div id="habitViewList"></div>
+</main>
+
+<main id="view-schedule" class="view">
+<h1 class="greeting">予定</h1>
+<p class="partner">仕事の日も、お休みの日も、その日ごとに決めよう。</p>
+
+<section class="section" style="margin-top:0">
+<div class="section-head"><div class="section-title">明日の設定</div></div>
+<div class="routine-card">
+<div class="day-choice">
+<button class="plain-btn schedule-day" data-day="today">今日</button>
+<button class="plain-btn schedule-day" data-day="tomorrow">明日</button>
+</div>
+<div style="height:10px"></div>
+<div class="day-choice">
+<button class="plain-btn day-status" data-status="work">仕事</button>
+<button class="plain-btn day-status" data-status="off">お休み</button>
+</div>
+<div style="height:12px"></div>
+
+<div id="workTimeFields" class="inline-fields">
+<div class="field">
+<label>勤務開始</label>
+<input type="time" id="dailyWorkStart">
+</div>
+<div class="field">
+<label>勤務終了</label>
+<input type="time" id="dailyWorkEnd">
+</div>
+</div>
+
+<div class="field">
+<label>起床時刻</label>
+<input type="time" id="dailyWake">
+</div>
+
+<button class="do" id="saveDailySchedule" style="width:100%;height:42px;border-radius:11px">この日の予定を保存</button>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-title">帰宅</div></div>
+<div class="return-card">
+<div class="value">今から帰宅</div>
+<div class="return-status" id="returnHomeStatus">仕事終了＋通勤時間から目安を出します。</div>
+<div class="actions" style="margin-top:12px">
+<button class="do" id="leaveWorkNow">今から帰宅</button>
+<button class="later" id="clearReturnHome">リセット</button>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<div class="section-title" id="scheduleListTitle">今日</div>
+<button class="plain-btn" id="addSchedule">予定を追加</button>
+</div>
+<div class="routine-card" id="scheduleList"></div>
+</section>
+</main>
+
+<main id="view-settings" class="view">
+<h1 class="greeting">設定</h1>
+<p class="partner">毎日の生活で変わりにくいものだけ設定します。</p>
+
+<section class="section" style="margin-top:0">
+<div class="section-head"><div class="section-title">生活の基本</div></div>
+<div class="routine-card">
+<button class="settings-row" id="settingBreakfast"><span>朝ごはん</span><strong id="settingBreakfastVal">—</strong></button>
+<button class="settings-row" id="settingDinner"><span>夜ごはん</span><strong id="settingDinnerVal">—</strong></button>
+<button class="settings-row" id="settingBath"><span>お風呂</span><strong id="settingBathVal">—</strong></button>
+<button class="settings-row" id="settingMakeup"><span>メイク</span><strong id="settingMakeupVal">—</strong></button>
+<button class="settings-row" id="settingSleep"><span>就寝時間</span><strong id="settingSleepVal">—</strong></button>
+<button class="settings-row" id="settingCommute"><span>通勤時間</span><strong id="settingCommuteVal">—</strong></button>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-title">ルーティン</div><button class="plain-btn" id="settingsRoutine">編集</button></div>
+<div class="routine-card">
+<div class="small-muted">朝・昼・夜のルーティンは、その日の状況に合わせて編集できます。</div>
+</div>
+</section>
+</main>
+
+<nav>
+<button data-view="today" class="active"><span class="nav-icon">⌂</span>今日</button>
+<button data-view="input"><span class="nav-icon">＋</span>入力</button>
+<button data-view="habits"><span class="nav-icon">○</span>継続</button>
+<button data-view="schedule"><span class="nav-icon">▣</span>予定</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<div id="routineModal" hidden>
+<div style="position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20;display:flex;align-items:flex-end;justify-content:center">
+<div style="background:#fff;width:min(520px,100%);max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:22px 18px 30px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2 style="margin:0;font-size:20px">ルーティンを編集</h2>
+<button class="plain-btn" id="closeRoutine">閉じる</button>
+</div>
+<div class="routine-tabs" style="margin-top:18px">
+<button data-routine-tab="morning" class="active">朝</button>
+<button data-routine-tab="day">昼</button>
+<button data-routine-tab="night">夜</button>
+</div>
+<div id="routineEditorList"></div>
+<button class="do" id="addRoutineItem" style="width:100%;height:44px;border-radius:12px;margin-top:10px">＋ ルーティンを追加</button>
+</div>
+</div>
+</div>
+
+<div id="habitModal" hidden>
+<div style="position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20;display:flex;align-items:flex-end;justify-content:center">
+<div style="background:#fff;width:min(520px,100%);max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:22px 18px 30px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2 style="margin:0;font-size:20px">継続を追加</h2>
+<button class="plain-btn" id="closeHabit">閉じる</button>
+</div>
+<div class="field" style="margin-top:18px">
+<label>名前</label>
+<input id="habitName" placeholder="例：英語">
+</div>
+<div class="form-grid">
+<div class="field">
+<label>頻度</label>
+<select id="habitFreq">
+<option value="daily">毎日</option>
+<option value="weekday">平日</option>
+<option value="2days">2日に1回</option>
+<option value="weekly">週1回</option>
+</select>
+</div>
+<div class="field">
+<label>スタンプ</label>
+<input id="habitStamp" class="emoji-input" value="🌱" maxlength="2">
+</div>
+</div>
+<button class="do" id="saveHabit" style="width:100%;height:44px;border-radius:12px">保存</button>
+</div>
+</div>
+</div>
+
+<div id="scheduleModal" hidden>
+<div style="position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20;display:flex;align-items:flex-end;justify-content:center">
+<div style="background:#fff;width:min(520px,100%);border-radius:22px 22px 0 0;padding:22px 18px 30px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2 style="margin:0;font-size:20px">予定を追加</h2>
+<button class="plain-btn" id="closeSchedule">閉じる</button>
+</div>
+<div class="form-grid" style="margin-top:18px">
+<div class="field"><label>日付</label><input type="date" id="scheduleDate"></div>
+<div class="field"><label>時間</label><input type="time" id="scheduleTime"></div>
+<div class="field full"><label>予定</label><input id="scheduleTitle" placeholder="美容院"></div>
+<div class="field full"><label>メモ</label><input id="scheduleNote" placeholder=""></div>
+</div>
+<button class="do" id="saveSchedule" style="width:100%;height:44px;border-radius:12px">保存</button>
+</div>
+</div>
+</div>
+
+<div id="settingModal" hidden>
+<div style="position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20;display:flex;align-items:flex-end;justify-content:center">
+<div style="background:#fff;width:min(520px,100%);border-radius:22px 22px 0 0;padding:22px 18px 30px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2 id="settingModalTitle" style="margin:0;font-size:20px">設定</h2>
+<button class="plain-btn" id="closeSetting">閉じる</button>
+</div>
+<div class="field" style="margin-top:18px">
+<label id="settingModalLabel">設定</label>
+<input type="time" id="settingModalInput">
+</div>
+<button class="do" id="saveSetting" style="width:100%;height:44px;border-radius:12px">保存</button>
+</div>
+</div>
+</div>
+
+<script>
+const KEY='zousan_life_os_v8';
+
+function dateKey(d){
+return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function today(){return dateKey(new Date())}
+function tomorrow(){return dateKey(new Date(Date.now()+86400000))}
+function dayAfterTomorrow(){return dateKey(new Date(Date.now()+172800000))}
+function esc(s){
+return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+
+const defaultState={
+tasks:[],
+schedules:[],
+habits:[
+{id:'h1',name:'英語',freq:'daily',stamp:'🌱',status:'active',history:{}},
+{id:'h2',name:'運動',freq:'daily',stamp:'🏃',status:'active',history:{}}
+],
+routines:{
+morning:[
+{id:'r1',name:'布団を畳む',freq:'daily'},
+{id:'r2',name:'ストレッチ',freq:'daily'},
+{id:'r3',name:'朝ごはん',freq:'daily'},
+{id:'r4',name:'メイク',freq:'daily'}
+],
+day:[],
+night:[]
+},
+settings:{
+breakfast:'07:30',
+dinner:'19:30',
+bath:'22:00',
+makeup:'08:00',
+sleep:'23:30',
+commute:60,
+workStart:'',
+workEnd:''
+},
+daily:{},
+tomorrow:'off',
+wake:'',
+returnHome:{date:'',leftAt:null,estimated:''}
+};
+
+function clone(o){return JSON.parse(JSON.stringify(o))}
+let state=clone(defaultState);
+
+try{
+const saved=JSON.parse(localStorage.getItem(KEY)||'null');
+if(saved){
+state={...state,...saved};
+state.routines={...defaultState.routines,...(saved.routines||{})};
+state.settings={...defaultState.settings,...(saved.settings||{})};
+state.returnHome={...defaultState.returnHome,...(saved.returnHome||{})};
+state.habits=saved.habits||defaultState.habits;
+state.tasks=saved.tasks||[];
+state.schedules=saved.schedules||[];
+state.daily=saved.daily||{};
+}
+}catch(e){}
+
+function save(){
+localStorage.setItem(KEY,JSON.stringify(state));
+}
+
+function toast(msg){
+const el=document.getElementById('toast');
+el.textContent=msg;
+el.classList.add('show');
+clearTimeout(window.__toast);
+window.__toast=setTimeout(()=>el.classList.remove('show'),1800);
+}
+
+function greeting(){
+const h=new Date().getHours();
+if(h<11)return'おはよう';
+if(h<17)return'こんにちは';
+if(h<21)return'こんばんは';
+return'おつかれさま';
+}
+
+function weekdayLabel(d){
+return['日','月','火','水','木','金','土'][d.getDay()];
+}
+
+function formatDate(d){
+return `${d.getMonth()+1}月${d.getDate()}日（${weekdayLabel(d)}）`;
+}
+
+function parseScheduleDate(text){
+if(/明後日|あさって/.test(text))return dayAfterTomorrow();
+if(/明日/.test(text))return tomorrow();
+if(/今日/.test(text))return today();
+return today();
+}
+
+function parseTime(text){
+const m=text.match(/(?:^|[^0-9])(\d{1,2})時(?:(\d{1,2})分)?/);
+if(!m)return'';
+let h=Number(m[1]);
+let min=Number(m[2]||0);
+if(h>=24||min>=60)return'';
+return String(h).padStart(2,'0')+':'+String(min).padStart(2,'0');
+}
+
+function detectPriority(text){
+if(/絶対|重要|今日中|急ぎ|必ず/.test(text))return'important';
+if(/できれば|余裕|いつか/.test(text))return'light';
+return'normal';
+}
+
+function addFromDump(raw){
+const lines=raw.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+let added=0;
+
+lines.forEach(text=>{
+const time=parseTime(text);
+const hasDate=/今日|明日|明後日|あさって/.test(text);
+
+if(hasDate&&time){
+const d=parseScheduleDate(text);
+const title=text
+.replace(/今日|明日|明後日|あさって/g,'')
+.replace(/(?:^|[^0-9])\d{1,2}時(?:\d{1,2}分)?/,'')
+.replace(/^[\s　]+/,'')
+.trim();
+
+state.schedules.push({
+id:'s'+Date.now()+Math.random(),
+date:d,
+time,
+title:title||'予定',
+note:'',
+fixed:false
+});
+added++;
+return;
+}
+
+if(/続けたい|継続|習慣|毎日/.test(text)&&!hasDate){
+const name=text.replace(/続けたい|継続したい|習慣にしたい|毎日/g,'').trim()||'新しい継続';
+state.habits.push({
+id:'h'+Date.now()+Math.random(),
+name,
+freq:'daily',
+stamp:'🌱',
+status:'active',
+history:{}
+});
+added++;
+return;
+}
+
+if(/トリートメント.*2日に1回|2日に1回.*トリートメント/.test(text)){
+state.routines.night.push({
+id:'r'+Date.now()+Math.random(),
+name:'トリートメント',
+freq:'2days'
+});
+added++;
+return;
+}
+
+state.tasks.push({
+id:'t'+Date.now()+Math.random(),
+text,
+priority:detectPriority(text),
+status:'open',
+created:Date.now()
+});
+added++;
+});
+
+save();
+renderToday();
+renderInput();
+renderHabits();
+renderSchedules();
+
+toast(`${added}件追加したよ🐘`);
+}
+
+function dailyFor(date){
+if(!state.daily[date]){
+state.daily[date]={
+status:date===tomorrow()?state.tomorrow:'work',
+wake:'',
+workStart:state.settings.workStart,
+workEnd:state.settings.workEnd
+};
+}
+return state.daily[date];
+}
+
+function todayDaily(){
+return dailyFor(today());
+}
+
+function renderWake(){
+const d=todayDaily();
+const saved=d.wake||state.wake;
+document.getElementById('wakeButton').textContent=saved?`起きた！ ${saved}`:'起きた！';
+document.getElementById('dailyWake').value=saved||'';
+}
+
+function renderRoutineToday(){
+const d=todayDaily();
+const hour=new Date().getHours();
+let type=hour>=20?'night':hour>=11?'day':'morning';
+const arr=state.routines[type]||[];
+const box=document.getElementById('morningRoutineToday');
+
+if(!arr.length){
+box.innerHTML='<div class="empty">この時間帯のルーティンはありません。</div>';
+return;
+}
+
+box.innerHTML='';
+arr.forEach((r,i)=>{
+const done=localStorage.getItem('routine_done_'+today()+'_'+r.id)==='1';
+const row=document.createElement('div');
+row.className='routine-item'+(done?' done':'');
+row.innerHTML=`
+<div class="routine-num">${i+1}</div>
+<div class="routine-name" style="flex:1;font-weight:700">${esc(r.name)}</div>
+<div class="routine-actions">
+<button class="mini-btn">${done?'完了':'できた'}</button>
+</div>`;
+row.querySelector('button').onclick=()=>{
+localStorage.setItem('routine_done_'+today()+'_'+r.id,done?'0':'1');
+renderRoutineToday();
+};
+box.appendChild(row);
+});
+
+const next=arr.find(r=>localStorage.getItem('routine_done_'+today()+'_'+r.id)!=='1');
+if(next){
+const p=document.createElement('div');
+p.className='next-mini';
+p.textContent='次は「'+next.name+'」';
+box.appendChild(p);
+}
+}
+
+let currentRoutineTab='morning';
+
+function renderRoutineEditor(){
+const list=document.getElementById('routineEditorList');
+const arr=state.routines[currentRoutineTab]||[];
+
+if(!arr.length){
+list.innerHTML='<div class="empty">まだありません。</div>';
+return;
+}
+
+list.innerHTML='';
+
+arr.forEach((r,i)=>{
+const card=document.createElement('div');
+card.className='row-card';
+card.innerHTML=`
+<div class="row-top">
+<div style="font-weight:800;width:26px">${i+1}</div>
+<input value="${esc(r.name)}">
+</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:9px">
+<select style="flex:1">
+<option value="daily"${r.freq==='daily'?' selected':''}>毎日</option>
+<option value="weekday"${r.freq==='weekday'?' selected':''}>平日</option>
+<option value="2days"${r.freq==='2days'?' selected':''}>2日に1回</option>
+<option value="anytime"${r.freq==='anytime'?' selected':''}>必要なとき</option>
+</select>
+<div class="routine-move">
+<button class="plain-btn up">↑</button>
+<button class="plain-btn down">↓</button>
+</div>
+<button class="danger-btn delete">削除</button>
+</div>`;
+
+const input=card.querySelector('input');
+const select=card.querySelector('select');
+
+input.onchange=()=>{
+r.name=input.value.trim()||r.name;
+save();
+renderRoutineToday();
+};
+
+select.onchange=()=>{
+r.freq=select.value;
+save();
+};
+
+card.querySelector('.up').onclick=()=>{
+if(i===0)return;
+[arr[i-1],arr[i]]=[arr[i],arr[i-1]];
+save();
+renderRoutineEditor();
+renderRoutineToday();
+};
+
+card.querySelector('.down').onclick=()=>{
+if(i===arr.length-1)return;
+[arr[i],arr[i+1]]=[arr[i+1],arr[i]];
+save();
+renderRoutineEditor();
+renderRoutineToday();
+};
+
+card.querySelector('.delete').onclick=()=>{
+if(!confirm(`「${r.name}」を削除する？`))return;
+arr.splice(i,1);
+save();
+renderRoutineEditor();
+renderRoutineToday();
+};
+
+list.appendChild(card);
+});
+}
+
+document.querySelectorAll('[data-routine-tab]').forEach(btn=>{
+btn.onclick=()=>{
+currentRoutineTab=btn.dataset.routineTab;
+document.querySelectorAll('[data-routine-tab]').forEach(x=>x.classList.toggle('active',x===btn));
+renderRoutineEditor();
+};
+});
+
+document.getElementById('openRoutineEditor').onclick=()=>{
+document.getElementById('routineModal').hidden=false;
+currentRoutineTab='morning';
+document.querySelectorAll('[data-routine-tab]').forEach(x=>x.classList.toggle('active',x.dataset.routineTab==='morning'));
+renderRoutineEditor();
+};
+
+document.getElementById('settingsRoutine').onclick=()=>{
+document.getElementById('routineModal').hidden=false;
+currentRoutineTab='morning';
+document.querySelectorAll('[data-routine-tab]').forEach(x=>x.classList.toggle('active',x.dataset.routineTab==='morning'));
+renderRoutineEditor();
+};
+
+document.getElementById('closeRoutine').onclick=()=>{
+document.getElementById('routineModal').hidden=true;
+};
+
+document.getElementById('addRoutineItem').onclick=()=>{
+state.routines[currentRoutineTab].push({
+id:'r'+Date.now()+Math.random(),
+name:'新しいルーティン',
+freq:'daily'
+});
+save();
+renderRoutineEditor();
+renderRoutineToday();
+};
+
+function renderToday(){
+const d=todayDaily();
+
+document.getElementById('todayDate').textContent=formatDate(new Date());
+document.getElementById('greeting').textContent=greeting();
+
+document.getElementById('todayWorkValue').textContent=d.status==='work'?'仕事':'お休み';
+document.getElementById('todayWorkTime').textContent=d.status==='work'
+?(d.workStart&&d.workEnd?d.workStart+'–'+d.workEnd:'勤務時間未設定')
+:'今日は仕事なし';
+
+document.getElementById('todayHomeValue').textContent=
+d.status==='work'
+?(state.returnHome.date===today()&&state.returnHome.estimated
+?state.returnHome.estimated
+:homeTimeText(d.workEnd))
+:'—';
+
+renderWake();
+
+const tasks=state.tasks.filter(t=>t.status==='open');
+
+const groups={
+important:[],
+normal:[],
+light:[]
+};
+
+tasks.forEach(t=>(groups[t.priority]||groups.normal).push(t));
+
+document.getElementById('taskTotal').textContent=tasks.length+'件';
+document.getElementById('importantCount').textContent=groups.important.length;
+document.getElementById('lightCount').textContent=groups.light.length;
+
+const gb=document.getElementById('todayTaskGroups');
+gb.innerHTML='';
+
+[['important','重要'],['normal','できれば'],['light','軽め']].forEach(([p,label])=>{
+const g=document.createElement('div');
+g.className='group';
+
+g.innerHTML=`
+<button class="group-toggle">
+<span class="group-left">
+<i class="dot ${p==='important'?'red':p==='normal'?'yellow':'green'}"></i>
+${label}　${groups[p].length}件
+</span>
+<span>＋</span>
+</button>
+<div class="items">
+${groups[p].map(t=>`<div class="item">${esc(t.text)}</div>`).join('')}
+</div>`;
+
+g.querySelector('button').onclick=()=>{
+const items=g.querySelector('.items');
+items.classList.toggle('open');
+g.querySelector('button span:last-child').textContent=items.classList.contains('open')?'−':'＋';
+};
+
+gb.appendChild(g);
+});
+
+const first=tasks[0];
+const second=tasks[1];
+
+document.getElementById('nowTaskName').textContent=
+first?first.text:'今日のタスクは全部できたよ';
+
+document.getElementById('nowTaskInfo').textContent=
+first?'次にやるなら、これひとつ。':'余裕があれば継続や予定を確認しよう。';
+
+document.getElementById('nowDo').disabled=!first;
+document.getElementById('nowDo').textContent=first?'やる':'完了';
+
+document.getElementById('nowDo').onclick=()=>{
+if(!first)return;
+first.status='done';
+save();
+renderToday();
+renderInput();
+toast('完了！ひとつ積み上がったよ🐘');
+};
+
+document.getElementById('nowLater').onclick=()=>{
+if(!first)return;
+first.status='later';
+save();
+renderToday();
+renderInput();
+toast('あとでにしておいたよ。');
+};
+
+document.getElementById('nextTaskName').textContent=
+second?second.text:'次のタスクはありません';
+
+document.getElementById('nextTaskInfo').textContent=
+second?'これが終わったら次はこれ。':'今やることをひとつ終えたら十分。';
+
+renderRoutineToday();
+
+const sl=document.getElementById('todayScheduleList');
+
+const base=state.schedules
+.filter(s=>s.date===today())
+.map(s=>s.fixed&&s.id==='work'
+?{...s,time:d.workStart,note:d.workEnd+'まで'}
+:s.fixed&&s.id==='home'
+?{...s,time:homeTimeText(d.workEnd).replace('ごろ',''),note:'通勤時間から自動計算'}
+:s);
+
+if(d.status==='work'){
+base.unshift({
+id:'work-today',
+time:d.workStart||'未設定',
+title:'仕事',
+note:d.workEnd?d.workEnd+'まで':'勤務終了未設定'
+});
+}
+
+if(state.returnHome.date===today()&&state.returnHome.estimated){
+base.push({
+id:'home-now',
+time:state.returnHome.estimated.replace('ごろ',''),
+title:'帰宅予定',
+note:state.returnHome.leftAt+'に出発'
+});
+}
+
+const arr=base
+.filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)
+.sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+
+sl.innerHTML=arr.length?'':'<div class="empty">今日の予定はありません。</div>';
+
+arr.forEach(s=>{
+const r=document.createElement('div');
+r.className='event';
+r.innerHTML=`
+<div class="time">${esc(s.time)}</div>
+<div>
+<div class="event-title">${esc(s.title)}</div>
+<div class="event-sub">${esc(s.note||'')}</div>
+</div>`;
+sl.appendChild(r);
+});
+
+document.getElementById('minimumText').textContent=
+first
+?`「${first.text}」をひとつできたら、今日は十分。ほかは余裕があればで大丈夫。`
+:'今日のタスクは完了。今日はもう十分できてるよ。';
+}
+
+function renderInput(){
+const list=document.getElementById('inputTaskList');
+const tasks=state.tasks.filter(t=>t.status!=='done');
+
+if(!tasks.length){
+list.innerHTML='<div class="empty">まだタスクはありません。</div>';
+}else{
+list.innerHTML='';
+tasks.forEach(t=>{
+const row=document.createElement('div');
+row.className='task-row';
+row.innerHTML=`
+<div style="flex:1">
+<div class="event-title">${esc(t.text)}</div>
+<div class="small-muted">${t.status==='later'?'あとで':t.priority==='important'?'重要':t.priority==='light'?'軽め':'できれば'}</div>
+</div>
+<button class="danger-btn">削除</button>`;
+row.querySelector('button').onclick=()=>{
+state.tasks=state.tasks.filter(x=>x.id!==t.id);
+save();
+renderInput();
+renderToday();
+};
+list.appendChild(row);
+});
+}
+
+const hlist=document.getElementById('inputHabitList');
+hlist.innerHTML=state.habits.length
+?state.habits.map(h=>`
+<div class="row-card">
+<div class="event-title">${esc(h.name)} ${h.status!=='active'?`<span class="tag">${esc(h.status)}</span>`:''}</div>
+<div class="small-muted">${freqLabel(h.freq)}・スタンプ ${esc(h.stamp||'🌱')}</div>
+</div>`).join('')
+:'<div class="empty">まだ継続はありません。</div>';
+}
+
+function freqLabel(freq){
+return{
+daily:'毎日',
+weekday:'平日',
+'2days':'2日に1回',
+weekly:'週1回',
+anytime:'必要なとき'
+}[freq]||freq;
+}
+
+function renderHabits(){
+const box=document.getElementById('habitViewList');
+const active=state.habits.filter(h=>h.status==='active');
+
+if(!active.length){
+box.innerHTML='<div class="empty">継続中のものはありません。</div>';
+return;
+}
+
+box.innerHTML='';
+
+active.forEach(h=>{
+const card=document.createElement('div');
+card.className='routine-card';
+card.style.marginBottom='12px';
+
+const hist=h.history||{};
+const todayKey=today();
+
+let days=[];
+for(let i=6;i>=0;i--){
+const d=new Date(Date.now()-i*86400000);
+days.push(dateKey(d));
+}
+
+card.innerHTML=`
+<div style="display:flex;align-items:center;gap:10px">
+<div style="font-size:30px">${esc(h.stamp||'🌱')}</div>
+<div style="flex:1">
+<div class="event-title">${esc(h.name)}</div>
+<div class="small-muted">${freqLabel(h.freq)}</div>
+</div>
+<button class="plain-btn edit-habit">編集</button>
+</div>
+<div class="stamp-row">
+${days.map(d=>`
+<div class="stamp ${hist[d]?'on':''}" title="${d}">
+${hist[d]?esc(h.stamp||'🌱'):'·'}
+</div>`).join('')}
+</div>
+<div class="habit-actions">
+<button class="do today-habit">${hist[todayKey]?'今日の印を取り消す':'今日できた！'}</button>
+<button class="plain-btn pause-habit">${h.status==='active'?'一時停止':'再開'}</button>
+<button class="danger-btn end-habit">終了</button>
+</div>`;
+
+card.querySelector('.today-habit').onclick=()=>{
+h.history=h.history||{};
+if(h.history[todayKey])delete h.history[todayKey];
+else h.history[todayKey]=true;
+save();
+renderHabits();
+renderInput();
+};
+
+card.querySelector('.pause-habit').onclick=()=>{
+h.status=h.status==='active'?'paused':'active';
+save();
+renderHabits();
+renderInput();
+};
+
+card.querySelector('.end-habit').onclick=()=>{
+if(!confirm(`「${h.name}」を終了する？`))return;
+h.status='ended';
+save();
+renderHabits();
+renderInput();
+};
+
+card.querySelector('.edit-habit').onclick=()=>{
+openHabitEdit(h);
+};
+
+box.appendChild(card);
+});
+}
+
+function openHabitEdit(h){
+document.getElementById('habitName').value=h.name;
+document.getElementById('habitFreq').value=h.freq;
+document.getElementById('habitStamp').value=h.stamp||'🌱';
+document.getElementById('habitModal').hidden=false;
+
+document.getElementById('saveHabit').onclick=()=>{
+h.name=document.getElementById('habitName').value.trim()||h.name;
+h.freq=document.getElementById('habitFreq').value;
+h.stamp=document.getElementById('habitStamp').value.trim()||'🌱';
+save();
+document.getElementById('habitModal').hidden=true;
+renderHabits();
+renderInput();
+toast('継続を更新したよ🐘');
+};
+}
+
+document.getElementById('addHabit').onclick=()=>{
+document.getElementById('habitName').value='';
+document.getElementById('habitFreq').value='daily';
+document.getElementById('habitStamp').value='🌱';
+document.getElementById('habitModal').hidden=false;
+
+document.getElementById('saveHabit').onclick=()=>{
+const name=document.getElementById('habitName').value.trim();
+if(!name){
+toast('名前を入れてね');
+return;
+}
+
+state.habits.push({
+id:'h'+Date.now(),
+name,
+freq:document.getElementById('habitFreq').value,
+stamp:document.getElementById('habitStamp').value.trim()||'🌱',
+status:'active',
+history:{}
+});
+
+save();
+document.getElementById('habitModal').hidden=true;
+renderHabits();
+renderInput();
+toast('継続を追加したよ🐘');
+};
+};
+
+document.getElementById('closeHabit').onclick=()=>{
+document.getElementById('habitModal').hidden=true;
+};
+
+document.getElementById('dumpAdd').onclick=()=>{
+const raw=document.getElementById('dumpInput').value.trim();
+if(!raw){
+toast('まず書いてみよう🐘');
+return;
+}
+addFromDump(raw);
+document.getElementById('dumpInput').value='';
+};
+
+let scheduleViewDay=today();
+
+function renderSchedules(){
+const d=dailyFor(scheduleViewDay);
+const list=document.getElementById('scheduleList');
+
+document.querySelectorAll('.schedule-day').forEach(b=>{
+b.classList.toggle(
+'active',
+(b.dataset.day==='today'&&scheduleViewDay===today())||
+(b.dataset.day==='tomorrow'&&scheduleViewDay!==today())
+);
+});
+
+document.querySelectorAll('.day-status').forEach(b=>{
+b.classList.toggle('active',b.dataset.status===d.status);
+});
+
+document.getElementById('dailyWorkStart').value=
+d.workStart||state.settings.workStart||'';
+
+document.getElementById('dailyWorkEnd').value=
+d.workEnd||state.settings.workEnd||'';
+
+document.getElementById('dailyWake').value=d.wake||'';
+
+document.getElementById('workTimeFields').style.display=
+d.status==='work'?'grid':'none';
+
+document.getElementById('scheduleListTitle').textContent=
+scheduleViewDay===today()?'今日':'明日';
+
+const rh=document.getElementById('returnHomeStatus');
+
+if(rh){
+rh.textContent=
+state.returnHome.date===today()&&state.returnHome.leftAt
+?`${state.returnHome.leftAt}に出発 → ${state.returnHome.estimated}`
+:'仕事終了＋通勤時間から目安を出します。';
+}
+
+const base=state.schedules
+.filter(s=>s.date===scheduleViewDay)
+.map(s=>s.fixed&&s.id==='work'
+?{...s,time:d.workStart,note:d.workEnd+'まで'}
+:s.fixed&&s.id==='home'
+?{...s,time:homeTimeText(d.workEnd).replace('ごろ',''),note:'通勤時間から自動計算'}
+:s);
+
+if(d.status==='work'){
+base.unshift({
+id:'work-daily',
+time:d.workStart||'未設定',
+title:'仕事',
+note:d.workEnd?d.workEnd+'まで':'勤務終了未設定'
+});
+}
+
+const arr=base
+.filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)
+.sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+
+list.innerHTML=arr.length
+?''
+:'<div class="empty">予定はありません。</div>';
+
+arr.forEach(s=>{
+const r=document.createElement('div');
+r.className='schedule-row';
+
+r.innerHTML=`
+<div class="time">${esc(s.time)}</div>
+<div style="flex:1">
+<div class="event-title">${esc(s.title)}</div>
+<div class="event-sub">${esc(s.note||'')}</div>
+</div>
+${s.fixed?'':'<button class="danger-btn">削除</button>'}`;
+
+if(!s.fixed){
+r.querySelector('button').onclick=()=>{
+state.schedules=state.schedules.filter(x=>x.id!==s.id);
+save();
+renderSchedules();
+renderToday();
+};
+}
+
+list.appendChild(r);
+});
+}
+
+function homeTimeText(endTime){
+if(!endTime)return'未設定';
+
+const [h,m]=endTime.split(':').map(Number);
+const mins=h*60+m+Number(state.settings.commute||0);
+
+const hh=Math.floor(mins/60)%24;
+const mm=mins%60;
+
+return`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}ごろ`;
+}
+
+document.getElementById('wakeButton').onclick=()=>{
+const now=new Date();
+const value=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+const d=todayDaily();
+d.wake=value;
+state.wake=value;
+
+save();
+renderWake();
+renderSchedules();
+toast(`起床 ${value} を記録したよ🐘`);
+};
+
+document.getElementById('editWakeToday').onclick=()=>{
+const d=todayDaily();
+const value=prompt('今日の起床時刻を入力してください（例：06:30）',d.wake||state.wake||'07:00');
+
+if(value===null)return;
+
+if(!/^\d{2}:\d{2}$/.test(value)){
+toast('06:30のように入力してね');
+return;
+}
+
+d.wake=value;
+state.wake=value;
+save();
+renderWake();
+renderSchedules();
+toast('起床時刻を更新したよ🐘');
+};
+
+document.getElementById('goSchedule').onclick=()=>{
+document.querySelector('[data-view="schedule"]').click();
+};
+
+let scheduleDate=today();
+
+document.getElementById('addSchedule').onclick=()=>{
+scheduleDate=today();
+document.getElementById('scheduleDate').value=scheduleDate;
+document.getElementById('scheduleTime').value='20:00';
+document.getElementById('scheduleTitle').value='';
+document.getElementById('scheduleNote').value='';
+document.getElementById('scheduleModal').hidden=false;
+};
+
+document.getElementById('closeSchedule').onclick=()=>{
+document.getElementById('scheduleModal').hidden=true;
+};
+
+document.getElementById('saveSchedule').onclick=()=>{
+const d=document.getElementById('scheduleDate').value;
+const t=document.getElementById('scheduleTime').value;
+const title=document.getElementById('scheduleTitle').value.trim();
+
+if(!d||!t||!title){
+toast('日付・時間・予定を入れてね');
+return;
+}
+
+state.schedules.push({
+id:'s'+Date.now(),
+date:d,
+time:t,
+title,
+note:document.getElementById('scheduleNote').value.trim(),
+fixed:false
+});
+
+save();
+document.getElementById('scheduleModal').hidden=true;
+renderSchedules();
+renderToday();
+toast('予定を追加したよ🐘');
+};
+
+const settingMap={
+sleep:['就寝時間','time'],
+breakfast:['朝ごはん','time'],
+dinner:['夜ごはん','time'],
+bath:['お風呂','time'],
+makeup:['メイク','time']
+};
+
+let editingSetting='';
+
+function renderSettings(){
+Object.keys(settingMap).forEach(k=>{
+const el=document.getElementById(
+'setting'+k[0].toUpperCase()+k.slice(1)+'Val'
+);
+if(el)el.textContent=state.settings[k]||'未設定';
+});
+
+document.getElementById('settingCommuteVal').textContent=
+state.settings.commute+'分';
+}
+
+function openSetting(k){
+editingSetting=k;
+
+document.getElementById('settingModalTitle').textContent=settingMap[k][0];
+document.getElementById('settingModalLabel').textContent=settingMap[k][0];
+document.getElementById('settingModalInput').value=
+state.settings[k]||'07:00';
+
+document.getElementById('settingModal').hidden=false;
+}
+
+Object.keys(settingMap).forEach(k=>{
+const el=document.getElementById(
+'setting'+k[0].toUpperCase()+k.slice(1)
+);
+if(el)el.onclick=()=>openSetting(k);
+});
+
+document.getElementById('settingCommute').onclick=()=>{
+const v=prompt(
+'通勤時間を分で入力してください。',
+state.settings.commute
+);
+
+if(v===null)return;
+
+const n=Number(v);
+
+if(!Number.isFinite(n)||n<0)return;
+
+state.settings.commute=Math.round(n);
+
+save();
+renderSettings();
+renderToday();
+renderSchedules();
+
+toast('通勤時間を更新したよ🐘');
+};
+
+document.getElementById('closeSetting').onclick=()=>{
+document.getElementById('settingModal').hidden=true;
+};
+
+document.getElementById('saveSetting').onclick=()=>{
+state.settings[editingSetting]=
+document.getElementById('settingModalInput').value;
+
+save();
+document.getElementById('settingModal').hidden=true;
+renderSettings();
+
+toast('設定を保存したよ🐘');
+};
+
+document.querySelectorAll('.schedule-day').forEach(b=>{
+b.onclick=()=>{
+scheduleViewDay=
+b.dataset.day==='today'
+?today()
+:tomorrow();
+
+renderSchedules();
+};
+});
+
+document.querySelectorAll('.day-status').forEach(b=>{
+b.onclick=()=>{
+const d=dailyFor(scheduleViewDay);
+
+d.status=b.dataset.status;
+
+state.daily[scheduleViewDay]=d;
+
+if(scheduleViewDay!==today()){
+state.tomorrow=d.status;
+}
+
+save();
+renderSchedules();
+renderToday();
+};
+});
+
+document.getElementById('saveDailySchedule').onclick=()=>{
+const d=dailyFor(scheduleViewDay);
+
+d.wake=document.getElementById('dailyWake').value;
+
+d.workStart=
+document.getElementById('dailyWorkStart').value||
+state.settings.workStart;
+
+d.workEnd=
+document.getElementById('dailyWorkEnd').value||
+state.settings.workEnd;
+
+state.daily[scheduleViewDay]=d;
+
+if(scheduleViewDay!==today()){
+state.tomorrow=d.status;
+}
+
+save();
+
+renderSchedules();
+renderToday();
+renderWake();
+
+toast('その日の予定を保存したよ🐘');
+};
+
+document.getElementById('leaveWorkNow').onclick=()=>{
+const now=new Date();
+
+const left=
+`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+const mins=
+now.getHours()*60+
+now.getMinutes()+
+Number(state.settings.commute||0);
+
+const estimated=
+`${String(Math.floor(mins/60)%24).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}ごろ`;
+
+state.returnHome={
+date:today(),
+leftAt:left,
+estimated
+};
+
+save();
+
+renderToday();
+renderSchedules();
+
+document.getElementById('returnHomeStatus').textContent=
+`${left}に出発 → ${estimated}`;
+
+toast('今から帰宅として記録したよ🐘');
+};
+
+document.getElementById('clearReturnHome').onclick=()=>{
+state.returnHome={
+date:'',
+leftAt:null,
+estimated:''
+};
+
+save();
+
+renderToday();
+renderSchedules();
+
+document.getElementById('returnHomeStatus').textContent=
+'仕事終了＋通勤時間から目安を出します。';
+
+toast('帰宅予定を通常表示に戻したよ');
+};
+
+document.getElementById('settings').onclick=()=>{
+document.querySelector('[data-view="settings"]').classList.add('active');
+document.querySelectorAll('.view').forEach(v=>{
+if(v.id!=='view-settings')v.classList.remove('active');
+});
+};
+
+document.getElementById('elephant').onclick=()=>{
+document.querySelector('[data-view="today"]').click();
+};
+
+document.querySelectorAll('nav button').forEach(btn=>{
+btn.onclick=()=>{
+const target=btn.dataset.view;
+
+document.querySelectorAll('.view').forEach(v=>{
+v.classList.toggle('active',v.id==='view-'+target);
+});
+
+document.querySelectorAll('nav button').forEach(b=>{
+b.classList.toggle('active',b===btn);
+});
+
+if(target==='today')renderToday();
+if(target==='input')renderInput();
+if(target==='habits')renderHabits();
+if(target==='schedule')renderSchedules();
+};
+});
+
+renderToday();
+renderInput();
+renderHabits();
+renderSchedules();
+renderSettings();
+</script>
+</body>
+</html>
