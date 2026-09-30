@@ -45,188 +45,115 @@ nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:auto;height:86
   .task-summary span{font-size:11px;color:#7b8790}
   .section-link{display:block;text-align:right;margin-top:10px;color:#4f7891;font-size:13px}
 </style>
-<style>.wake-btn{height:44px!important;font-size:14px!important;padding:0 18px!important;max-width:180px!important}</style></head>
-<body>
-<div class="app">
+<style>.wake-btn{height:44px!important;font-size:14px!important;padding:0 18px!important;max-width:180px!important}</style><style>
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin-bottom:10px}.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 11px;background:#fff;color:var(--text);font:inherit}.full{grid-column:1/-1}.plain-btn{border:1px solid var(--line);background:#fff;color:#4f5962;border-radius:11px;padding:9px 13px;font-weight:700}.danger-btn{border:1px solid #e7c7ca;background:#fff;color:#b14e56;border-radius:10px;padding:7px 9px;font-size:12px}.row-card{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;background:#fff}.row-top{display:flex;align-items:center;gap:8px}.row-top input{flex:1}.routine-tabs{display:flex;gap:7px;margin-bottom:12px}.routine-tabs button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 4px;font-weight:700;color:#68727d}.routine-tabs button.active{background:var(--accent-soft);border-color:#bcd5e2;color:#4f7891}.empty{padding:18px;text-align:center;color:var(--muted);font-size:13px}.habit-actions{display:flex;gap:7px;margin-top:10px}.habit-actions button{flex:1}.stamp-row{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}.stamp{width:29px;height:29px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px}.stamp.on{background:var(--accent-soft);color:var(--accent);font-weight:800}.task-row,.schedule-row{display:flex;align-items:center;gap:8px;padding:11px 0;border-bottom:1px solid #edf1f3}.task-row:last-child,.schedule-row:last-child{border-bottom:0}.small-muted{font-size:11px;color:var(--muted)}.tag{display:inline-block;font-size:11px;border-radius:20px;padding:4px 7px;background:#f1f4f6;color:#68727d;margin-left:5px}.settings-row{display:flex;justify-content:space-between;align-items:center;padding:15px 14px;background:#fff;border:0;width:100%;text-align:left}.settings-row+.settings-row{border-top:1px solid var(--line)}
+</style></head><body><div class="app">
 <header><button class="head-btn brand-mark" id="elephant" aria-label="ぞうさん">🐘</button><div class="title">ぞうさんの生活OS</div><button class="head-btn" id="settings">⚙︎</button></header>
+
 <main id="view-today" class="view active">
-<div class="date">9月25日（金）</div><h1 class="greeting">おはよう。</h1>
-<p class="partner">🐘 今日は仕事だね。まずは朝ごはん。<br>ゆっくり準備していこう。</p>
-<section class="schedule"><div><div class="label">今日の予定</div><div class="value">仕事</div><div class="sub">10:00–19:00</div></div><div><div class="label">帰宅予定</div><div class="value">20:00ごろ</div><div class="sub">目安</div></div></section>
-<button class="wake" id="wake">起きた！</button>
-<section class="section">
-  <div class="section-title">🌅 朝のルーティン</div>
-  <div class="routine-card" aria-label="朝のルーティン">
-    <div class="routine-item"><div class="routine-num">1</div><div class="routine-name"><strong>布団をたたむ</strong><div class="muted">2分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
-    <div class="routine-item"><div class="routine-num">2</div><div class="routine-name"><strong>ストレッチ</strong><div class="muted">5分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
-    <div class="routine-item"><div class="routine-num">3</div><div class="routine-name"><strong>朝ごはん</strong><div class="muted">15分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
-    <div class="routine-item"><div class="routine-num">4</div><div class="routine-name"><strong>メイク</strong><div class="muted">20分くらい</div></div><div class="routine-actions"><button class="mini-btn routine-done" type="button">できた</button></div></div>
-    <div class="next-mini">次にやる：布団をたたむ</div>
-  </div>
-  <a class="section-link" href="#">ルーティンを編集する →</a>
-</section>
-
-<section class="section"><div class="section-head"><div class="section-title">今やる</div><div class="section-meta">NOW</div></div><div class="next"><div class="next-kicker">NOW</div><div class="next-name">洗濯する</div><div class="next-info">15分くらい　・　軽め</div><div class="actions"><button class="do" data-msg="洗濯、スタート！">やる</button><button class="later" data-msg="あとで大丈夫。">あとで</button></div></div></section>
-<section class="section"><div class="section-head"><div class="section-title">今日の全体像</div><div class="section-meta">7件</div></div><div class="overview"><div class="stat"><div class="num">2</div><small>重要</small></div><div class="stat"><div class="num">3</div><small>できれば</small></div><div class="stat"><div class="num">2</div><small>軽め</small></div></div></section>
-<section class="section"><div class="section-head"><div class="section-title">固定予定</div></div><div class="event"><div class="time">10:00</div><div><div class="event-title">仕事</div><div class="event-sub">19:00まで</div></div></div><div class="event"><div class="time">20:00</div><div><div class="event-title">帰宅予定</div><div class="event-sub">目安</div></div></div></section>
-<section class="section"><div class="section-head"><div class="section-title">今日のタスク</div></div><div class="groups">
-<div class="group"><button class="group-toggle"><span class="group-left"><i class="dot red"></i>重要　2件</span><span>＋</span></button><div class="items"><div class="item">仕事</div><div class="item">洗濯する</div></div></div>
-<div class="group"><button class="group-toggle"><span class="group-left"><i class="dot yellow"></i>できれば　3件</span><span>＋</span></button><div class="items"><div class="item">英語を10分</div><div class="item">部屋を少し片づける</div><div class="item">コーヒーの勉強</div></div></div>
-<div class="group"><button class="group-toggle"><span class="group-left"><i class="dot green"></i>軽め　2件</span><span>＋</span></button><div class="items"><div class="item">メール確認</div><div class="item">明日の準備</div></div></div>
-</div></section>
-<section class="minimum"><div class="minimum-title">🐘 今日の最低ライン</div><p>「仕事」と「洗濯」ができたら、今日はもう十分。<br>ほかは余裕があればで大丈夫。</p></section>
+<div class="date" id="todayDate"></div><h1 class="greeting" id="greeting"></h1><p class="partner" id="partnerMessage"></p>
+<section class="schedule"><div><div class="label">今日の予定</div><div class="value" id="todayWorkValue">仕事</div><div class="sub" id="todayWorkTime">10:00–19:00</div></div><div><div class="label">帰宅予定</div><div class="value" id="todayHomeValue">20:00ごろ</div><div class="sub">目安</div></div></section>
+<div class="wake-row"><button class="wake wake-btn" id="wake">起きた！</button><span id="wakeTimeLabel" class="wake-time"></span></div>
+<section class="section"><div class="section-title">🌅 朝のルーティン</div><div class="routine-card"><div id="todayRoutineList"></div><div class="next-mini" id="todayRoutineNext"></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title">今やる</div><div class="section-meta">NOW</div></div><div class="next"><div class="next-kicker">NOW</div><div class="next-name" id="nowTaskName"></div><div class="next-info" id="nowTaskInfo"></div><div class="actions"><button class="do" id="nowDo">やる</button><button class="later" id="nowLater">あとで</button></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title">今日の全体像</div><div class="section-meta" id="taskTotal"></div></div><div class="overview"><div class="stat"><div class="num" id="importantCount">0</div><small>重要</small></div><div class="stat"><div class="num" id="normalCount">0</div><small>できれば</small></div><div class="stat"><div class="num" id="lightCount">0</div><small>軽め</small></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title">固定予定</div></div><div id="todayScheduleList"></div></section>
+<section class="section"><div class="section-head"><div class="section-title">今日のタスク</div></div><div class="groups" id="todayTaskGroups"></div></section>
+<section class="minimum"><div class="minimum-title">🐘 今日の最低ライン</div><p id="minimumText">まずは「今やる」をひとつ。ほかは余裕があればで大丈夫。</p></section>
 </main>
+
 <nav aria-label="メインナビゲーション"><button class="active" data-view="today"><span class="nav-icon">⌂</span>今日</button><button data-view="input"><span class="nav-icon">＋</span>入力</button><button data-view="routine"><span class="nav-icon">○</span>継続</button><button data-view="schedule"><span class="nav-icon">□</span>予定</button></nav>
-<div class="view" id="view-input" hidden>
-  <main><div class="date">入力</div><h1 class="greeting">なんでも書いてね。</h1><p class="partner">🐘 思いついたことを、そのまま投げて大丈夫。日付や優先順位はあとで整理するよ。</p>
-  <section class="section"><div class="section-head"><div class="section-title">タスクを追加</div></div><div class="next"><textarea id="taskInput" rows="4" placeholder="例：洗濯する
-明日20時から美容院
-英語を10分やりたい" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;resize:vertical;line-height:1.6"></textarea><div class="actions" style="margin-top:10px"><button class="do" id="addTask">追加する</button></div><p class="next-info" id="inputResult" style="margin:12px 0 0"></p></div></section>
-  <section class="section"><div class="section-head"><div class="section-title">ルーティン</div></div><div class="next"><div class="next-name" style="font-size:17px">朝・昼・夜の流れを登録</div><div class="next-info">今はサンプル表示。次の段階で自由に追加・編集できるようにする。</div><button class="later" id="editRoutine" style="height:40px;border-radius:11px;padding:0 18px;font-weight:750">ルーティンを設定</button></div></section>
-  </main></div>
-<div class="view" id="view-routine" hidden>
-  <main><div class="date">継続</div><h1 class="greeting">続けたいこと。</h1><p class="partner">🐘 毎日できなくても大丈夫。続けた日だけ、ちゃんと積み上がっていくよ。</p>
-  <section class="section"><div class="section-head"><div class="section-title">継続中</div><div class="section-meta">3件</div></div><div class="groups"><div class="group"><button class="group-toggle"><span class="group-left"><i class="dot green"></i>英語　10分</span><span>›</span></button></div><div class="group"><button class="group-toggle"><span class="group-left"><i class="dot yellow"></i>ランニング</span><span>›</span></button></div><div class="group"><button class="group-toggle"><span class="group-left"><i class="dot red"></i>筋トレ</span><span>›</span></button></div></div></section>
-  </main></div>
-<div class="view" id="view-schedule" hidden>
-  <main><div class="date">予定</div><h1 class="greeting">予定を見よう。</h1><p class="partner">🐘 固定予定は守りつつ、その間はゆるく組み立てよう。</p>
-  <section class="section"><div class="section-head"><div class="section-title">今日</div></div><div class="next"><div class="event"><div class="time">10:00</div><div><div class="event-title">仕事</div><div class="event-sub">19:00まで</div></div></div><div class="event"><div class="time">20:00</div><div><div class="event-title">帰宅予定</div><div class="event-sub">目安</div></div></div><button class="do" id="addSchedule" style="margin-top:12px;height:40px;border-radius:11px;padding:0 18px;font-weight:750">予定を追加</button></div></section>
-  </main></div>
-<div class="view" id="view-settings" hidden>
-  <main><div class="date">設定</div><h1 class="greeting">生活の基本設定。</h1><p class="partner">🐘 ここは一度決めたら、毎日入力しなくていいようにする場所。</p>
-  <section class="section"><div class="section-head"><div class="section-title">生活リズム</div></div><div class="groups"><div class="group"><button class="group-toggle"><span>起床時間</span><strong>7:00</strong></button></div><div class="group"><button class="group-toggle"><span>就寝時間</span><strong>23:30</strong></button></div><div class="group"><button class="group-toggle"><span>通勤時間</span><strong>60分</strong></button></div></div></section>
-  <section class="section"><div class="section-head"><div class="section-title">仕事</div></div><div class="next"><div class="next-name" style="font-size:17px">明日は仕事？</div><div class="actions" style="margin-top:12px"><button class="do" id="workTomorrow">仕事</button><button class="later" id="offTomorrow">お休み</button></div></div></section>
-  </main></div><div class="toast" id="toast"></div>
-</div>
-<script>
-const toast=document.getElementById("toast");let timer;
-function showToast(msg){toast.textContent=msg;toast.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove("show"),1800)}
 
-// Today interactions
-const wake=document.getElementById("wake");
-if(wake) wake.onclick=()=>{wake.textContent="起きた！ 7:12";showToast("おはよう。今日を始めよう🐘")};
-document.querySelectorAll("[data-msg]").forEach(b=>b.addEventListener("click",()=>showToast(b.dataset.msg)));
-document.querySelectorAll(".group-toggle").forEach(b=>b.addEventListener("click",()=>{
-  const x=b.nextElementSibling;
-  if(!x) return;
-  x.classList.toggle("open");
-  const end=b.lastElementChild;
-  if(end && (end.textContent==='＋'||end.textContent==='−')) end.textContent=x.classList.contains("open")?"−":"＋";
-}));
+<div class="view" id="view-input" hidden><main><div class="date">入力</div><h1 class="greeting">なんでも書いてね。</h1><p class="partner">🐘 思いついたことを、そのまま投げて大丈夫。ここから「タスク・予定・継続」に分けられるよ。</p>
+<section class="section"><div class="section-head"><div class="section-title">なんでもBOX</div></div><div class="next"><textarea id="taskInput" rows="5" placeholder="洗濯する\n明日20時から美容院\n英語を10分やりたい"></textarea><div class="actions" style="margin-top:10px"><button class="do" id="addTask">追加する</button></div><p class="next-info" id="inputResult" style="margin:12px 0 0"></p></div></section>
+<section class="section"><div class="section-head"><div class="section-title">登録済みのタスク</div><div class="section-meta" id="inputTaskCount"></div></div><div class="next" id="inputTaskList"></div></section>
+<section class="section"><div class="section-head"><div class="section-title">ルーティン</div></div><div class="next"><div class="next-name" style="font-size:17px">朝・昼・夜の流れ</div><div class="next-info">順番・名前・頻度をここで編集できます。</div><button class="do" id="openRoutineEditor" style="height:40px;border-radius:11px;padding:0 18px;font-weight:750">ルーティンを編集</button></div></section>
+</main></div>
 
-// Morning routine: complete in sequence and update the next action.
-const routineItems=[...document.querySelectorAll('.routine-item')];
-const nextRoutine=document.querySelector('.next-mini');
-function updateRoutine(){
-  const first=routineItems.find(i=>!i.classList.contains('done'));
-  if(nextRoutine) nextRoutine.textContent=first?'次にやる：'+first.querySelector('.routine-name strong').textContent:'朝のルーティン完了。よくできたね🐘';
-}
-routineItems.forEach(item=>{
-  const btn=item.querySelector('.routine-done');
-  if(!btn) return;
-  btn.addEventListener('click',()=>{item.classList.toggle('done');btn.textContent=item.classList.contains('done')?'戻す':'できた';updateRoutine();});
-});
-updateRoutine();
+<div class="view" id="view-routine" hidden><main><div class="date">継続</div><h1 class="greeting">続けたいこと。</h1><p class="partner">🐘 毎日できなくても大丈夫。続けた日だけ、ちゃんと積み上がっていくよ。</p>
+<section class="section"><div class="section-head"><div class="section-title">継続中</div><div class="section-meta" id="habitCount"></div></div><div id="habitList"></div><button class="do" id="addHabit" style="margin-top:10px;height:42px;border-radius:11px;padding:0 18px;font-weight:750">＋ 継続を追加</button></section>
+<section class="section"><div class="section-head"><div class="section-title">休止・終了</div></div><div id="inactiveHabitList" class="next"></div></section>
+</main></div>
 
-// Single-page navigation: the original prototype only showed a toast, so taps appeared to do nothing.
-const views={
-  today:document.getElementById('view-today'),
-  input:document.getElementById('view-input'),
-  routine:document.getElementById('view-routine'),
-  schedule:document.getElementById('view-schedule'),
-  settings:document.getElementById('view-settings')
-};
-function showView(name){
-  Object.entries(views).forEach(([key,el])=>{
-    if(!el) return;
-    const active=key===name;
-    el.classList.toggle('active',active);
-    el.hidden=!active;
-  });
-  document.querySelectorAll('nav button[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
-  window.scrollTo(0,0);
-}
-const nav=document.querySelector('nav');
-if(nav) nav.addEventListener('click',e=>{
-  const button=e.target.closest('button[data-view]');
-  if(button) showView(button.dataset.view);
-});
-showView('today');
-document.getElementById('settings')?.addEventListener('click',()=>showView('settings'));
-document.getElementById('elephant')?.addEventListener('click',()=>{showView('today');showToast('🐘 ここにいるよ。');});
+<div class="view" id="view-schedule" hidden><main><div class="date">予定</div><h1 class="greeting">予定を見よう。</h1><p class="partner">🐘 固定予定と、その日に追加した予定をここにまとめます。</p>
+<section class="section"><div class="section-head"><div class="section-title">今日</div></div><div class="next" id="scheduleList"></div><button class="do" id="addSchedule" style="margin-top:12px;height:42px;border-radius:11px;padding:0 18px;font-weight:750">＋ 予定を追加</button></section>
+</main></div>
 
-document.getElementById('addTask')?.addEventListener('click',()=>{
-  const input=document.getElementById('taskInput');const result=document.getElementById('inputResult');
-  const text=input.value.trim();
-  if(!text){result.textContent='まずは、思いついたことを1つ書いてみよう。';return;}
-  result.textContent=`追加したよ。「${text.split(/\n/)[0].slice(0,24)}${text.length>24?'…':''}」\n今は仮登録。次の段階で日付や優先度を自動整理するよ。`;
-  input.value='';showToast('追加したよ🐘');
-});
-document.getElementById('editRoutine')?.addEventListener('click',()=>showToast('ルーティン編集は次のアップデートで追加予定'));
-document.getElementById('addSchedule')?.addEventListener('click',()=>showToast('予定入力は次のアップデートで追加予定'));
-document.getElementById('workTomorrow')?.addEventListener('click',()=>showToast('明日は仕事として覚えておくね'));
-document.getElementById('offTomorrow')?.addEventListener('click',()=>showToast('明日はお休みとして覚えておくね'));
-</script>
+<div class="view" id="view-settings" hidden><main><div class="date">設定</div><h1 class="greeting">生活の基本設定。</h1><p class="partner">🐘 一度決めたら、毎日入力しなくていいようにする場所。</p>
+<section class="section"><div class="section-head"><div class="section-title">生活リズム</div></div><div class="groups"><button class="settings-row" id="settingWake"><span>起床時間</span><strong id="settingWakeVal"></strong></button><button class="settings-row" id="settingSleep"><span>就寝時間</span><strong id="settingSleepVal"></strong></button><button class="settings-row" id="settingCommute"><span>通勤時間</span><strong id="settingCommuteVal"></strong></button><button class="settings-row" id="settingWorkStart"><span>仕事開始</span><strong id="settingWorkStartVal"></strong></button><button class="settings-row" id="settingWorkEnd"><span>仕事終了</span><strong id="settingWorkEndVal"></strong></button></div></section>
+<section class="section"><div class="section-head"><div class="section-title">食事・お風呂・メイク</div></div><div class="groups"><button class="settings-row" id="settingBreakfast"><span>朝ごはん</span><strong id="settingBreakfastVal"></strong></button><button class="settings-row" id="settingDinner"><span>夜ごはん</span><strong id="settingDinnerVal"></strong></button><button class="settings-row" id="settingBath"><span>お風呂</span><strong id="settingBathVal"></strong></button><button class="settings-row" id="settingMakeup"><span>メイク</span><strong id="settingMakeupVal"></strong></button></div></section>
+<section class="section"><div class="section-head"><div class="section-title">明日の予定</div></div><div class="next"><div class="next-name" style="font-size:17px" id="tomorrowStatus"></div><div class="actions" style="margin-top:12px"><button class="do" id="workTomorrow">仕事</button><button class="later" id="offTomorrow">お休み</button></div></div></section>
+</main></div>
+
+<div class="toast" id="toast"></div></div>
+
+<!-- Routine editor modal -->
+<div id="routineModal" class="modal" hidden><div class="modal-backdrop"></div><div class="modal-sheet"><div class="modal-head"><strong>ルーティンを編集</strong><button class="plain-btn" id="closeRoutine">閉じる</button></div><div class="routine-tabs" id="routineTabs"><button data-rperiod="morning" class="active">朝</button><button data-rperiod="day">昼</button><button data-rperiod="night">夜</button></div><div id="routineEditorList"></div><button class="plain-btn" id="addRoutineRow" style="width:100%;margin-top:4px">＋ 項目を追加</button><button class="do" id="saveRoutine" style="width:100%;margin-top:10px;height:44px;border-radius:11px">保存する</button></div></div>
+
+<!-- Habit modal -->
+<div id="habitModal" class="modal" hidden><div class="modal-backdrop"></div><div class="modal-sheet"><div class="modal-head"><strong id="habitModalTitle">継続を追加</strong><button class="plain-btn" id="closeHabit">閉じる</button></div><div class="field"><label>何を続けたい？</label><input id="habitName" placeholder="例：英語、ランニング、読書"></div><div class="field"><label>目安</label><input id="habitDetail" placeholder="例：10分、週3回"></div><div class="field"><label>頻度</label><select id="habitFrequency"><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">週に1回</option><option value="custom">自由</option></select></div><button class="do" id="saveHabit" style="width:100%;height:44px;border-radius:11px">保存する</button></div></div>
+
+<!-- Schedule modal -->
+<div id="scheduleModal" class="modal" hidden><div class="modal-backdrop"></div><div class="modal-sheet"><div class="modal-head"><strong>予定を追加</strong><button class="plain-btn" id="closeSchedule">閉じる</button></div><div class="form-grid"><div class="field"><label>日付</label><input type="date" id="scheduleDate"></div><div class="field"><label>時間</label><input type="time" id="scheduleTime"></div><div class="field full"><label>予定</label><input id="scheduleTitle" placeholder="例：美容院"></div><div class="field full"><label>メモ</label><input id="scheduleNote" placeholder="任意"></div></div><button class="do" id="saveSchedule" style="width:100%;height:44px;border-radius:11px">保存する</button></div></div>
+
+<!-- Setting modal -->
+<div id="settingModal" class="modal" hidden><div class="modal-backdrop"></div><div class="modal-sheet"><div class="modal-head"><strong id="settingModalTitle">設定</strong><button class="plain-btn" id="closeSetting">閉じる</button></div><div class="field"><label id="settingModalLabel"></label><input id="settingModalInput" type="time"></div><button class="do" id="saveSetting" style="width:100%;height:44px;border-radius:11px">保存する</button></div></div>
 
 <style>
-#todayDate{display:block}.wake-row{display:flex;align-items:center;gap:10px}.wake-btn{max-width:180px!important;margin:0!important}.wake-time{font-size:12px;color:var(--muted)}
-.edit-routine-btn{width:100%;margin-top:10px;border:0;background:none;color:#4f7891;font-size:13px;text-align:right;padding:8px;cursor:pointer}
-.habit-card{margin-bottom:10px;border:1px solid #d5e1e8;border-radius:17px;padding:16px;background:#fff;box-shadow:var(--shadow)}
-.stamps{display:flex;gap:5px;margin-top:12px}.stamp{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px}.stamp.on{background:#e4f1f8;color:#4f7891;font-weight:800}
+.modal{position:fixed;inset:0;z-index:20}.modal[hidden]{display:none}.modal-backdrop{position:absolute;inset:0;background:rgba(25,35,42,.38)}.modal-sheet{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(520px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:18px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.15)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:17px}.wake-time{font-size:12px;color:var(--muted)}
 </style>
+
 <script>
-(function(){
-const KEY='zousan-life-os-state-v6';
-const defaults={wakeTime:null,nowDone:false,routine:['布団をたたむ','ストレッチ','朝ごはん','メイク'],routineDone:{},habits:[{id:'english',name:'英語',detail:'10分'},{id:'running',name:'ランニング',detail:''},{id:'strength',name:'筋トレ',detail:''}],stamps:{}};
-let s;try{s=JSON.parse(localStorage.getItem(KEY))||defaults}catch(e){s=defaults}
-const save=()=>localStorage.setItem(KEY,JSON.stringify(s));
-const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const key=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return y+'-'+m+'-'+day};
-const today=()=>key(new Date());
-const toast=m=>window.showToast?showToast(m):null;
+const KEY='zousan-life-os-v7';
+const oldKey='zousan-life-os-state-v6';
+const defaults={wakeTime:null,todayDone:{},tasks:[{id:'t1',text:'洗濯する',priority:'important',status:'open'},{id:'t2',text:'英語を10分',priority:'normal',status:'open'},{id:'t3',text:'部屋を少し片づける',priority:'normal',status:'open'},{id:'t4',text:'コーヒーの勉強',priority:'normal',status:'open'},{id:'t5',text:'メール確認',priority:'light',status:'open'},{id:'t6',text:'明日の準備',priority:'light',status:'open'}],routines:{morning:[{name:'布団をたたむ',time:'2分くらい',freq:'daily'},{name:'ストレッチ',time:'5分くらい',freq:'daily'},{name:'朝ごはん',time:'15分くらい',freq:'daily'},{name:'メイク',time:'20分くらい',freq:'daily'}],day:[],night:[]},routineDone:{},habits:[{id:'english',name:'英語',detail:'10分',frequency:'daily',status:'active',stamps:{}},{id:'running',name:'ランニング',detail:'',frequency:'weekly',status:'active',stamps:{}},{id:'strength',name:'筋トレ',detail:'',frequency:'weekly',status:'active',stamps:{}}],schedules:[{id:'work',date:'',time:'10:00',title:'仕事',note:'19:00まで',fixed:true},{id:'home',date:'',time:'20:00',title:'帰宅予定',note:'目安',fixed:true}],settings:{wake:'07:00',sleep:'23:30',commute:60,workStart:'10:00',workEnd:'19:00',breakfast:'08:00',dinner:'20:00',bath:'22:00',makeup:'08:30'},tomorrow:'work'};
+let state=loadState();
+function loadState(){try{let x=JSON.parse(localStorage.getItem(KEY));if(x)return normalize(x);let old=JSON.parse(localStorage.getItem(oldKey));if(old){const n=structuredClone(defaults);n.wakeTime=old.wakeTime||null;n.routines.morning=(old.routine||n.routines.morning.map(x=>x.name)).map(x=>typeof x==='string'?{name:x,time:'',freq:'daily'}:x);n.habits=(old.habits||n.habits).map(h=>({...h,status:'active',stamps:old.stamps?.[h.id]||{}}));return n}return structuredClone(defaults)}catch(e){return structuredClone(defaults)}}
+function normalize(s){const d=structuredClone(defaults);return {...d,...s,routines:{...d.routines,...(s.routines||{})},settings:{...d.settings,...(s.settings||{})},tasks:Array.isArray(s.tasks)?s.tasks:d.tasks,habits:Array.isArray(s.habits)?s.habits:d.habits,schedules:Array.isArray(s.schedules)?s.schedules:d.schedules}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+function dateKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function formatDate(d=new Date()){const w=['日','月','火','水','木','金','土'];return `${d.getMonth()+1}月${d.getDate()}日（${w[d.getDay()]}）`}
+function today(){return dateKey()}
+function updateHeader(){const d=new Date(),h=d.getHours();document.getElementById('todayDate').textContent=formatDate(d);document.getElementById('greeting').textContent=h<11?'おはよう。':h<17?'こんにちは。':h<22?'こんばんは。':'おつかれさま。';document.getElementById('partnerMessage').innerHTML=h<11?'🐘 今日はここから。まずは朝の流れをひとつずつ。':h<17?'🐘 午後も、次のひとつだけやろう。':'🐘 今日ここまでできたことも、ちゃんと積み上がってるよ。'}
+updateHeader();setInterval(updateHeader,60000);
 
-// 日付・時間帯の表示
-function header(){const d=new Date(),days=['日','月','火','水','木','金','土'];const date=document.querySelector('#view-today .date');const g=document.querySelector('#view-today .greeting');const p=document.querySelector('#view-today .partner');if(date)date.textContent=(d.getMonth()+1)+'月'+d.getDate()+'日（'+days[d.getDay()]+'）';if(g){const h=d.getHours();g.textContent=h<11?'おはよう。':h<17?'こんにちは。':h<22?'こんばんは。':'おつかれさま。'}if(p)p.innerHTML='🐘 今日も、次のひとつだけ一緒にやろう。'}
-header();
+const views={today:document.getElementById('view-today'),input:document.getElementById('view-input'),routine:document.getElementById('view-routine'),schedule:document.getElementById('view-schedule'),settings:document.getElementById('view-settings')};
+function showView(n){Object.entries(views).forEach(([k,v])=>{v.classList.toggle('active',k===n);v.hidden=k!==n});document.querySelectorAll('nav button[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===n));window.scrollTo(0,0);if(n==='today')renderToday();if(n==='input')renderInput();if(n==='routine')renderHabits();if(n==='schedule')renderSchedules();if(n==='settings')renderSettings()}
+document.querySelector('nav').addEventListener('click',e=>{const b=e.target.closest('button[data-view]');if(b)showView(b.dataset.view)});document.getElementById('settings').onclick=()=>showView('settings');document.getElementById('elephant').onclick=()=>{showView('today');toast('🐘 ここにいるよ。')};
 
-// 「起きた！」は実際に押した時刻を保存
-const wake=document.getElementById('wake');
-if(wake){
-  wake.onclick=function(){s.wakeTime=new Date().toISOString();save();renderWake();toast('起きた時間を記録したよ🐘')};
-  function renderWake(){const old=document.getElementById('wakeTimeLabel');if(old)old.remove();if(s.wakeTime){const d=new Date(s.wakeTime),x=document.createElement('span');x.id='wakeTimeLabel';x.className='wake-time';x.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')+' に記録';wake.insertAdjacentElement('afterend',x);}}
-  renderWake();
-}
+function renderWake(){const w=document.getElementById('wake'),label=document.getElementById('wakeTimeLabel');if(state.wakeTime){const d=new Date(state.wakeTime);label.textContent=`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')} に記録`}else label.textContent='';w.textContent='起きた！'}
+document.getElementById('wake').onclick=()=>{state.wakeTime=new Date().toISOString();save();renderWake();toast('起きた時間を記録したよ🐘')};renderWake();
 
-// 朝ルーティンを実データ化
-const card=document.querySelector('#view-today .routine-card');
-if(card){
-  card.innerHTML='<div id="routineList"></div><div class="next-mini" id="routineNext"></div><button id="routineEdit" class="edit-routine-btn" type="button">ルーティンを編集する →</button>';
-  function renderRoutine(){const list=document.getElementById('routineList'),day=today();list.innerHTML='';s.routine.forEach((name,i)=>{const done=!!s.routineDone[day+'-'+i],row=document.createElement('div');row.className='routine-item'+(done?' done':'');row.innerHTML='<div class="routine-num">'+(i+1)+'</div><div class="routine-name"><strong>'+esc(name)+'</strong></div><div class="routine-actions"><button class="mini-btn" type="button">'+(done?'戻す':'できた')+'</button></div>';row.querySelector('button').onclick=()=>{if(done)delete s.routineDone[day+'-'+i];else s.routineDone[day+'-'+i]=1;save();renderRoutine()};list.appendChild(row)});const next=s.routine.find((x,i)=>!s.routineDone[day+'-'+i]);document.getElementById('routineNext').textContent=next?'次にやる：'+next:'朝のルーティン完了。よくできたね🐘'}
-  renderRoutine();
-  document.getElementById('routineEdit').onclick=()=>{const entered=prompt('朝のルーティンを1行ずつ入力してください。',s.routine.map((x,i)=>(i+1)+'. '+x).join('\n'));if(entered===null)return;const a=entered.split(/\n/).map(x=>x.replace(/^\s*\d+[.)]\s*/,'').trim()).filter(Boolean);if(!a.length)return; s.routine=a;s.routineDone={};save();renderRoutine();toast('ルーティンを更新したよ🐘')};
-}
+function freqText(f){return {daily:'毎日',weekdays:'平日',weekly:'週1回',custom:'自由'}[f]||'毎日'}
+function routineApplies(r){const f=r.freq||'daily',d=new Date();if(f==='weekdays')return d.getDay()>=1&&d.getDay()<=5;if(f==='weekly')return d.getDay()===1;if(f==='every2'){const anchor=new Date(r.anchor||dateKey());anchor.setHours(0,0,0,0);const now=new Date();now.setHours(0,0,0,0);return Math.floor((now-anchor)/86400000)%2===0}return true}
+function renderRoutineToday(){const box=document.getElementById('todayRoutineList'),next=document.getElementById('todayRoutineNext'),arr=state.routines.morning||[],day=today();box.innerHTML='';arr.forEach((r,i)=>{const done=!!state.routineDone[day+'-morning-'+i],row=document.createElement('div');row.className='routine-item'+(done?' done':'');row.innerHTML=`<div class="routine-num">${i+1}</div><div class="routine-name"><strong>${esc(r.name)}</strong><div class="muted">${esc(r.time||'')} ${r.freq?`・ ${freqText(r.freq)}`:''}</div></div><div class="routine-actions"><button class="mini-btn">${done?'戻す':'できた'}</button></div>`;row.querySelector('button').onclick=()=>{if(done)delete state.routineDone[day+'-morning-'+i];else state.routineDone[day+'-morning-'+i]=1;save();renderRoutineToday()};box.appendChild(row)});const n=arr.find((r,i)=>!state.routineDone[day+'-morning-'+i]);next.textContent=n?'次にやる：'+n.name:(arr.length?'朝のルーティン完了。よくできたね🐘':'朝のルーティンは未登録です。入力から追加できます。')}
+function renderRoutineEditor(){const p=window.routinePeriod||'morning',box=document.getElementById('routineEditorList'),arr=state.routines[p]||[];box.innerHTML='';if(!arr.length)box.innerHTML='<div class="empty">まだ項目がありません。<br>下の「項目を追加」から始めよう。</div>';arr.forEach((r,i)=>{const row=document.createElement('div');row.className='row-card';row.innerHTML=`<div class="row-top"><span class="routine-num">${i+1}</span><input class="r-name" value="${esc(r.name)}" placeholder="例：布団をたたむ"><button class="danger-btn">削除</button></div><div class="form-grid" style="margin-top:8px"><div class="field"><label>目安時間</label><input class="r-time" value="${esc(r.time||'')}" placeholder="10分くらい"></div><div class="field"><label>頻度</label><select class="r-freq"><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">週1回</option><option value="every2">2日に1回</option><option value="custom">自由</option></select></div></div>`;row.querySelector('.r-freq').value=r.freq||'daily';row.querySelector('.danger-btn').onclick=()=>{arr.splice(i,1);renderRoutineEditor()};box.appendChild(row)})}
+function openRoutine(){document.getElementById('routineModal').hidden=false;window.routinePeriod='morning';document.querySelectorAll('[data-rperiod]').forEach(b=>b.classList.toggle('active',b.dataset.rperiod==='morning'));renderRoutineEditor()}
+function closeModal(id){document.getElementById(id).hidden=true}
+document.getElementById('openRoutineEditor').onclick=openRoutine;document.querySelector('[data-rperiod="morning"]').onclick=()=>{};
+document.querySelectorAll('[data-rperiod]').forEach(b=>b.onclick=()=>{window.routinePeriod=b.dataset.rperiod;document.querySelectorAll('[data-rperiod]').forEach(x=>x.classList.toggle('active',x===b));renderRoutineEditor()});
+document.getElementById('addRoutineRow').onclick=()=>{const p=window.routinePeriod||'morning';state.routines[p].push({name:'',time:'',freq:'daily',anchor:today()});renderRoutineEditor();setTimeout(()=>document.querySelector('#routineEditorList .r-name:last-of-type')?.focus(),0)};
+document.getElementById('saveRoutine').onclick=()=>{const p=window.routinePeriod||'morning',rows=[...document.querySelectorAll('#routineEditorList .row-card')];state.routines[p]=rows.map(r=>({name:r.querySelector('.r-name').value.trim(),time:r.querySelector('.r-time').value.trim(),freq:r.querySelector('.r-freq').value,anchor:today()})).filter(r=>r.name);save();closeModal('routineModal');renderRoutineToday();toast('ルーティンを保存したよ🐘')};document.getElementById('closeRoutine').onclick=()=>closeModal('routineModal');
 
-// 「今やる」は完了処理まで行う
-const nowDo=document.getElementById('nowDo');
-const nowLater=document.getElementById('nowLater');
-const nowName=document.querySelector('#view-today .next-name');
-if(nowDo){
-  // 既存HTMLのボタンにIDを付けるため、data-msgを持つ最初の「やる」を拾う
-}
-const nowBox=[...document.querySelectorAll('#view-today .next')].find(x=>x.querySelector('[data-msg="洗濯、スタート！"]'));
-if(nowBox){const buttons=nowBox.querySelectorAll('button');const doBtn=buttons[0],laterBtn=buttons[1];doBtn.id='realNowDo';laterBtn.id='realNowLater';if(s.nowDone){doBtn.textContent='完了済み';doBtn.disabled=true;nowBox.querySelector('.next-name').textContent='洗濯、完了！';nowBox.querySelector('.next-info').textContent='ちゃんと積み上がったよ🐘'}doBtn.onclick=()=>{s.nowDone=true;save();doBtn.textContent='完了済み';doBtn.disabled=true;nowBox.querySelector('.next-name').textContent='洗濯、完了！';nowBox.querySelector('.next-info').textContent='ちゃんと積み上がったよ🐘';toast('完了！ちゃんと積み上がったよ🐘')};laterBtn.onclick=()=>toast('あとでにしておいたよ。')}
+function priorityText(p){return p==='important'?'重要':p==='normal'?'できれば':'軽め'}
+function renderInput(){const box=document.getElementById('inputTaskList'),tasks=state.tasks.filter(t=>t.status!=='done');document.getElementById('inputTaskCount').textContent=tasks.length+'件';box.innerHTML=tasks.length?'':'<div class="empty">まだ登録されたタスクはありません。</div>';tasks.forEach(t=>{const row=document.createElement('div');row.className='task-row';row.innerHTML=`<div style="flex:1"><strong>${esc(t.text)}</strong><span class="tag">${priorityText(t.priority)}</span></div><button class="mini-btn taskDone">完了</button><button class="danger-btn taskDelete">削除</button>`;row.querySelector('.taskDone').onclick=()=>{t.status='done';save();renderInput();renderToday()};row.querySelector('.taskDelete').onclick=()=>{t.status='deleted';save();renderInput();renderToday()};box.appendChild(row)})}
+function classify(text){const lower=text;let type='task';if(/(毎日|平日|週\d|\d日に1回|続け|習慣)/.test(lower))type='habit';else if(/(\d{1,2}[:時]\d{0,2}|明日|今日|あさって|予定|美容院|病院|予約)/.test(lower))type='schedule';return type}
+document.getElementById('addTask').onclick=()=>{const input=document.getElementById('taskInput'),result=document.getElementById('inputResult'),lines=input.value.split(/\n/).map(x=>x.trim()).filter(Boolean);if(!lines.length){result.textContent='まずは、思いついたことを1つ書いてみよう。';return}let messages=[];lines.forEach(text=>{const type=classify(text);if(type==='habit'){const h={id:'h'+Date.now()+Math.random().toString(16).slice(2),name:text.replace(/(毎日|平日|週\d回|\d日に1回)/g,'').trim(),detail:'',frequency:'daily',status:'active',stamps:{}};state.habits.push(h);messages.push('継続に登録')}else if(type==='schedule'){const tm=text.match(/(\d{1,2}):?(\d{2})?/);const time=tm?String(tm[1]).padStart(2,'0')+':'+(tm[2]||'00'):'12:00';state.schedules.push({id:'s'+Date.now()+Math.random(),date:today(),time,title:text,note:'',fixed:false});messages.push('予定に登録')}else{state.tasks.push({id:'t'+Date.now()+Math.random(),text,priority:'normal',status:'open'});messages.push('タスクに登録')}});save();input.value='';result.textContent=lines.map((x,i)=>`「${x}」→ ${messages[i]}`).join('\n');renderInput();renderToday();toast('整理して登録したよ🐘')};
 
-// 継続のスタンプ
-const routineView=document.getElementById('view-routine');
-if(routineView){
- const section=routineView.querySelector('.section');
- if(section){section.innerHTML='<div class="section-head"><div class="section-title">継続中</div><div class="section-meta" id="habitCount"></div></div><div id="habitList"></div>';
- function last7(){const a=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);a.push(key(d))}return a}
- function renderHabits(){const box=document.getElementById('habitList'),days=last7();document.getElementById('habitCount').textContent=s.habits.length+'件';box.innerHTML='';s.habits.forEach(h=>{const st=s.stamps[h.id]||{},total=Object.values(st).filter(Boolean).length,row=document.createElement('div');row.className='habit-card';row.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><div class="next-name" style="font-size:17px">'+esc(h.name)+(h.detail?'　'+esc(h.detail):'')+'</div><div class="next-info">累計スタンプ '+total+'個</div></div><button class="'+(st[today()]?'later':'do')+'" style="height:40px;border-radius:11px;padding:0 14px;font-weight:750">'+(st[today()]?'今日済み':'今日のスタンプ')+'</button></div><div class="stamps">'+days.map(d=>'<span class="stamp '+(st[d]?'on':'')+'">'+(st[d]?'印':'')+'</span>').join('')+'</div>';row.querySelector('button').onclick=()=>{s.stamps[h.id] ||= {};if(s.stamps[h.id][today()])delete s.stamps[h.id][today()];else s.stamps[h.id][today()]=1;save();renderHabits()};box.appendChild(row)})}
- renderHabits();
- }
-}
-})();
-</script>
-</body>
-</html>
+function last7(){const a=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);a.push(dateKey(d))}return a}
+function renderHabits(){const active=state.habits.filter(h=>h.status==='active'),inactive=state.habits.filter(h=>h.status!=='active');document.getElementById('habitCount').textContent=active.length+'件';const box=document.getElementById('habitList');box.innerHTML=active.length?'':'<div class="next empty">まだ継続はありません。</div>';active.forEach(h=>renderHabitCard(h,box));const ib=document.getElementById('inactiveHabitList');ib.innerHTML=inactive.length?'':'<div class="empty">休止・終了した継続はありません。</div>';inactive.forEach(h=>{const r=document.createElement('div');r.className='task-row';r.innerHTML=`<div style="flex:1"><strong>${esc(h.name)}</strong><div class="small-muted">${h.status==='paused'?'休止中':'終了'}</div></div><button class="mini-btn">再開</button>`;r.querySelector('button').onclick=()=>{h.status='active';save();renderHabits()};ib.appendChild(r)})}
+function renderHabitCard(h,box){const days=last7(),st=h.stamps||{},total=Object.values(st).filter(Boolean).length,todayKey=today(),done=!!st[todayKey],row=document.createElement('div');row.className='habit-card';row.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><div class="next-name" style="font-size:18px">${esc(h.name)}</div><div class="next-info">${esc(h.detail||freqText(h.frequency))} ・ 累計スタンプ ${total}個</div></div><button class="${done?'later':'do'} stampBtn">${done?'今日済み':'今日のスタンプ'}</button></div><div class="stamp-row">${days.map(d=>`<span class="stamp ${st[d]?'on':''}">${st[d]?'印':'·'}</span>`).join('')}</div><div class="habit-actions"><button class="plain-btn editHabit">編集</button><button class="plain-btn pauseHabit">休止</button><button class="danger-btn endHabit">終了</button></div>`;row.querySelector('.stampBtn').onclick=()=>{h.stamps[todayKey]=!done;save();renderHabits()};row.querySelector('.editHabit').onclick=()=>openHabit(h);row.querySelector('.pauseHabit').onclick=()=>{h.status='paused';save();renderHabits()};row.querySelector('.endHabit').onclick=()=>{h.status='ended';save();renderHabits()};box.appendChild(row)}
+let editingHabit=null;function openHabit(h=null){editingHabit=h;document.getElementById('habitModalTitle').textContent=h?'継続を編集':'継続を追加';document.getElementById('habitName').value=h?.name||'';document.getElementById('habitDetail').value=h?.detail||'';document.getElementById('habitFrequency').value=h?.frequency||'daily';document.getElementById('habitModal').hidden=false}document.getElementById('addHabit').onclick=()=>openHabit();document.getElementById('closeHabit').onclick=()=>closeModal('habitModal');document.getElementById('saveHabit').onclick=()=>{const name=document.getElementById('habitName').value.trim();if(!name){toast('名前を入れてね');return}if(editingHabit){editingHabit.name=name;editingHabit.detail=document.getElementById('habitDetail').value.trim();editingHabit.frequency=document.getElementById('habitFrequency').value}else state.habits.push({id:'h'+Date.now(),name,detail:document.getElementById('habitDetail').value.trim(),frequency:document.getElementById('habitFrequency').value,status:'active',stamps:{}});save();closeModal('habitModal');renderHabits();toast('継続を保存したよ🐘')};
+
+function renderSchedules(){const list=document.getElementById('scheduleList');const base=state.schedules.filter(s=>!s.date||s.date===today()).map(s=>s.fixed&&s.id==='work'?{...s,time:state.settings.workStart,note:state.settings.workEnd+'まで'}:s.fixed&&s.id==='home'?{...s,time:homeTimeText().replace('ごろ',''),note:'通勤時間から自動計算'}:s);const arr=base.sort((a,b)=>a.time.localeCompare(b.time));list.innerHTML=arr.length?'':'<div class="empty">今日の予定はありません。</div>';arr.forEach(s=>{const r=document.createElement('div');r.className='schedule-row';r.innerHTML=`<div class="time">${esc(s.time)}</div><div style="flex:1"><div class="event-title">${esc(s.title)}</div><div class="event-sub">${esc(s.note||'')}${s.fixed?' ・ 固定予定':''}</div></div>${s.fixed?'':'<button class="danger-btn">削除</button>'}`;if(!s.fixed)r.querySelector('button').onclick=()=>{state.schedules=state.schedules.filter(x=>x.id!==s.id);save();renderSchedules();renderToday()};list.appendChild(r)})}
+function homeTimeText(){const [h,m]=state.settings.workEnd.split(':').map(Number);const mins=h*60+m+Number(state.settings.commute||0);const hh=Math.floor(mins/60)%24,mm=mins%60;return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}ごろ`}
+function renderToday(){document.getElementById('todayWorkTime').textContent=state.settings.workStart+'–'+state.settings.workEnd;document.getElementById('todayHomeValue').textContent=homeTimeText();const tasks=state.tasks.filter(t=>t.status==='open'),groups={important:[],normal:[],light:[]};tasks.forEach(t=>(groups[t.priority]||groups.normal).push(t));document.getElementById('taskTotal').textContent=tasks.length+'件';document.getElementById('importantCount').textContent=groups.important.length;document.getElementById('normalCount').textContent=groups.normal.length;document.getElementById('lightCount').textContent=groups.light.length;const gb=document.getElementById('todayTaskGroups');gb.innerHTML='';[['important','重要'],['normal','できれば'],['light','軽め']].forEach(([p,label])=>{const g=document.createElement('div');g.className='group';g.innerHTML=`<button class="group-toggle"><span class="group-left"><i class="dot ${p==='important'?'red':p==='normal'?'yellow':'green'}"></i>${label}　${groups[p].length}件</span><span>＋</span></button><div class="items">${groups[p].map(t=>`<div class="item">${esc(t.text)}</div>`).join('')}</div>`;g.querySelector('button').onclick=()=>{g.querySelector('.items').classList.toggle('open');g.querySelector('button span:last-child').textContent=g.querySelector('.items').classList.contains('open')?'−':'＋'};gb.appendChild(g)});const first=tasks[0];document.getElementById('nowTaskName').textContent=first?first.text:'今日のタスクは全部できたよ';document.getElementById('nowTaskInfo').textContent=first?'次にやるなら、これひとつ。':'余裕があれば継続や予定を確認しよう。';document.getElementById('nowDo').disabled=!first;document.getElementById('nowDo').textContent=first?'やる':'完了';document.getElementById('nowDo').onclick=()=>{if(!first)return;first.status='done';save();renderToday();renderInput();toast('完了！ひとつ積み上がったよ🐘')};document.getElementById('nowLater').onclick=()=>{if(!first)return;first.status='later';save();renderToday();toast('あとでにしておいたよ。')};renderRoutineToday();const sl=document.getElementById('todayScheduleList');const base=state.schedules.filter(s=>!s.date||s.date===today()).map(s=>s.fixed&&s.id==='work'?{...s,time:state.settings.workStart,note:state.settings.workEnd+'まで'}:s.fixed&&s.id==='home'?{...s,time:homeTimeText().replace('ごろ',''),note:'通勤時間から自動計算'}:s);const arr=base.sort((a,b)=>a.time.localeCompare(b.time));sl.innerHTML=arr.length?'':'<div class="empty">今日の予定はありません。</div>';arr.forEach(s=>{const r=document.createElement('div');r.className='event';r.innerHTML=`<div class="time">${esc(s.time)}</div><div><div class="event-title">${esc(s.title)}</div><div class="event-sub">${esc(s.note||'')}</div></div>`;sl.appendChild(r)});document.getElementById('minimumText').textContent=first?`「${first.text}」をひとつできたら、今日は十分。ほかは余裕があればで大丈夫。`:'今日のタスクは完了。今日はもう十分できてるよ。'}
+
+let scheduleDate=today();document.getElementById('addSchedule').onclick=()=>{scheduleDate=today();document.getElementById('scheduleDate').value=scheduleDate;document.getElementById('scheduleTime').value='20:00';document.getElementById('scheduleTitle').value='';document.getElementById('scheduleNote').value='';document.getElementById('scheduleModal').hidden=false};document.getElementById('closeSchedule').onclick=()=>closeModal('scheduleModal');document.getElementById('saveSchedule').onclick=()=>{const d=document.getElementById('scheduleDate').value,t=document.getElementById('scheduleTime').value,title=document.getElementById('scheduleTitle').value.trim();if(!d||!t||!title){toast('日付・時間・予定を入れてね');return}state.schedules.push({id:'s'+Date.now(),date:d,time:t,title,note:document.getElementById('scheduleNote').value.trim(),fixed:false});save();closeModal('scheduleModal');renderSchedules();renderToday();toast('予定を追加したよ🐘')};
+
+const settingMap={wake:['起床時間','time'],sleep:['就寝時間','time'],workStart:['仕事開始','time'],workEnd:['仕事終了','time'],breakfast:['朝ごはん','time'],dinner:['夜ごはん','time'],bath:['お風呂','time'],makeup:['メイク','time']};let editingSetting='';function renderSettings(){Object.keys(settingMap).forEach(k=>document.getElementById('setting'+k[0].toUpperCase()+k.slice(1)+'Val').textContent=state.settings[k]||'未設定');document.getElementById('settingCommuteVal').textContent=state.settings.commute+'分';document.getElementById('tomorrowStatus').textContent=state.tomorrow==='work'?'明日は仕事':'明日はお休み'}function openSetting(k){editingSetting=k;document.getElementById('settingModalTitle').textContent=settingMap[k][0];document.getElementById('settingModalLabel').textContent=settingMap[k][0];document.getElementById('settingModalInput').value=state.settings[k]||'07:00';document.getElementById('settingModal').hidden=false}Object.keys(settingMap).forEach(k=>document.getElementById('setting'+k[0].toUpperCase()+k.slice(1)).onclick=()=>openSetting(k));document.getElementById('settingCommute').onclick=()=>{const v=prompt('通勤時間を分で入力してください。',state.settings.commute);if(v===null)return;const n=Number(v);if(!Number.isFinite(n)||n<0)return;state.settings.commute=Math.round(n);save();renderSettings();toast('通勤時間を更新したよ🐘')};document.getElementById('closeSetting').onclick=()=>closeModal('settingModal');document.getElementById('saveSetting').onclick=()=>{state.settings[editingSetting]=document.getElementById('settingModalInput').value;save();closeModal('settingModal');renderSettings();toast('設定を保存したよ🐘')};document.getElementById('workTomorrow').onclick=()=>{state.tomorrow='work';save();renderSettings();toast('明日は仕事として設定したよ')};document.getElementById('offTomorrow').onclick=()=>{state.tomorrow='off';save();renderSettings();toast('明日はお休みとして設定したよ')};
+
+renderToday();renderInput();renderHabits();renderSchedules();renderSettings();
+</script></body></html>
