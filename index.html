@@ -6,147 +6,615 @@
 <meta name="theme-color" content="#ffffff">
 <title>ぞうさんの生活OS</title>
 <style>
-:root{--bg:#f4f7fa;--card:#fff;--text:#20242a;--muted:#68727d;--line:#dce3e9;--accent:#4f7891;--accent-soft:#e4f1f8;--important:#c75a63;--normal:#d18a3c;--light:#4d9775;--shadow:0 7px 20px rgba(55,76,94,.11)}
+:root{
+  --bg:#f4f7fa;
+  --card:#fff;
+  --text:#20242a;
+  --muted:#68727d;
+  --line:#dce3e9;
+  --blue:#52758b;
+  --blue2:#eaf2f6;
+  --green:#6e9278;
+  --yellow:#d39b3d;
+  --red:#c76c68;
+  --shadow:0 7px 24px rgba(55,76,94,.08);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
-button{font:inherit}
-.app{max-width:520px;margin:auto;min-height:100vh;background:#fff}
-header{height:86px;display:grid;grid-template-columns:68px 1fr 68px;align-items:center;border-bottom:1px solid var(--line);padding:0 10px;position:sticky;top:0;background:#fff;z-index:5}
-.brand-mark{font-size:56px;text-align:center;line-height:1}
-.title{text-align:center;font-weight:800;letter-spacing:.04em;font-size:18px}
-.head-btn{border:0;background:#f5f8fa;color:#4f5962;font-size:36px;width:68px;height:68px;border-radius:18px;display:grid;place-items:center;justify-self:center}
-main{padding:28px 18px 116px}
-.date{font-size:14px;color:var(--muted);font-weight:600}
-.greeting{font-size:30px;font-weight:750;margin:7px 0 8px}
-.partner{font-size:14px;line-height:1.8;color:#454b52;margin:0 0 22px}
-.schedule{display:grid;grid-template-columns:1fr 1fr;border:1px solid #d4e2eb;border-radius:17px;overflow:hidden;margin-bottom:13px;background:#f8fbfd;box-shadow:var(--shadow)}
-.schedule>div{padding:16px 15px}
-.schedule>div+div{border-left:1px solid var(--line)}
-.label{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px}
-.value{font-size:15px;font-weight:700}
-.sub{font-size:12px;color:var(--muted);margin-top:3px}
-.wake{width:100%;height:44px;border:1px solid #4f7891;background:var(--accent);color:#fff;border-radius:13px;font-weight:800;margin-bottom:30px;box-shadow:0 5px 14px rgba(79,120,145,.22)}
-.section{margin-top:26px}
-.section-head{display:flex;align-items:center;justify-content:space-between;border-left:5px solid var(--accent);padding:7px 10px;margin-bottom:11px;background:#f5f8fa}
-.section-title{font-size:15px;font-weight:800}
-.section-meta{font-size:12px;color:var(--muted)}
-.next{border:1px solid #d5e1e8;border-radius:17px;padding:19px;background:#fff;box-shadow:var(--shadow)}
-.next-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:8px}
-.next-name{font-size:20px;font-weight:800;margin-bottom:6px}
-.next-info{font-size:12px;color:var(--muted);margin-bottom:15px}
-.actions{display:flex;gap:8px}
-.actions button{height:40px;border-radius:11px;padding:0 18px;font-weight:750}
-.do{border:1px solid #4f7891;background:#4f7891;color:#fff;box-shadow:0 4px 10px rgba(79,120,145,.20)}
-.later{border:1px solid var(--line);background:#fff;color:#555}
-.overview{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #d8e1e8;border-radius:15px;overflow:hidden;background:#fff;box-shadow:0 4px 12px rgba(55,76,94,.07)}
-.stat{padding:14px 8px;text-align:center}
-.stat+.stat{border-left:1px solid var(--line)}
-.num{font-size:21px;font-weight:800}
-.stat small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-.event{display:flex;gap:14px;padding:12px 2px;border-bottom:1px solid var(--line)}
-.event:last-child{border-bottom:0}
-.time{width:52px;font-weight:800;font-size:14px}
-.event-title{font-size:14px;font-weight:650}
-.event-sub{font-size:12px;color:var(--muted);margin-top:2px}
-.groups{border:1px solid var(--line);border-radius:15px;overflow:hidden}
-.group+.group{border-top:1px solid var(--line)}
-.group button{width:100%;border:0;background:#fff;padding:15px 14px;display:flex;align-items:center;justify-content:space-between;color:var(--text)}
-.group-left{display:flex;align-items:center;gap:9px;font-weight:700}
-.dot{width:8px;height:8px;border-radius:50%}
-.red{background:var(--important)}
-.yellow{background:var(--normal)}
-.green{background:var(--light)}
-.items{display:none;padding:0 14px 13px 36px}
-.items.open{display:block}
-.item{font-size:13px;padding:8px 0;color:#4d535a}
-.minimum{margin-top:28px;padding:18px;border:1px solid #b9d5c7;border-radius:16px;background:#edf8f2;box-shadow:var(--shadow)}
-.minimum-title{font-size:13px;font-weight:800;margin-bottom:7px}
-.minimum p{margin:0;font-size:14px;line-height:1.75;color:#4b5359}
-.toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(15px);background:#252a2f;color:#fff;padding:11px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.22s;z-index:10;white-space:nowrap}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+html{background:var(--bg)}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  font-size:15px;
+  line-height:1.6;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{
+  width:min(560px,100%);
+  min-height:100vh;
+  margin:0 auto;
+  background:#fff;
+  padding-bottom:84px;
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:62px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);
+  display:grid;
+  grid-template-columns:48px 1fr 48px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+}
+.title{
+  text-align:center;
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+.head-btn{
+  width:42px;
+  height:42px;
+  margin:auto;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  font-size:21px;
+  border-radius:12px;
+}
+.brand-mark{font-size:22px}
 .view{display:none}
 .view.active{display:block}
 .view[hidden]{display:none!important}
-nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:auto;height:86px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:6;padding-bottom:env(safe-area-inset-bottom)}
-nav button{border:0;background:none;color:#7b858e;font-size:13px;font-weight:700}
-nav button.active{color:#4f6878}
-.nav-icon{display:block;font-size:24px;margin-bottom:4px}
-@media(min-width:521px){
-body{padding:20px 0}
-.app{border:1px solid var(--line);border-radius:22px;overflow:hidden;min-height:calc(100vh - 40px)}
-nav{border-left:1px solid var(--line);border-right:1px solid var(--line)}
+main{padding:20px 16px 24px}
+.date{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:3px;
 }
-
-.wake-row{display:flex;align-items:center;gap:10px}
-.wake-btn{max-width:220px;margin:0}
-.routine-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 18px rgba(55,76,94,.08)}
-.routine-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #edf1f3}
-.routine-item:last-child{border-bottom:0;padding-bottom:0}
-.routine-item:first-child{padding-top:0}
-.routine-num{width:28px;height:28px;border-radius:50%;background:#e4f1f8;color:#4f7891;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
-.routine-item.done .routine-num{background:#dcefe5;color:#4d9775}
-.routine-item.done .routine-name{text-decoration:line-through;color:#8a959c}
-.routine-actions{margin-left:auto;display:flex;gap:6px;flex:none}
-.mini-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:12px;min-height:36px}
-.next-mini{margin-top:10px;color:#4f7891;font-size:13px}
-.task-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.task-summary>div{background:#f8fafb;border-radius:14px;padding:10px;text-align:center}
-.task-summary strong{display:block;font-size:20px}
-.task-summary span{font-size:11px;color:#7b8790}
-.section-link{display:block;text-align:right;margin-top:10px;color:#4f7891;font-size:13px}
-.wake-btn{height:44px!important;font-size:14px!important;padding:0 18px!important;max-width:180px!important}
-
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.field{margin-bottom:10px}
-.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 11px;background:#fff;color:var(--text);font:inherit}
-.full{grid-column:1/-1}
-.plain-btn{border:1px solid var(--line);background:#fff;color:#4f5962;border-radius:11px;padding:9px 13px;font-weight:700}
-.danger-btn{border:1px solid #e7c7ca;background:#fff;color:#b14e56;border-radius:10px;padding:7px 9px;font-size:12px}
-.row-card{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;background:#fff}
-.row-top{display:flex;align-items:center;gap:8px}
-.row-top input{flex:1}
-.routine-tabs{display:flex;gap:7px;margin-bottom:12px}
-.routine-tabs button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 4px;font-weight:700;color:#68727d}
-.routine-tabs button.active{background:var(--accent-soft);border-color:#bcd5e2;color:#4f7891}
-.empty{padding:18px;text-align:center;color:var(--muted);font-size:13px}
-.habit-actions{display:flex;gap:7px;margin-top:10px}
-.habit-actions button{flex:1}
-.stamp-row{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
-.stamp{width:29px;height:29px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px}
-.stamp.on{background:var(--accent-soft);color:var(--accent);font-weight:800}
-.task-row,.schedule-row{display:flex;align-items:center;gap:8px;padding:11px 0;border-bottom:1px solid #edf1f3}
-.task-row:last-child,.schedule-row:last-child{border-bottom:0}
-.small-muted{font-size:11px;color:var(--muted)}
-.tag{display:inline-block;font-size:11px;border-radius:20px;padding:4px 7px;background:#f1f4f6;color:#68727d;margin-left:5px}
-.settings-row{display:flex;justify-content:space-between;align-items:center;padding:15px 14px;background:#fff;border:0;width:100%;text-align:left}
-.settings-row+.settings-row{border-top:1px solid var(--line)}
-
-.schedule-controls{display:flex;gap:7px;margin-bottom:10px}
-.schedule-controls button{flex:1}
-.day-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.day-choice button{height:40px;border-radius:11px}
-.day-choice button.active{background:var(--accent-soft);border-color:#bcd5e2;color:var(--accent)}
-.inline-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.return-card{border:1px solid #d5e1e8;border-radius:15px;padding:15px;background:#f8fbfd}
-.return-status{font-size:13px;color:var(--muted);margin-top:4px}
-.routine-move{display:flex;gap:5px}
-.routine-move button{width:36px;height:36px;padding:0}
-.emoji-input{font-size:22px;text-align:center}
-textarea{resize:vertical;min-height:120px;line-height:1.7}
-button:disabled{opacity:.42;cursor:default}
-.muted{font-size:11px;color:var(--muted);margin-top:3px}
-.wake-time{font-size:12px;color:var(--muted)}
-.habit-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:10px;box-shadow:0 5px 15px rgba(55,76,94,.06)}
-.modal{position:fixed;inset:0;background:rgba(25,35,42,.35);z-index:20;display:grid;place-items:end center;padding:18px}
+.greeting{
+  margin:0;
+  font-size:25px;
+  line-height:1.35;
+  letter-spacing:.01em;
+}
+.partner{
+  margin:7px 0 20px;
+  color:var(--muted);
+  font-size:13px;
+}
+.schedule{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:14px;
+}
+.schedule>div{
+  background:var(--blue2);
+  border-radius:17px;
+  padding:14px;
+}
+.label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:700;
+}
+.value{
+  margin-top:2px;
+  font-size:17px;
+  font-weight:800;
+}
+.sub{
+  color:var(--muted);
+  font-size:12px;
+}
+.wake-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:20px;
+}
+.wake{
+  height:44px;
+  border:0;
+  border-radius:12px;
+  padding:0 18px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:800;
+}
+.wake-btn{
+  height:44px!important;
+  font-size:14px!important;
+  padding:0 18px!important;
+  max-width:180px!important;
+}
+.wake-time{
+  font-size:12px;
+  color:var(--muted);
+}
+.section{margin-top:18px}
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px;
+}
+.section-title{
+  font-size:16px;
+  font-weight:800;
+}
+.section-meta{
+  color:var(--muted);
+  font-size:12px;
+}
+.routine-card,
+.next,
+.return-card,
+.minimum{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  box-shadow:var(--shadow);
+}
+.routine-card{padding:8px 14px}
+.routine-item{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:12px 2px;
+  border-bottom:1px solid #edf0f2;
+}
+.routine-item:last-child{border-bottom:0}
+.routine-item.done{opacity:.48}
+.routine-num{
+  width:27px;
+  height:27px;
+  flex:0 0 27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--blue2);
+  color:var(--blue);
+  font-size:12px;
+  font-weight:800;
+}
+.routine-name{flex:1;min-width:0}
+.routine-name strong{
+  display:block;
+  font-size:14px;
+}
+.muted{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
+}
+.next{padding:17px}
+.next-kicker{
+  color:var(--blue);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+.next-name{
+  margin-top:3px;
+  font-size:21px;
+  font-weight:850;
+  line-height:1.4;
+}
+.next-info{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+.do,.later,.plain-btn,.danger-btn,.mini-btn{
+  border-radius:11px;
+  border:1px solid var(--line);
+  min-height:38px;
+  padding:0 14px;
+  font-weight:750;
+}
+.do{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.later{
+  background:#fff;
+  color:var(--text);
+}
+.plain-btn{background:#fff;color:var(--text)}
+.danger-btn{
+  background:#fff;
+  color:var(--red);
+  border-color:#edc9c7;
+}
+.mini-btn{
+  min-height:34px;
+  padding:0 11px;
+  background:#f6f8f9;
+  color:var(--text);
+}
+button:disabled{
+  opacity:.42;
+  cursor:default;
+}
+.overview{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+.stat{
+  padding:14px 8px;
+  text-align:center;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:15px;
+}
+.num{
+  font-size:23px;
+  font-weight:850;
+}
+.stat small{
+  color:var(--muted);
+  font-size:11px;
+}
+.groups{display:grid;gap:8px}
+.group{
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+}
+.group-toggle{
+  width:100%;
+  border:0;
+  background:#fff;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  font-weight:750;
+}
+.group-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  display:inline-block;
+}
+.dot.red{background:var(--red)}
+.dot.yellow{background:var(--yellow)}
+.dot.green{background:var(--green)}
+.items{
+  display:none;
+  border-top:1px solid var(--line);
+}
+.items.open{display:block}
+.item{
+  padding:10px 14px;
+  border-bottom:1px solid #eef1f3;
+  font-size:13px;
+}
+.item:last-child{border-bottom:0}
+.event,.schedule-row,.task-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+}
+.event:last-child,.schedule-row:last-child,.task-row:last-child{
+  border-bottom:0;
+}
+.time{
+  width:54px;
+  flex:0 0 54px;
+  color:var(--blue);
+  font-size:13px;
+  font-weight:800;
+}
+.event-title{font-weight:750}
+.event-sub,.small-muted{
+  color:var(--muted);
+  font-size:11px;
+}
+.minimum{
+  margin-top:18px;
+  padding:16px;
+  background:#f8fbfc;
+}
+.minimum-title{
+  font-weight:800;
+  font-size:14px;
+}
+.minimum p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+textarea{
+  display:block;
+  width:100%;
+  resize:vertical;
+  min-height:120px;
+  line-height:1.7;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:13px;
+  outline:none;
+  background:#fff;
+  color:var(--text);
+}
+textarea:focus,
+input:focus,
+select:focus{
+  border-color:#9bb1bf;
+  box-shadow:0 0 0 3px rgba(82,117,139,.08);
+  outline:none;
+}
+.tag{
+  display:inline-block;
+  margin-left:8px;
+  padding:2px 7px;
+  border-radius:7px;
+  background:#f1f4f6;
+  color:var(--muted);
+  font-size:10px;
+}
+.field{display:grid;gap:5px}
+.field label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:750;
+}
+.field input,.field select{
+  width:100%;
+  height:42px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:0 10px;
+  background:#fff;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.form-grid .full{grid-column:1/-1}
+.inline-fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.schedule-controls,
+.day-choice{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:10px;
+}
+.schedule-controls button,
+.day-choice button{
+  min-height:40px;
+}
+.schedule-day.active,
+.day-status.active{
+  background:var(--blue2);
+  color:var(--blue);
+  border-color:#cbdde6;
+}
+.settings-row{
+  width:100%;
+  min-height:50px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4px;
+  text-align:left;
+}
+.settings-row:last-child{border-bottom:0}
+.settings-row strong{
+  color:var(--muted);
+  font-size:13px;
+}
+.habit-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:16px;
+  margin-bottom:10px;
+  box-shadow:0 6px 18px rgba(55,76,94,.07);
+}
+.stamp-row{
+  display:flex;
+  gap:5px;
+  margin-top:14px;
+}
+.stamp{
+  width:29px;
+  height:29px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f2f4f5;
+  color:#c1c7cb;
+  font-size:14px;
+}
+.stamp.on{
+  background:#edf5ef;
+  color:#466c51;
+}
+.habit-actions{
+  display:flex;
+  gap:7px;
+  margin-top:13px;
+}
+.routine-editor-list{display:grid;gap:10px}
+.row-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+.row-top{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+.r-name{
+  flex:1;
+  min-width:0;
+  height:40px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:0 9px;
+}
+.routine-move{
+  display:flex;
+  gap:4px;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:20;
+}
 .modal[hidden]{display:none}
-.sheet{width:min(520px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.2)}
-.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
-.sheet-title{font-size:18px;font-weight:800}
-.close{border:0;background:#f3f5f6;border-radius:10px;width:38px;height:38px}
-.sheet-actions{display:flex;gap:8px;margin-top:15px}
-.sheet-actions button{flex:1;height:43px;border-radius:11px}
-.hidden{display:none!important}
+.modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(24,31,36,.35);
+}
+.modal-sheet{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:min(560px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:22px 22px 0 0;
+  padding:20px 18px 30px;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+  box-shadow:0 -8px 30px rgba(0,0,0,.15);
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:18px;
+  margin-bottom:16px;
+}
+.routine-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-bottom:14px;
+}
+.routine-tabs button{
+  min-height:40px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+}
+.routine-tabs button.active{
+  background:var(--blue2);
+  color:var(--blue);
+  border-color:#cbdde6;
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  transform:translate(-50%,20px);
+  width:max-content;
+  max-width:calc(100% - 32px);
+  padding:11px 15px;
+  background:#252b30;
+  color:#fff;
+  border-radius:12px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:40;
+}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+.now-pulse{
+  box-shadow:0 8px 24px rgba(79,120,145,.16);
+}
+.empty{
+  color:var(--muted);
+  line-height:1.7;
+  padding:12px 2px;
+}
+nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:min(560px,100%);
+  height:72px;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:15;
+}
+nav button{
+  border:0;
+  background:transparent;
+  color:#7a858d;
+  font-size:11px;
+  font-weight:700;
+}
+nav button.active{color:var(--blue)}
+.nav-icon{
+  display:block;
+  font-size:20px;
+  line-height:24px;
+  margin-bottom:2px;
+}
+.return-card{padding:16px}
+.return-status{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+.emoji-input{
+  font-size:22px;
+}
+@media(max-width:380px){
+  main{padding-left:13px;padding-right:13px}
+  .greeting{font-size:23px}
+  .row-top .danger-btn{padding:0 8px}
+  .routine-move .mini-btn{padding:0 8px}
+}
 </style>
 </head>
 
@@ -154,365 +622,312 @@ button:disabled{opacity:.42;cursor:default}
 <div class="app">
 
 <header>
-  <div class="brand-mark">🐘</div>
+  <button class="head-btn brand-mark" id="elephant" aria-label="ぞうさん">🐘</button>
   <div class="title">ぞうさんの生活OS</div>
-  <button class="head-btn" id="settingsBtn">⚙︎</button>
+  <button class="head-btn" id="settings" aria-label="設定">⚙︎</button>
 </header>
 
-<main>
-
-<section class="view active" id="view-today">
+<main id="view-today" class="view active">
   <div class="date" id="todayDate"></div>
-  <div class="greeting" id="greeting"></div>
-  <p class="partner">今日も、ぞうさんと一緒に。<br>全部やらなくて大丈夫。まずひとつ。</p>
+  <h1 class="greeting" id="greeting"></h1>
+  <p class="partner" id="partnerMessage"></p>
 
-  <div class="schedule">
+  <section class="schedule">
     <div>
-      <div class="label">今日</div>
-      <div class="value" id="todayWorkValue">—</div>
-      <div class="sub" id="todayWorkTime">—</div>
+      <div class="label">今日の予定</div>
+      <div class="value" id="todayWorkValue">仕事</div>
+      <div class="sub" id="todayWorkTime">--:--–--:--</div>
     </div>
     <div>
-      <div class="label">帰宅目安</div>
-      <div class="value" id="todayHomeValue">—</div>
-      <div class="sub">通勤時間から計算</div>
+      <div class="label">帰宅予定</div>
+      <div class="value" id="todayHomeValue">--:--</div>
+      <div class="sub">目安</div>
     </div>
-  </div>
+  </section>
 
   <div class="wake-row">
-    <button class="wake wake-btn" id="wakeBtn">起きた！</button>
-    <span class="wake-time" id="wakeTime"></span>
+    <button class="wake wake-btn" id="wake" type="button">起きた！</button>
+    <input id="wakeInput" type="time" aria-label="起床時刻" style="width:108px;height:44px;border:1px solid var(--line);border-radius:11px;padding:0 9px;background:#fff">
+    <span id="wakeTimeLabel" class="wake-time"></span>
   </div>
 
-  <div class="section">
+  <section class="section">
+    <div class="section-title">🌅 朝のルーティン</div>
+    <div class="routine-card">
+      <div id="todayRoutineList"></div>
+      <div class="next-mini" id="todayRoutineNext"></div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="section-head">
       <div class="section-title">今やる</div>
-      <div class="section-meta">ひとつだけ</div>
+      <div class="section-meta">NOW</div>
     </div>
-
-    <div class="next">
-      <div class="next-kicker">NEXT ACTION</div>
-      <div class="next-name" id="nowTaskName">—</div>
+    <div class="next now-pulse">
+      <div class="next-kicker">NOW</div>
+      <div class="next-name" id="nowTaskName"></div>
       <div class="next-info" id="nowTaskInfo"></div>
       <div class="actions">
-        <button class="do" id="nowDo">やる</button>
-        <button class="later" id="nowLater">あとで</button>
+        <button class="do" id="nowDo" type="button">やる</button>
+        <button class="later" id="nowLater" type="button">あとで</button>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <div class="section-head">
       <div class="section-title">今日の全体像</div>
+      <div class="section-meta" id="taskTotal"></div>
     </div>
-    <div class="task-summary">
-      <div><strong id="taskTotal">0</strong><span>残り</span></div>
-      <div><strong id="importantCount">0</strong><span>重要</span></div>
-      <div><strong id="normalCount">0</strong><span>できれば</span></div>
+    <div class="overview">
+      <div class="stat"><div class="num" id="importantCount">0</div><small>重要</small></div>
+      <div class="stat"><div class="num" id="normalCount">0</div><small>できれば</small></div>
+      <div class="stat"><div class="num" id="lightCount">0</div><small>軽め</small></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">タスク</div>
-    </div>
-    <div class="groups" id="todayTaskGroups"></div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">ルーティン</div>
-      <button class="plain-btn" id="editRoutineBtn">編集</button>
-    </div>
-    <div class="routine-card" id="todayRoutine"></div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">今日の予定</div>
-      <button class="plain-btn" id="goScheduleBtn">予定を見る</button>
-    </div>
+  <section class="section">
+    <div class="section-head"><div class="section-title">固定予定</div></div>
     <div id="todayScheduleList"></div>
-  </div>
+  </section>
 
-  <div class="minimum">
-    <div class="minimum-title">🐘 最低限これだけ</div>
-    <p id="minimumText">ひとつできたら十分。</p>
-  </div>
-</section>
+  <section class="section">
+    <div class="section-head"><div class="section-title">今日のタスク</div></div>
+    <div class="groups" id="todayTaskGroups"></div>
+  </section>
 
+  <section class="minimum">
+    <div class="minimum-title">🐘 今日の最低ライン</div>
+    <p id="minimumText">まずは「今やる」をひとつ。ほかは余裕があればで大丈夫。</p>
+  </section>
+</main>
 
-<section class="view" id="view-input">
-  <div class="date">なんでも入れてOK</div>
-  <div class="greeting">入力</div>
-  <p class="partner">思いついたことを、そのまま書いてね🐘<br>あとで生活OSが整理します。</p>
+<nav aria-label="メインナビゲーション">
+  <button class="active" data-view="today"><span class="nav-icon">⌂</span>今日</button>
+  <button data-view="input"><span class="nav-icon">＋</span>入力</button>
+  <button data-view="routine"><span class="nav-icon">○</span>継続</button>
+  <button data-view="schedule"><span class="nav-icon">□</span>予定</button>
+</nav>
 
-  <div class="section">
+<div class="view" id="view-input" hidden>
+<main>
+  <div class="date">入力</div>
+  <h1 class="greeting">なんでも書いてね。</h1>
+  <p class="partner">🐘 思いついたことを、そのまま投げて大丈夫。ここから「タスク・予定・継続」に分けられるよ。</p>
+
+  <section class="section">
+    <div class="section-head"><div class="section-title">なんでもBOX</div></div>
+    <div class="next">
+      <textarea
+        id="taskInput"
+        rows="5"
+        autocomplete="off"
+        autocapitalize="sentences"
+        spellcheck="false"
+        placeholder="洗濯する&#10;明日20時から美容院&#10;英語を10分やりたい"></textarea>
+      <div class="actions" style="margin-top:10px">
+        <button type="button" class="do" id="addTask">追加する</button>
+      </div>
+      <p class="next-info" id="inputResult" style="margin:12px 0 0"></p>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="section-head">
-      <div class="section-title">なんでもBOX</div>
+      <div class="section-title">登録済みのタスク</div>
+      <div class="section-meta" id="inputTaskCount"></div>
     </div>
+    <div class="next" id="inputTaskList"></div>
+  </section>
 
-    <div class="field">
-      <textarea id="quickInput" placeholder="例：
-洗濯する
-明後日20時 美容院
-英語を続けたい
-毎日ストレッチ"></textarea>
+  <section class="section">
+    <div class="section-head"><div class="section-title">ルーティン</div></div>
+    <div class="next">
+      <div class="next-name" style="font-size:17px">朝・昼・夜の流れ</div>
+      <div class="next-info">順番・名前・頻度をここで編集できます。</div>
+      <button type="button" class="do" id="openRoutineEditor" style="height:40px;border-radius:11px;padding:0 18px;font-weight:750;margin-top:12px">ルーティンを編集</button>
     </div>
+  </section>
+</main>
+</div>
 
-    <button class="do" id="quickAdd" style="width:100%;height:45px;border-radius:12px">追加する</button>
-    <div class="muted">「明日」「明後日」「20時」なども入力できます。</div>
-  </div>
+<div class="view" id="view-routine" hidden>
+<main>
+  <div class="date">継続</div>
+  <h1 class="greeting">続けたいこと。</h1>
+  <p class="partner">🐘 毎日できなくても大丈夫。続けた日だけ、ちゃんと積み上がっていくよ。</p>
 
-  <div class="section">
+  <section class="section">
     <div class="section-head">
-      <div class="section-title">未完了タスク</div>
+      <div class="section-title">継続中</div>
+      <div class="section-meta" id="habitCount"></div>
     </div>
-    <div class="routine-card" id="inputTaskList"></div>
-  </div>
-</section>
-
-
-<section class="view" id="view-habits">
-  <div class="date">続けたいこと</div>
-  <div class="greeting">継続</div>
-  <p class="partner">毎日完璧じゃなくて大丈夫。<br>続いた日だけ、ぞうさんと記録していこう。</p>
-
-  <button class="do" id="addHabitBtn" style="width:100%;height:45px;border-radius:12px">＋ 継続を追加</button>
-
-  <div class="section">
     <div id="habitList"></div>
-  </div>
-</section>
+    <button type="button" class="do" id="addHabit" style="margin-top:10px;height:42px;border-radius:11px;padding:0 18px;font-weight:750">＋ 継続を追加</button>
+  </section>
 
+  <section class="section">
+    <div class="section-head"><div class="section-title">休止・終了</div></div>
+    <div id="inactiveHabitList" class="next"></div>
+  </section>
+</main>
+</div>
 
-<section class="view" id="view-schedule">
-  <div class="date">予定と一日の設定</div>
-  <div class="greeting">予定</div>
-  <p class="partner">仕事の日・休みの日、起きる時間もその日ごとに変えられます。</p>
+<div class="view" id="view-schedule" hidden>
+<main>
+  <div class="date">予定</div>
+  <h1 class="greeting">明日のことも、ここで決めよう。</h1>
+  <p class="partner">🐘 仕事かお休みか、勤務時間、帰宅までをその日の予定として設定できます。</p>
 
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">今日は？</div>
-    </div>
+  <section class="section">
+    <div class="section-head"><div class="section-title">仕事・お休み</div></div>
+    <div class="next">
+      <div class="schedule-controls">
+        <button type="button" class="plain-btn schedule-day active" data-day="today">今日</button>
+        <button type="button" class="plain-btn schedule-day" data-day="tomorrow">明日</button>
+      </div>
 
-    <div class="day-choice">
-      <button class="plain-btn schedule-day" data-day="today">今日</button>
-      <button class="plain-btn schedule-day" data-day="tomorrow">明日</button>
-    </div>
-  </div>
+      <div class="day-choice">
+        <button type="button" class="plain-btn day-status" data-status="work">仕事</button>
+        <button type="button" class="plain-btn day-status" data-status="off">お休み</button>
+      </div>
 
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">この日の予定</div>
-    </div>
+      <div class="inline-fields" id="workTimeFields" style="margin-top:10px">
+        <div class="field">
+          <label>仕事開始</label>
+          <input type="time" id="dailyWorkStart">
+        </div>
+        <div class="field">
+          <label>仕事終了</label>
+          <input type="time" id="dailyWorkEnd">
+        </div>
+      </div>
 
-    <div class="day-choice">
-      <button class="plain-btn day-status" data-status="work">仕事</button>
-      <button class="plain-btn day-status" data-status="off">お休み</button>
-    </div>
-  </div>
-
-  <div class="section" id="workTimeFields">
-    <div class="section-head">
-      <div class="section-title">その日の時間</div>
-    </div>
-
-    <div class="form-grid">
-      <div class="field">
-        <label>起きる時間</label>
+      <div class="field" style="margin-top:10px">
+        <label>起床時刻</label>
         <input type="time" id="dailyWake">
       </div>
 
-      <div class="field">
-        <label>仕事開始</label>
-        <input type="time" id="dailyWorkStart">
-      </div>
-
-      <div class="field">
-        <label>仕事終了</label>
-        <input type="time" id="dailyWorkEnd">
-      </div>
+      <button type="button" class="do" id="saveDailySchedule" style="width:100%;height:42px;border-radius:11px;margin-top:10px">この日の予定を保存</button>
     </div>
+  </section>
 
-    <button class="do" id="saveDailySchedule" style="width:100%;height:43px;border-radius:11px">この日の設定を保存</button>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title" id="scheduleListTitle">今日</div>
-      <button class="plain-btn" id="addSchedule">＋ 予定</button>
-    </div>
-    <div class="routine-card" id="scheduleList"></div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">帰宅</div>
-    </div>
-
+  <section class="section">
+    <div class="section-head"><div class="section-title">帰宅</div></div>
     <div class="return-card">
-      <div class="value">今から帰宅</div>
+      <div class="next-name" style="font-size:17px" id="returnHomeTitle">帰宅予定</div>
       <div class="return-status" id="returnHomeStatus">仕事終了＋通勤時間から目安を出します。</div>
-
       <div class="actions" style="margin-top:12px">
-        <button class="do" id="leaveWorkNow">今から帰宅</button>
-        <button class="later" id="clearReturnHome">解除</button>
+        <button type="button" class="do" id="leaveWorkNow">今から帰宅</button>
+        <button type="button" class="later" id="clearReturnHome">予定に戻す</button>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">予定一覧</div>
-    </div>
-    <div class="routine-card" id="allScheduleList">
-      <div class="empty">予定を選択してください。</div>
-    </div>
-  </div>
-</section>
-
-
-<section class="view" id="view-settings">
-  <div class="date">生活の基本設定</div>
-  <div class="greeting">設定</div>
-  <p class="partner">毎日変わるものは「予定」で設定。<br>ここには普段の生活リズムだけを置きます。</p>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">生活リズム</div>
-    </div>
-
-    <div class="groups">
-      <button class="settings-row" id="settingBreakfast">
-        <span>朝ごはん</span><strong id="settingBreakfastVal">—</strong>
-      </button>
-
-      <button class="settings-row" id="settingDinner">
-        <span>夜ごはん</span><strong id="settingDinnerVal">—</strong>
-      </button>
-
-      <button class="settings-row" id="settingBath">
-        <span>お風呂</span><strong id="settingBathVal">—</strong>
-      </button>
-
-      <button class="settings-row" id="settingMakeup">
-        <span>メイク</span><strong id="settingMakeupVal">—</strong>
-      </button>
-
-      <button class="settings-row" id="settingSleep">
-        <span>就寝時間</span><strong id="settingSleepVal">—</strong>
-      </button>
-
-      <button class="settings-row" id="settingCommute">
-        <span>通勤時間</span><strong id="settingCommuteVal">—</strong>
-      </button>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-title">補足</div>
-    </div>
-
-    <div class="routine-card">
-      <div class="small-muted">
-        起床時間・仕事開始・仕事終了は毎日違っても大丈夫です。
-        「予定」タブからその日の時間を入力してください。
-      </div>
-    </div>
-  </div>
-</section>
-
+  <section class="section">
+    <div class="section-head"><div class="section-title" id="scheduleListTitle">今日</div></div>
+    <div class="next" id="scheduleList"></div>
+    <button type="button" class="do" id="addSchedule" style="margin-top:12px;height:42px;border-radius:11px;padding:0 18px;font-weight:750">＋ 予定を追加</button>
+  </section>
 </main>
+</div>
 
-<nav>
-  <button data-view="today" class="active">
-    <span class="nav-icon">☀️</span>今日
-  </button>
-  <button data-view="input">
-    <span class="nav-icon">＋</span>入力
-  </button>
-  <button data-view="habits">
-    <span class="nav-icon">🌱</span>継続
-  </button>
-  <button data-view="schedule">
-    <span class="nav-icon">📅</span>予定
-  </button>
-</nav>
+<div class="view" id="view-settings" hidden>
+<main>
+  <div class="date">設定</div>
+  <h1 class="greeting">生活の基本設定。</h1>
+  <p class="partner">🐘 一度決めたら、毎日入力しなくていいようにする場所。</p>
 
+  <section class="section">
+    <div class="section-head"><div class="section-title">生活リズム</div></div>
+    <div class="groups">
+      <button type="button" class="settings-row" id="settingSleep"><span>就寝時間</span><strong id="settingSleepVal"></strong></button>
+      <button type="button" class="settings-row" id="settingCommute"><span>通勤時間</span><strong id="settingCommuteVal"></strong></button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div class="section-title">食事・お風呂・メイク</div></div>
+    <div class="groups">
+      <button type="button" class="settings-row" id="settingBreakfast"><span>朝ごはん</span><strong id="settingBreakfastVal"></strong></button>
+      <button type="button" class="settings-row" id="settingDinner"><span>夜ごはん</span><strong id="settingDinnerVal"></strong></button>
+      <button type="button" class="settings-row" id="settingBath"><span>お風呂</span><strong id="settingBathVal"></strong></button>
+      <button type="button" class="settings-row" id="settingMakeup"><span>メイク</span><strong id="settingMakeupVal"></strong></button>
+    </div>
+  </section>
+</main>
 </div>
 
 <div class="toast" id="toast"></div>
 
-
-<div class="modal" id="routineModal" hidden>
-  <div class="sheet">
-    <div class="sheet-head">
-      <div class="sheet-title">ルーティンを編集</div>
-      <button class="close" id="closeRoutine">×</button>
+<!-- Routine editor -->
+<div id="routineModal" class="modal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <strong>ルーティンを編集</strong>
+      <button type="button" class="plain-btn" id="closeRoutine">閉じる</button>
     </div>
 
-    <div class="routine-tabs">
-      <button data-routine="morning" class="active">朝</button>
-      <button data-routine="day">昼</button>
-      <button data-routine="night">夜</button>
+    <div class="routine-tabs" id="routineTabs">
+      <button type="button" data-rperiod="morning" class="active">朝</button>
+      <button type="button" data-rperiod="day">昼</button>
+      <button type="button" data-rperiod="night">夜</button>
     </div>
 
-    <div id="routineEditor"></div>
+    <div id="routineEditorList"></div>
 
-    <button class="plain-btn" id="addRoutineItem" style="width:100%;margin-top:8px">＋ 項目を追加</button>
-
-    <div class="sheet-actions">
-      <button class="later" id="cancelRoutine">閉じる</button>
-      <button class="do" id="saveRoutine">保存</button>
-    </div>
+    <button type="button" class="plain-btn" id="addRoutineRow" style="width:100%;margin-top:4px">＋ 項目を追加</button>
+    <button type="button" class="do" id="saveRoutine" style="width:100%;margin-top:10px;height:44px;border-radius:11px">保存する</button>
   </div>
 </div>
 
-
-<div class="modal" id="habitModal" hidden>
-  <div class="sheet">
-    <div class="sheet-head">
-      <div class="sheet-title" id="habitModalTitle">継続を追加</div>
-      <button class="close" id="closeHabit">×</button>
+<!-- Habit modal -->
+<div id="habitModal" class="modal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <strong id="habitModalTitle">継続を追加</strong>
+      <button type="button" class="plain-btn" id="closeHabit">閉じる</button>
     </div>
 
     <div class="field">
-      <label>名前</label>
-      <input id="habitName" placeholder="例：英語、運動">
+      <label>何を続けたい？</label>
+      <input id="habitName" placeholder="例：英語、ランニング、読書">
     </div>
 
-    <div class="form-grid">
-      <div class="field">
-        <label>頻度</label>
-        <select id="habitFrequency">
-          <option value="daily">毎日</option>
-          <option value="weekdays">平日</option>
-          <option value="every2">2日に1回</option>
-          <option value="weekly">週1回</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>スタンプ</label>
-        <input class="emoji-input" id="habitEmoji" value="🌱" maxlength="2">
-      </div>
+    <div class="field" style="margin-top:10px">
+      <label>目安</label>
+      <input id="habitDetail" placeholder="例：10分、週3回">
     </div>
 
-    <div class="sheet-actions">
-      <button class="later" id="cancelHabit">閉じる</button>
-      <button class="do" id="saveHabit">保存</button>
+    <div class="field" style="margin-top:10px">
+      <label>頻度</label>
+      <select id="habitFrequency">
+        <option value="daily">毎日</option>
+        <option value="weekdays">平日</option>
+        <option value="weekly">週に1回</option>
+        <option value="custom">自由</option>
+      </select>
     </div>
+
+    <div class="field" style="margin-top:10px">
+      <label>スタンプ</label>
+      <input id="habitStamp" class="emoji-input" maxlength="4" value="🌱" placeholder="🌱">
+    </div>
+
+    <button type="button" class="do" id="saveHabit" style="width:100%;height:44px;border-radius:11px;margin-top:14px">保存する</button>
   </div>
 </div>
 
-
-<div class="modal" id="scheduleModal" hidden>
-  <div class="sheet">
-    <div class="sheet-head">
-      <div class="sheet-title">予定を追加</div>
-      <button class="close" id="closeSchedule">×</button>
+<!-- Schedule modal -->
+<div id="scheduleModal" class="modal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <strong>予定を追加</strong>
+      <button type="button" class="plain-btn" id="closeSchedule">閉じる</button>
     </div>
 
     <div class="form-grid">
@@ -520,329 +935,1146 @@ button:disabled{opacity:.42;cursor:default}
         <label>日付</label>
         <input type="date" id="scheduleDate">
       </div>
-
       <div class="field">
         <label>時間</label>
         <input type="time" id="scheduleTime">
       </div>
-
       <div class="field full">
         <label>予定</label>
         <input id="scheduleTitle" placeholder="例：美容院">
       </div>
-
       <div class="field full">
         <label>メモ</label>
         <input id="scheduleNote" placeholder="任意">
       </div>
     </div>
 
-    <div class="sheet-actions">
-      <button class="later" id="closeSchedule2">閉じる</button>
-      <button class="do" id="saveSchedule">保存</button>
-    </div>
+    <button type="button" class="do" id="saveSchedule" style="width:100%;height:44px;border-radius:11px;margin-top:14px">保存する</button>
   </div>
 </div>
 
-
-<div class="modal" id="settingModal" hidden>
-  <div class="sheet">
-    <div class="sheet-head">
-      <div class="sheet-title" id="settingModalTitle">設定</div>
-      <button class="close" id="closeSetting">×</button>
+<!-- Setting modal -->
+<div id="settingModal" class="modal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <strong id="settingModalTitle">設定</strong>
+      <button type="button" class="plain-btn" id="closeSetting">閉じる</button>
     </div>
 
     <div class="field">
-      <label id="settingModalLabel">設定</label>
-      <input type="time" id="settingModalInput">
+      <label id="settingModalLabel"></label>
+      <input id="settingModalInput" type="time">
     </div>
 
-    <div class="sheet-actions">
-      <button class="later" id="cancelSetting">閉じる</button>
-      <button class="do" id="saveSetting">保存</button>
-    </div>
+    <button type="button" class="do" id="saveSetting" style="width:100%;height:44px;border-radius:11px;margin-top:14px">保存する</button>
   </div>
 </div>
 
+</div>
 
 <script>
-const KEY='zousan-life-os-v9';
+const KEY='zousan-life-os-v10';
+const oldV9Key='zousan-life-os-v9';
+const oldV8Key='zousan-life-os-v8';
+const oldV7Key='zousan-life-os-v7';
+const oldKey='zousan-life-os-state-v6';
 
-const $=id=>document.getElementById(id);
+const defaults={
+  wakeTime:null,
+  todayDone:{},
+  tasks:[
+    {id:'t1',text:'洗濯する',priority:'important',status:'open'},
+    {id:'t2',text:'英語を10分',priority:'normal',status:'open'},
+    {id:'t3',text:'部屋を少し片づける',priority:'normal',status:'open'},
+    {id:'t4',text:'コーヒーの勉強',priority:'normal',status:'open'},
+    {id:'t5',text:'メール確認',priority:'light',status:'open'},
+    {id:'t6',text:'明日の準備',priority:'light',status:'open'}
+  ],
+  routines:{
+    morning:[
+      {name:'布団をたたむ',time:'2分くらい',freq:'daily'},
+      {name:'ストレッチ',time:'5分くらい',freq:'daily'},
+      {name:'朝ごはん',time:'15分くらい',freq:'daily'},
+      {name:'メイク',time:'20分くらい',freq:'daily'}
+    ],
+    day:[],
+    night:[]
+  },
+  routineDone:{},
+  habits:[
+    {id:'english',name:'英語',detail:'10分',frequency:'daily',status:'active',stamps:{}},
+    {id:'running',name:'ランニング',detail:'',frequency:'weekly',status:'active',stamps:{}},
+    {id:'strength',name:'筋トレ',detail:'',frequency:'weekly',status:'active',stamps:{}}
+  ],
+  schedules:[
+    {id:'work',date:'',time:'10:00',title:'仕事',note:'19:00まで',fixed:true},
+    {id:'home',date:'',time:'20:00',title:'帰宅予定',note:'目安',fixed:true}
+  ],
+  settings:{
+    wake:'07:00',
+    sleep:'23:30',
+    commute:60,
+    workStart:'10:00',
+    workEnd:'19:00',
+    breakfast:'08:00',
+    dinner:'20:00',
+    bath:'22:00',
+    makeup:'08:30'
+  },
+  daily:{},
+  returnHome:{date:'',leftAt:null,estimated:''},
+  tomorrow:'work'
+};
+
+function dateKey(d=new Date()){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 
 function today(){
-  return dateKey(new Date());
+  return dateKey();
 }
 
-function dateKey(d){
-  const y=d.getFullYear();
-  const m=String(d.getMonth()+1).padStart(2,'0');
-  const day=String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
+function formatDate(d=new Date()){
+  const w=['日','月','火','水','木','金','土'];
+  return `${d.getMonth()+1}月${d.getDate()}日（${w[d.getDay()]}）`;
 }
 
-function tomorrow(){
-  return dateKey(new Date(Date.now()+86400000));
+function esc(x){
+  return String(x??'').replace(/[&<>"']/g,c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c]));
 }
 
-function esc(v){
-  return String(v??'')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
+function toast(message){
+  const t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=message;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(()=>t.classList.remove('show'),1800);
 }
 
-function toast(msg){
-  const el=$('toast');
-  el.textContent=msg;
-  el.classList.add('show');
-  clearTimeout(window.__toast);
-  window.__toast=setTimeout(()=>el.classList.remove('show'),1800);
-}
+function normalize(s){
+  const d=structuredClone(defaults);
 
-function closeModal(id){
-  $(id).hidden=true;
-}
-
-function defaultState(){
-  return {
-    tasks:[
-      {id:'t1',text:'洗濯する',priority:'important',status:'open',created:Date.now()},
-      {id:'t2',text:'英語をやる',priority:'normal',status:'open',created:Date.now()},
-      {id:'t3',text:'部屋を少し片付ける',priority:'light',status:'open',created:Date.now()}
-    ],
-    schedules:[
-      {id:'work',date:'',time:'',title:'仕事',note:'',fixed:true},
-      {id:'home',date:'',time:'',title:'帰宅',note:'',fixed:true}
-    ],
-    routines:{
-      morning:[
-        {id:'r1',name:'布団を畳む',frequency:'daily',done:false},
-        {id:'r2',name:'ストレッチ',frequency:'daily',done:false},
-        {id:'r3',name:'朝ごはん',frequency:'daily',done:false},
-        {id:'r4',name:'メイク',frequency:'daily',done:false}
-      ],
-      day:[],
-      night:[
-        {id:'r5',name:'お風呂',frequency:'daily',done:false},
-        {id:'r6',name:'スキンケア',frequency:'daily',done:false}
-      ]
-    },
-    habits:[
-      {id:'h1',name:'英語',frequency:'daily',status:'active',stampEmoji:'🌱',stamps:{}},
-      {id:'h2',name:'運動',frequency:'every2',status:'active',stampEmoji:'🏃',stamps:{}}
-    ],
-    settings:{
-      breakfast:'08:00',
-      dinner:'19:00',
-      bath:'22:00',
-      makeup:'08:30',
-      sleep:'23:30',
-      commute:60,
-      workStart:'',
-      workEnd:''
-    },
-    daily:{},
-    tomorrow:'work',
-    returnHome:{
-      date:'',
-      leftAt:null,
-      estimated:''
-    }
-  };
-}
-
-function migrate(raw){
-  const base=defaultState();
-  const s=raw||{};
-
-  const out={
-    ...base,
-    ...s,
-    tasks:Array.isArray(s.tasks)?s.tasks:base.tasks,
-    schedules:Array.isArray(s.schedules)?s.schedules:base.schedules,
-    routines:s.routines||base.routines,
-    habits:Array.isArray(s.habits)?s.habits:base.habits,
-    settings:{...base.settings,...(s.settings||{})},
-    daily:s.daily||{},
-    returnHome:{...base.returnHome,...(s.returnHome||{})}
-  };
-
-  out.habits=out.habits.map(h=>({
-    id:h.id||('h'+Date.now()+Math.random()),
+  const habits=(Array.isArray(s.habits)?s.habits:d.habits).map(h=>({
+    ...h,
     name:h.name||'継続',
+    detail:h.detail||'',
     frequency:h.frequency||h.freq||'daily',
-    status:h.status||'active',
+    freq:h.freq||h.frequency||'daily',
     stampEmoji:h.stampEmoji||h.stamp||'🌱',
-    stamps:h.stamps||h.history||{}
+    stamps:h.stamps||h.history||{},
+    history:h.history||h.stamps||{},
+    status:h.status||'active'
   }));
 
-  ['morning','day','night'].forEach(k=>{
-    if(!Array.isArray(out.routines[k]))out.routines[k]=[];
-    out.routines[k]=out.routines[k].map((r,i)=>({
-      id:r.id||('r'+k+i+Date.now()),
-      name:r.name||'項目',
-      frequency:r.frequency||r.freq||'daily',
-      done:!!r.done
-    }));
+  const routines={
+    ...d.routines,
+    ...(s.routines||{})
+  };
+
+  Object.keys(routines).forEach(k=>{
+    routines[k]=(routines[k]||[]).map(r=>{
+      if(typeof r==='string'){
+        return {
+          name:r,
+          time:'',
+          freq:'daily',
+          anchor:dateKey()
+        };
+      }
+      return {
+        name:r.name||'ルーティン',
+        time:r.time||'',
+        freq:r.freq||r.frequency||'daily',
+        anchor:r.anchor||dateKey()
+      };
+    });
   });
 
-  out.tasks=out.tasks.map(t=>({
-    ...t,
-    priority:t.priority||detectPriority(t.text||''),
-    status:t.status||'open'
-  }));
-
-  return out;
+  return {
+    ...d,
+    ...s,
+    routines,
+    settings:{
+      ...d.settings,
+      ...(s.settings||{})
+    },
+    daily:{
+      ...d.daily,
+      ...(s.daily||{})
+    },
+    returnHome:{
+      ...d.returnHome,
+      ...(s.returnHome||{})
+    },
+    tasks:Array.isArray(s.tasks)?s.tasks:d.tasks,
+    habits,
+    schedules:Array.isArray(s.schedules)?s.schedules:d.schedules
+  };
 }
 
-let state;
+function loadState(){
+  try{
+    let x=JSON.parse(localStorage.getItem(KEY));
+    if(x)return normalize(x);
 
-try{
-  const raw=
-    localStorage.getItem(KEY)||
-    localStorage.getItem('zousan-life-os-v8')||
-    localStorage.getItem('zousan-life-os-v7')||
-    localStorage.getItem('zousan-life-os-v6');
+    let old=JSON.parse(
+      localStorage.getItem(oldV9Key) ||
+      localStorage.getItem(oldV8Key) ||
+      localStorage.getItem(oldV7Key) ||
+      localStorage.getItem(oldKey)
+    );
 
-  state=migrate(raw?JSON.parse(raw):null);
-}catch(e){
-  state=defaultState();
+    if(old){
+      const n=normalize(old);
+      n.wakeTime=old.wakeTime||null;
+
+      n.routines.morning=(
+        old.routines?.morning ||
+        old.routine ||
+        n.routines.morning.map(x=>x.name)
+      ).map(x=>
+        typeof x==='string'
+          ? {name:x,time:'',freq:'daily'}
+          : x
+      );
+
+      n.habits=(old.habits||n.habits).map(h=>({
+        ...h,
+        status:h.status||'active',
+        stamps:h.stamps||old.stamps?.[h.id]||{},
+        stampEmoji:h.stampEmoji||'🌱'
+      }));
+
+      return n;
+    }
+
+    return structuredClone(defaults);
+  }catch(e){
+    return structuredClone(defaults);
+  }
 }
+
+let state=loadState();
 
 function save(){
   localStorage.setItem(KEY,JSON.stringify(state));
 }
 
-function detectPriority(text){
-  const importantWords=['仕事','病院','予約','美容院','提出','締切','支払い','洗濯','買い物'];
-  const lightWords=['片付け','掃除','ストレッチ','英語','読む','見る'];
+function updateHeader(){
+  const d=new Date();
+  const h=d.getHours();
 
-  if(importantWords.some(w=>text.includes(w)))return'important';
-  if(lightWords.some(w=>text.includes(w)))return'light';
-  return'normal';
-}
+  const dateEl=document.getElementById('todayDate');
+  const greeting=document.getElementById('greeting');
+  const partner=document.getElementById('partnerMessage');
 
-function getGreeting(){
-  const h=new Date().getHours();
+  if(dateEl)dateEl.textContent=formatDate(d);
 
-  if(h<11)return'おはよう';
-  if(h<17)return'こんにちは';
-  if(h<21)return'こんばんは';
-  return'おつかれさま';
-}
-
-function formatDateJP(key){
-  const d=new Date(key+'T00:00:00');
-  const week=['日','月','火','水','木','金','土'];
-  return `${d.getMonth()+1}月${d.getDate()}日（${week[d.getDay()]}）`;
-}
-
-function routineApplies(r,key=today()){
-  if(r.frequency==='daily')return true;
-
-  const d=new Date(key+'T00:00:00');
-
-  if(r.frequency==='weekdays'){
-    return d.getDay()!==0&&d.getDay()!==6;
+  if(greeting){
+    greeting.textContent=
+      h<11?'おはよう。':
+      h<17?'こんにちは。':
+      h<22?'こんばんは。':
+      'おつかれさま。';
   }
 
-  if(r.frequency==='every2'){
-    const start=new Date('2026-01-01T00:00:00');
-    const diff=Math.floor((d-start)/86400000);
-    return diff%2===0;
+  if(partner){
+    partner.innerHTML=
+      h<11
+        ?'🐘 今日はここから。まずは朝の流れをひとつずつ。'
+        :h<17
+          ?'🐘 午後も、次のひとつだけやろう。'
+          :'🐘 今日ここまでできたことも、ちゃんと積み上がってるよ。';
+  }
+}
+
+updateHeader();
+setInterval(updateHeader,60000);
+
+const views={
+  today:document.getElementById('view-today'),
+  input:document.getElementById('view-input'),
+  routine:document.getElementById('view-routine'),
+  schedule:document.getElementById('view-schedule'),
+  settings:document.getElementById('view-settings')
+};
+
+function showView(name){
+  Object.entries(views).forEach(([key,view])=>{
+    view.classList.toggle('active',key===name);
+    view.hidden=key!==name;
+  });
+
+  document.querySelectorAll('nav button[data-view]').forEach(b=>{
+    b.classList.toggle('active',b.dataset.view===name);
+  });
+
+  window.scrollTo(0,0);
+
+  if(name==='today')renderToday();
+  if(name==='input')renderInput();
+  if(name==='routine')renderHabits();
+  if(name==='schedule')renderSchedules();
+  if(name==='settings')renderSettings();
+}
+
+document.querySelector('nav').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-view]');
+  if(b)showView(b.dataset.view);
+});
+
+document.getElementById('settings').onclick=()=>showView('settings');
+
+document.getElementById('elephant').onclick=()=>{
+  showView('today');
+  toast('🐘 ここにいるよ。');
+};
+
+function todayDaily(){
+  return state.daily[today()]||{
+    status:state.tomorrow==='work'?'work':'off',
+    wake:'',
+    workStart:state.settings.workStart,
+    workEnd:state.settings.workEnd
+  };
+}
+
+function getWakeTime(){
+  return todayDaily().wake||'';
+}
+
+function setWakeTime(v){
+  const d={
+    ...todayDaily(),
+    wake:v
+  };
+
+  state.daily[today()]=d;
+  state.wakeTime=v
+    ?new Date(`${today()}T${v}:00`).toISOString()
+    :null;
+
+  save();
+}
+
+function renderWake(){
+  const button=document.getElementById('wake');
+  const label=document.getElementById('wakeTimeLabel');
+  const input=document.getElementById('wakeInput');
+  const value=getWakeTime();
+
+  if(input)input.value=value||'';
+  if(label)label.textContent=value?`${value} に記録`:'';
+  if(button)button.textContent='起きた！';
+}
+
+document.getElementById('wake').onclick=()=>{
+  const now=new Date();
+  const v=
+    `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  setWakeTime(v);
+  renderWake();
+  renderToday();
+  toast('起きた時間を記録したよ🐘');
+};
+
+document.getElementById('wakeInput').onchange=e=>{
+  if(!e.target.value)return;
+  setWakeTime(e.target.value);
+  renderWake();
+  renderToday();
+  toast('起床時刻を保存したよ🐘');
+};
+
+function freqText(f){
+  return {
+    daily:'毎日',
+    weekdays:'平日',
+    weekly:'週1回',
+    every2:'2日に1回',
+    custom:'自由'
+  }[f]||'毎日';
+}
+
+function routineApplies(r){
+  const f=r.freq||'daily';
+  const d=new Date();
+
+  if(f==='weekdays'){
+    return d.getDay()>=1&&d.getDay()<=5;
   }
 
-  if(r.frequency==='weekly'){
+  if(f==='weekly'){
     return d.getDay()===1;
+  }
+
+  if(f==='every2'){
+    const anchor=new Date(r.anchor||dateKey());
+    anchor.setHours(0,0,0,0);
+
+    const now=new Date();
+    now.setHours(0,0,0,0);
+
+    return Math.floor((now-anchor)/86400000)%2===0;
   }
 
   return true;
 }
 
-function todayDaily(){
-  return dailyFor(today());
+function renderRoutineToday(){
+  const box=document.getElementById('todayRoutineList');
+  const next=document.getElementById('todayRoutineNext');
+
+  const arr=(state.routines.morning||[]).filter(routineApplies);
+  const day=today();
+
+  box.innerHTML='';
+
+  arr.forEach((r,i)=>{
+    const done=!!state.routineDone[day+'-morning-'+i];
+    const row=document.createElement('div');
+
+    row.className='routine-item'+(done?' done':'');
+
+    row.innerHTML=`
+      <div class="routine-num">${i+1}</div>
+      <div class="routine-name">
+        <strong>${esc(r.name)}</strong>
+        <div class="muted">
+          ${esc(r.time||'')}
+          ${r.freq?`・ ${freqText(r.freq)}`:''}
+        </div>
+      </div>
+      <button type="button" class="${done?'later':'mini-btn'}">
+        ${done?'済':'✓'}
+      </button>
+    `;
+
+    row.querySelector('button').onclick=()=>{
+      if(done){
+        delete state.routineDone[day+'-morning-'+i];
+      }else{
+        state.routineDone[day+'-morning-'+i]=true;
+      }
+
+      save();
+      renderRoutineToday();
+    };
+
+    box.appendChild(row);
+  });
+
+  const n=arr.find((r,i)=>!state.routineDone[day+'-morning-'+i]);
+
+  next.textContent=
+    n
+      ?'次にやる：'+n.name
+      :arr.length
+        ?'朝のルーティン完了。よくできたね🐘'
+        :'朝のルーティンは未登録です。入力から追加できます。';
 }
 
-function dailyFor(date){
-  if(!state.daily[date]){
-    const isTomorrow=date===tomorrow();
+function renderRoutineEditor(){
+  const p=window.routinePeriod||'morning';
+  const box=document.getElementById('routineEditorList');
+  const arr=state.routines[p]||[];
 
-    state.daily[date]={
-      status:isTomorrow?state.tomorrow:'work',
-      wake:'',
-      workStart:state.settings.workStart||'',
-      workEnd:state.settings.workEnd||''
-    };
+  box.innerHTML='';
+
+  if(!arr.length){
+    box.innerHTML=
+      '<div class="empty">まだ項目がありません。<br>下の「項目を追加」から始めよう。</div>';
   }
 
-  return state.daily[date];
+  arr.forEach((r,i)=>{
+    const row=document.createElement('div');
+    row.className='row-card';
+
+    row.innerHTML=`
+      <div class="row-top">
+        <span class="routine-num">${i+1}</span>
+
+        <input
+          class="r-name"
+          value="${esc(r.name)}"
+          placeholder="例：布団をたたむ"
+        >
+
+        <div class="routine-move">
+          <button type="button" class="mini-btn move-up" ${i===0?'disabled':''}>↑</button>
+          <button type="button" class="mini-btn move-down" ${i===arr.length-1?'disabled':''}>↓</button>
+        </div>
+
+        <button type="button" class="danger-btn">削除</button>
+      </div>
+
+      <div class="form-grid" style="margin-top:8px">
+        <div class="field">
+          <label>目安時間</label>
+          <input class="r-time" value="${esc(r.time||'')}" placeholder="10分くらい">
+        </div>
+
+        <div class="field">
+          <label>頻度</label>
+          <select class="r-freq">
+            <option value="daily">毎日</option>
+            <option value="weekdays">平日</option>
+            <option value="weekly">週1回</option>
+            <option value="every2">2日に1回</option>
+            <option value="custom">自由</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    row.querySelector('.r-freq').value=r.freq||'daily';
+
+    row.querySelector('.danger-btn').onclick=()=>{
+      arr.splice(i,1);
+      save();
+      renderRoutineEditor();
+    };
+
+    row.querySelector('.move-up').onclick=()=>{
+      if(i>0){
+        [arr[i-1],arr[i]]=[arr[i],arr[i-1]];
+        save();
+        renderRoutineEditor();
+      }
+    };
+
+    row.querySelector('.move-down').onclick=()=>{
+      if(i<arr.length-1){
+        [arr[i+1],arr[i]]=[arr[i],arr[i+1]];
+        save();
+        renderRoutineEditor();
+      }
+    };
+
+    box.appendChild(row);
+  });
 }
 
-function renderWake(){
-  const d=todayDaily();
-  $('wakeTime').textContent=d.wake?`起床 ${d.wake}`:'';
-  $('wakeBtn').textContent=d.wake?'起きた時間を変更':'起きた！';
+function openRoutine(){
+  document.getElementById('routineModal').hidden=false;
+  window.routinePeriod='morning';
+
+  document.querySelectorAll('[data-rperiod]').forEach(b=>{
+    b.classList.toggle('active',b.dataset.rperiod==='morning');
+  });
+
+  renderRoutineEditor();
 }
 
-function renderRoutineToday(){
-  const now=new Date().getHours();
-  const type=now<12?'morning':now<18?'day':'night';
-  const list=state.routines[type].filter(r=>routineApplies(r));
+function closeModal(id){
+  document.getElementById(id).hidden=true;
+}
 
-  const box=$('todayRoutine');
+document.getElementById('openRoutineEditor').onclick=openRoutine;
 
-  if(!list.length){
-    box.innerHTML='<div class="empty">今の時間帯のルーティンはありません。</div>';
+document.querySelectorAll('[data-rperiod]').forEach(b=>{
+  b.onclick=()=>{
+    window.routinePeriod=b.dataset.rperiod;
+
+    document.querySelectorAll('[data-rperiod]').forEach(x=>{
+      x.classList.toggle('active',x===b);
+    });
+
+    renderRoutineEditor();
+  };
+});
+
+document.getElementById('addRoutineRow').onclick=()=>{
+  const p=window.routinePeriod||'morning';
+
+  state.routines[p].push({
+    name:'',
+    time:'',
+    freq:'daily',
+    anchor:today()
+  });
+
+  renderRoutineEditor();
+
+  setTimeout(()=>{
+    document.querySelector('#routineEditorList .r-name:last-of-type')?.focus();
+  },0);
+};
+
+document.getElementById('saveRoutine').onclick=()=>{
+  const p=window.routinePeriod||'morning';
+  const rows=[...document.querySelectorAll('#routineEditorList .row-card')];
+
+  state.routines[p]=rows.map(r=>({
+    name:r.querySelector('.r-name').value.trim(),
+    time:r.querySelector('.r-time').value.trim(),
+    freq:r.querySelector('.r-freq').value,
+    anchor:today()
+  })).filter(r=>r.name);
+
+  save();
+  closeModal('routineModal');
+  renderRoutineToday();
+  toast('ルーティンを保存したよ🐘');
+};
+
+document.getElementById('closeRoutine').onclick=()=>{
+  closeModal('routineModal');
+};
+
+function priorityText(p){
+  return p==='important'
+    ?'重要'
+    :p==='normal'
+      ?'できれば'
+      :'軽め';
+}
+
+function renderInput(){
+  const box=document.getElementById('inputTaskList');
+
+  const tasks=state.tasks.filter(
+    t=>t.status!=='done'&&t.status!=='deleted'
+  );
+
+  document.getElementById('inputTaskCount').textContent=tasks.length+'件';
+
+  box.innerHTML=tasks.length
+    ?''
+    :'<div class="empty">まだ登録されたタスクはありません。</div>';
+
+  tasks.forEach(t=>{
+    const row=document.createElement('div');
+
+    row.className='task-row';
+
+    row.innerHTML=`
+      <div style="flex:1;min-width:0">
+        <strong>${esc(t.text)}</strong>
+        <span class="tag">${priorityText(t.priority)}</span>
+      </div>
+      <button type="button" class="mini-btn taskDone">完了</button>
+      <button type="button" class="danger-btn taskDelete">削除</button>
+    `;
+
+    row.querySelector('.taskDone').onclick=()=>{
+      t.status='done';
+      save();
+      renderInput();
+      renderToday();
+      toast('完了！ひとつ積み上がったよ🐘');
+    };
+
+    row.querySelector('.taskDelete').onclick=()=>{
+      t.status='deleted';
+      save();
+      renderInput();
+      renderToday();
+      toast('削除したよ。');
+    };
+
+    box.appendChild(row);
+  });
+}
+
+function detectPriority(text){
+  if(/絶対|重要|今日中|急ぎ|必ず/.test(text))return 'important';
+  if(/できれば|余裕があれば|いつか|暇なとき/.test(text))return 'light';
+  return 'normal';
+}
+
+function classify(text){
+  if(/(毎日|平日|週\d|週[一二三四五六七]回|\d日に1回|続け|習慣)/.test(text)){
+    return 'habit';
+  }
+
+  if(/(\d{1,2}[:時]\d{0,2}|明日|明後日|あさって|今日|予定|美容院|病院|予約)/.test(text)){
+    return 'schedule';
+  }
+
+  return 'task';
+}
+
+function relativeDateFromText(text){
+  const d=new Date();
+
+  if(/明後日|あさって/.test(text)){
+    d.setDate(d.getDate()+2);
+  }else if(/明日/.test(text)){
+    d.setDate(d.getDate()+1);
+  }
+
+  return dateKey(d);
+}
+
+function extractTime(text){
+  let m=text.match(/(\d{1,2})[:時](\d{0,2})?/);
+
+  if(!m)return '12:00';
+
+  let h=Math.min(23,Number(m[1]));
+  let minute=m[2] ? Number(m[2]) : 0;
+
+  if(minute>59)minute=59;
+
+  return `${String(h).padStart(2,'0')}:${String(minute).padStart(2,'0')}`;
+}
+
+function cleanScheduleTitle(text){
+  return text
+    .replace(/^(今日|明日|明後日|あさって)\s*/,'')
+    .replace(/\d{1,2}(?::|時)\d{0,2}分?/,'')
+    .replace(/^から/,'')
+    .trim()||text;
+}
+
+function addInputItems(){
+  const input=document.getElementById('taskInput');
+  const result=document.getElementById('inputResult');
+
+  if(!input||!result)return;
+
+  const lines=input.value
+    .split(/\r?\n/)
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+  if(!lines.length){
+    result.textContent='まずは、思いついたことを1つ書いてみよう。';
+    input.focus();
     return;
   }
 
-  box.innerHTML=list.map((r,i)=>`
-    <div class="routine-item ${r.done?'done':''}">
-      <div class="routine-num">${i+1}</div>
-      <div style="flex:1">
-        <div class="routine-name">${esc(r.name)}</div>
-        <div class="small-muted">${r.frequency==='daily'?'毎日':r.frequency==='weekdays'?'平日':r.frequency==='every2'?'2日に1回':'週1回'}</div>
-      </div>
-      <div class="routine-actions">
-        <button class="mini-btn" data-routine-done="${esc(r.id)}">${r.done?'戻す':'完了'}</button>
-      </div>
-    </div>
-  `).join('');
+  const messages=[];
 
-  box.querySelectorAll('[data-routine-done]').forEach(btn=>{
-    btn.onclick=()=>{
-      const r=state.routines[type].find(x=>x.id===btn.dataset.routineDone);
-      if(!r)return;
-      r.done=!r.done;
+  lines.forEach(text=>{
+    const type=classify(text);
+    const idBase=Date.now().toString(36)+Math.random().toString(16).slice(2);
+
+    if(type==='habit'){
+      const h={
+        id:'h'+idBase,
+        name:text.replace(/(毎日|平日|週\d回|\d日に1回)/g,'').trim(),
+        detail:'',
+        frequency:'daily',
+        stampEmoji:'🌱',
+        status:'active',
+        stamps:{}
+      };
+
+      state.habits.push(h);
+      messages.push('継続に登録');
+
+    }else if(type==='schedule'){
+      const d=relativeDateFromText(text);
+      const time=extractTime(text);
+
+      state.schedules.push({
+        id:'s'+idBase,
+        date:d,
+        time,
+        title:cleanScheduleTitle(text),
+        note:'',
+        fixed:false
+      });
+
+      messages.push(
+        d===today()
+          ?'今日の予定に登録'
+          :d===dateKey(new Date(Date.now()+86400000))
+            ?'明日の予定に登録'
+            :'明後日の予定に登録'
+      );
+
+    }else{
+      state.tasks.push({
+        id:'t'+idBase,
+        text,
+        priority:detectPriority(text),
+        status:'open'
+      });
+
+      messages.push('タスクに登録');
+    }
+  });
+
+  save();
+
+  input.value='';
+
+  result.textContent=lines
+    .map((x,i)=>`「${x}」→ ${messages[i]}`)
+    .join('\n');
+
+  renderInput();
+  renderToday();
+  renderHabits();
+  renderSchedules();
+
+  toast('整理して登録したよ🐘');
+
+  input.focus();
+}
+
+const addTaskButton=document.getElementById('addTask');
+
+if(addTaskButton){
+  addTaskButton.addEventListener('click',addInputItems);
+}
+
+const taskInput=document.getElementById('taskInput');
+
+if(taskInput){
+  taskInput.addEventListener('keydown',e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){
+      e.preventDefault();
+      addInputItems();
+    }
+  });
+}
+
+function last7(){
+  const a=[];
+
+  for(let i=6;i>=0;i--){
+    const d=new Date();
+    d.setDate(d.getDate()-i);
+    a.push(dateKey(d));
+  }
+
+  return a;
+}
+
+function renderHabits(){
+  const active=state.habits.filter(h=>h.status==='active');
+  const inactive=state.habits.filter(h=>h.status!=='active');
+
+  document.getElementById('habitCount').textContent=active.length+'件';
+
+  const box=document.getElementById('habitList');
+
+  box.innerHTML=active.length
+    ?''
+    :'<div class="next empty">まだ継続はありません。</div>';
+
+  active.forEach(h=>renderHabitCard(h,box));
+
+  const ib=document.getElementById('inactiveHabitList');
+
+  ib.innerHTML=inactive.length
+    ?''
+    :'<div class="empty">休止・終了した継続はありません。</div>';
+
+  inactive.forEach(h=>{
+    const r=document.createElement('div');
+
+    r.className='task-row';
+
+    r.innerHTML=`
+      <div style="flex:1">
+        <strong>${esc(h.name)}</strong>
+        <div class="small-muted">${h.status==='paused'?'休止中':'終了'}</div>
+      </div>
+      <button type="button" class="mini-btn">再開</button>
+    `;
+
+    r.querySelector('button').onclick=()=>{
+      h.status='active';
       save();
-      renderRoutineToday();
-      toast(r.done?'ルーティン完了🐘':'戻したよ');
+      renderHabits();
     };
+
+    ib.appendChild(r);
+  });
+}
+
+function renderHabitCard(h,box){
+  const days=last7();
+  const st=h.stamps||{};
+  const total=Object.values(st).filter(Boolean).length;
+  const todayKey=today();
+  const done=!!st[todayKey];
+  const emoji=h.stampEmoji||'🌱';
+
+  const row=document.createElement('div');
+
+  row.className='habit-card';
+
+  row.innerHTML=`
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+      <div style="min-width:0">
+        <div class="next-name" style="font-size:18px">${esc(h.name)}</div>
+        <div class="next-info">
+          ${esc(h.detail||freqText(h.frequency))}
+          ・ 累計スタンプ ${total}個
+        </div>
+      </div>
+
+      <button type="button" class="${done?'later':'do'} stampBtn">
+        ${done?'今日済み':'今日のスタンプ'}
+      </button>
+    </div>
+
+    <div class="stamp-row">
+      ${days.map(d=>`
+        <span class="stamp ${st[d]?'on':''}">
+          ${st[d]?(st[d]===true?emoji:st[d]):'·'}
+        </span>
+      `).join('')}
+    </div>
+
+    <div class="habit-actions">
+      <button type="button" class="plain-btn editHabit">編集</button>
+      <button type="button" class="plain-btn pauseHabit">休止</button>
+      <button type="button" class="danger-btn endHabit">終了</button>
+    </div>
+  `;
+
+  row.querySelector('.stampBtn').onclick=()=>{
+    if(done){
+      delete h.stamps[todayKey];
+    }else{
+      h.stamps[todayKey]=emoji;
+    }
+
+    save();
+    renderHabits();
+  };
+
+  row.querySelector('.editHabit').onclick=()=>openHabit(h);
+
+  row.querySelector('.pauseHabit').onclick=()=>{
+    h.status='paused';
+    save();
+    renderHabits();
+  };
+
+  row.querySelector('.endHabit').onclick=()=>{
+    h.status='ended';
+    save();
+    renderHabits();
+  };
+
+  box.appendChild(row);
+}
+
+let editingHabit=null;
+
+function openHabit(h=null){
+  editingHabit=h;
+
+  document.getElementById('habitModalTitle').textContent=
+    h?'継続を編集':'継続を追加';
+
+  document.getElementById('habitName').value=h?.name||'';
+  document.getElementById('habitDetail').value=h?.detail||'';
+  document.getElementById('habitFrequency').value=h?.frequency||'daily';
+  document.getElementById('habitStamp').value=h?.stampEmoji||'🌱';
+
+  document.getElementById('habitModal').hidden=false;
+}
+
+document.getElementById('addHabit').onclick=()=>openHabit();
+
+document.getElementById('closeHabit').onclick=()=>{
+  closeModal('habitModal');
+};
+
+document.getElementById('saveHabit').onclick=()=>{
+  const name=document.getElementById('habitName').value.trim();
+
+  if(!name){
+    toast('名前を入れてね');
+    return;
+  }
+
+  const detail=document.getElementById('habitDetail').value.trim();
+  const frequency=document.getElementById('habitFrequency').value;
+  const stamp=document.getElementById('habitStamp').value.trim()||'🌱';
+
+  if(editingHabit){
+    editingHabit.name=name;
+    editingHabit.detail=detail;
+    editingHabit.frequency=frequency;
+    editingHabit.stampEmoji=stamp;
+  }else{
+    state.habits.push({
+      id:'h'+Date.now(),
+      name,
+      detail,
+      frequency,
+      stampEmoji:stamp,
+      status:'active',
+      stamps:{}
+    });
+  }
+
+  save();
+  closeModal('habitModal');
+  renderHabits();
+  toast('継続を保存したよ🐘');
+};
+
+let scheduleViewDay=today();
+
+function dailyFor(date){
+  return state.daily[date]||{
+    status:
+      date===today()
+        ?'work'
+        :date===dateKey(new Date(Date.now()+86400000))
+          ?state.tomorrow
+          :'work',
+    wake:'',
+    workStart:state.settings.workStart,
+    workEnd:state.settings.workEnd
+  };
+}
+
+function homeTimeText(endTime){
+  const [h,m]=(endTime||todayDaily().workEnd||state.settings.workEnd)
+    .split(':')
+    .map(Number);
+
+  const mins=h*60+m+Number(state.settings.commute||0);
+
+  const hh=Math.floor(mins/60)%24;
+  const mm=mins%60;
+
+  return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}ごろ`;
+}
+
+function renderSchedules(){
+  const d=dailyFor(scheduleViewDay);
+  const list=document.getElementById('scheduleList');
+
+  document.querySelectorAll('.schedule-day').forEach(b=>{
+    b.classList.toggle(
+      'active',
+      (b.dataset.day==='today'&&scheduleViewDay===today()) ||
+      (b.dataset.day==='tomorrow'&&scheduleViewDay!==today())
+    );
+  });
+
+  document.querySelectorAll('.day-status').forEach(b=>{
+    b.classList.toggle('active',b.dataset.status===d.status);
+  });
+
+  document.getElementById('dailyWorkStart').value=
+    d.workStart||state.settings.workStart;
+
+  document.getElementById('dailyWorkEnd').value=
+    d.workEnd||state.settings.workEnd;
+
+  document.getElementById('dailyWake').value=d.wake||'';
+
+  document.getElementById('workTimeFields').style.display=
+    d.status==='work'?'grid':'none';
+
+  document.getElementById('scheduleListTitle').textContent=
+    scheduleViewDay===today()?'今日':'明日';
+
+  const rh=document.getElementById('returnHomeStatus');
+
+  if(rh){
+    rh.textContent=
+      state.returnHome.date===today()&&state.returnHome.leftAt
+        ?`${state.returnHome.leftAt}に出発 → ${state.returnHome.estimated}`
+        :'仕事終了＋通勤時間から目安を出します。';
+  }
+
+  const base=state.schedules
+    .filter(s=>s.date===scheduleViewDay)
+    .map(s=>{
+      if(s.fixed&&s.id==='work'){
+        return {
+          ...s,
+          time:d.workStart,
+          note:d.workEnd+'まで'
+        };
+      }
+
+      if(s.fixed&&s.id==='home'){
+        return {
+          ...s,
+          time:homeTimeText(d.workEnd).replace('ごろ',''),
+          note:'通勤時間から自動計算'
+        };
+      }
+
+      return s;
+    });
+
+  if(d.status==='work'){
+    base.unshift({
+      id:'work-daily',
+      time:d.workStart,
+      title:'仕事',
+      note:d.workEnd+'まで'
+    });
+  }
+
+  const arr=base
+    .filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)
+    .sort((a,b)=>a.time.localeCompare(b.time));
+
+  list.innerHTML=arr.length
+    ?''
+    :'<div class="empty">予定はありません。</div>';
+
+  arr.forEach(s=>{
+    const r=document.createElement('div');
+
+    r.className='schedule-row';
+
+    r.innerHTML=`
+      <div class="time">${esc(s.time)}</div>
+      <div style="flex:1">
+        <div class="event-title">${esc(s.title)}</div>
+        <div class="event-sub">${esc(s.note||'')}</div>
+      </div>
+      ${s.fixed?'':'<button type="button" class="danger-btn">削除</button>'}
+    `;
+
+    if(!s.fixed){
+      r.querySelector('button').onclick=()=>{
+        state.schedules=state.schedules.filter(x=>x.id!==s.id);
+        save();
+        renderSchedules();
+        renderToday();
+      };
+    }
+
+    list.appendChild(r);
   });
 }
 
 function renderToday(){
   const d=todayDaily();
 
-  $('todayDate').textContent=formatDateJP(today());
-  $('greeting').textContent=getGreeting();
+  document.getElementById('todayWorkValue').textContent=
+    d.status==='work'?'仕事':'お休み';
 
-  $('todayWorkValue').textContent=d.status==='work'?'仕事':'お休み';
-  $('todayWorkTime').textContent=d.status==='work'
-    ?`${d.workStart||'—'}–${d.workEnd||'—'}`
-    :'今日は仕事なし';
-
-  $('todayHomeValue').textContent=
+  document.getElementById('todayWorkTime').textContent=
     d.status==='work'
-      ?(state.returnHome.date===today()&&state.returnHome.estimated
-        ?state.returnHome.estimated
-        :homeTimeText(d.workEnd))
-      :'—';
+      ?d.workStart+'–'+d.workEnd
+      :'今日は仕事なし';
 
-  renderWake();
+  document.getElementById('todayHomeValue').textContent=
+    d.status==='work'
+      ?state.returnHome.date===today()&&state.returnHome.estimated
+        ?state.returnHome.estimated
+        :homeTimeText(d.workEnd)
+      :'—';
 
   const tasks=state.tasks.filter(t=>t.status==='open');
 
@@ -852,4 +2084,414 @@ function renderToday(){
     light:[]
   };
 
-  tasks.forEach(t=>(groups[t
+  tasks.forEach(t=>{
+    (groups[t.priority]||groups.normal).push(t);
+  });
+
+  document.getElementById('taskTotal').textContent=tasks.length+'件';
+  document.getElementById('importantCount').textContent=groups.important.length;
+  document.getElementById('normalCount').textContent=groups.normal.length;
+  document.getElementById('lightCount').textContent=groups.light.length;
+
+  const gb=document.getElementById('todayTaskGroups');
+  gb.innerHTML='';
+
+  [
+    ['important','重要'],
+    ['normal','できれば'],
+    ['light','軽め']
+  ].forEach(([p,label])=>{
+    const g=document.createElement('div');
+
+    g.className='group';
+
+    g.innerHTML=`
+      <button type="button" class="group-toggle">
+        <span class="group-left">
+          <i class="dot ${p==='important'?'red':p==='normal'?'yellow':'green'}"></i>
+          ${label}　${groups[p].length}件
+        </span>
+        <span>＋</span>
+      </button>
+
+      <div class="items">
+        ${groups[p].map(t=>`
+          <div class="item">${esc(t.text)}</div>
+        `).join('')}
+      </div>
+    `;
+
+    g.querySelector('button').onclick=()=>{
+      const items=g.querySelector('.items');
+      const open=items.classList.toggle('open');
+
+      g.querySelector('button span:last-child').textContent=
+        open?'−':'＋';
+    };
+
+    gb.appendChild(g);
+  });
+
+  const first=tasks[0];
+
+  document.getElementById('nowTaskName').textContent=
+    first
+      ?first.text
+      :'今日のタスクは全部できたよ';
+
+  document.getElementById('nowTaskInfo').textContent=
+    first
+      ?'次にやるなら、これひとつ。'
+      :'余裕があれば継続や予定を確認しよう。';
+
+  const nowDo=document.getElementById('nowDo');
+
+  nowDo.disabled=!first;
+  nowDo.textContent=first?'やる':'完了';
+
+  nowDo.onclick=()=>{
+    if(!first)return;
+
+    first.status='done';
+
+    save();
+    renderToday();
+    renderInput();
+
+    toast('完了！ひとつ積み上がったよ🐘');
+  };
+
+  document.getElementById('nowLater').onclick=()=>{
+    if(!first)return;
+
+    first.status='later';
+
+    save();
+    renderToday();
+    renderInput();
+
+    toast('あとでにしておいたよ。');
+  };
+
+  renderRoutineToday();
+
+  const sl=document.getElementById('todayScheduleList');
+
+  const base=state.schedules
+    .filter(s=>s.date===today())
+    .map(s=>{
+      if(s.fixed&&s.id==='work'){
+        return {
+          ...s,
+          time:d.workStart,
+          note:d.workEnd+'まで'
+        };
+      }
+
+      if(s.fixed&&s.id==='home'){
+        return {
+          ...s,
+          time:homeTimeText(d.workEnd).replace('ごろ',''),
+          note:'通勤時間から自動計算'
+        };
+      }
+
+      return s;
+    });
+
+  if(d.status==='work'){
+    base.unshift({
+      id:'work-today',
+      time:d.workStart,
+      title:'仕事',
+      note:d.workEnd+'まで'
+    });
+  }
+
+  if(
+    state.returnHome.date===today() &&
+    state.returnHome.estimated
+  ){
+    base.push({
+      id:'home-now',
+      time:state.returnHome.estimated.replace('ごろ',''),
+      title:'帰宅予定',
+      note:state.returnHome.leftAt+'に出発'
+    });
+  }
+
+  const arr=base
+    .filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)
+    .sort((a,b)=>a.time.localeCompare(b.time));
+
+  sl.innerHTML=arr.length
+    ?''
+    :'<div class="empty">今日の予定はありません。</div>';
+
+  arr.forEach(s=>{
+    const r=document.createElement('div');
+
+    r.className='event';
+
+    r.innerHTML=`
+      <div class="time">${esc(s.time)}</div>
+      <div>
+        <div class="event-title">${esc(s.title)}</div>
+        <div class="event-sub">${esc(s.note||'')}</div>
+      </div>
+    `;
+
+    sl.appendChild(r);
+  });
+
+  document.getElementById('minimumText').textContent=
+    first
+      ?`「${first.text}」をひとつできたら、今日は十分。ほかは余裕があればで大丈夫。`
+      :'今日のタスクは完了。今日はもう十分できてるよ。';
+}
+
+let scheduleDate=today();
+
+document.getElementById('addSchedule').onclick=()=>{
+  scheduleDate=today();
+
+  document.getElementById('scheduleDate').value=scheduleDate;
+  document.getElementById('scheduleTime').value='20:00';
+  document.getElementById('scheduleTitle').value='';
+  document.getElementById('scheduleNote').value='';
+
+  document.getElementById('scheduleModal').hidden=false;
+};
+
+document.getElementById('closeSchedule').onclick=()=>{
+  closeModal('scheduleModal');
+};
+
+document.getElementById('saveSchedule').onclick=()=>{
+  const d=document.getElementById('scheduleDate').value;
+  const t=document.getElementById('scheduleTime').value;
+  const title=document.getElementById('scheduleTitle').value.trim();
+
+  if(!d||!t||!title){
+    toast('日付・時間・予定を入れてね');
+    return;
+  }
+
+  state.schedules.push({
+    id:'s'+Date.now(),
+    date:d,
+    time:t,
+    title,
+    note:document.getElementById('scheduleNote').value.trim(),
+    fixed:false
+  });
+
+  save();
+  closeModal('scheduleModal');
+  renderSchedules();
+  renderToday();
+  toast('予定を追加したよ🐘');
+};
+
+const settingMap={
+  sleep:['就寝時間','time'],
+  breakfast:['朝ごはん','time'],
+  dinner:['夜ごはん','time'],
+  bath:['お風呂','time'],
+  makeup:['メイク','time']
+};
+
+let editingSetting='';
+
+function renderSettings(){
+  Object.keys(settingMap).forEach(k=>{
+    const id='setting'+k[0].toUpperCase()+k.slice(1)+'Val';
+    const el=document.getElementById(id);
+
+    if(el){
+      el.textContent=state.settings[k]||'未設定';
+    }
+  });
+
+  document.getElementById('settingCommuteVal').textContent=
+    state.settings.commute+'分';
+}
+
+function openSetting(k){
+  editingSetting=k;
+
+  document.getElementById('settingModalTitle').textContent=
+    settingMap[k][0];
+
+  document.getElementById('settingModalLabel').textContent=
+    settingMap[k][0];
+
+  document.getElementById('settingModalInput').value=
+    state.settings[k]||'07:00';
+
+  document.getElementById('settingModal').hidden=false;
+}
+
+Object.keys(settingMap).forEach(k=>{
+  const el=document.getElementById(
+    'setting'+k[0].toUpperCase()+k.slice(1)
+  );
+
+  if(el){
+    el.onclick=()=>openSetting(k);
+  }
+});
+
+document.getElementById('settingCommute').onclick=()=>{
+  const v=prompt(
+    '通勤時間を分で入力してください。',
+    state.settings.commute
+  );
+
+  if(v===null)return;
+
+  const n=Number(v);
+
+  if(!Number.isFinite(n)||n<0)return;
+
+  state.settings.commute=Math.round(n);
+
+  save();
+  renderSettings();
+  renderToday();
+  renderSchedules();
+
+  toast('通勤時間を更新したよ🐘');
+};
+
+document.getElementById('closeSetting').onclick=()=>{
+  closeModal('settingModal');
+};
+
+document.getElementById('saveSetting').onclick=()=>{
+  state.settings[editingSetting]=
+    document.getElementById('settingModalInput').value;
+
+  save();
+  closeModal('settingModal');
+  renderSettings();
+
+  toast('設定を保存したよ🐘');
+};
+
+document.querySelectorAll('.schedule-day').forEach(b=>{
+  b.onclick=()=>{
+    scheduleViewDay=
+      b.dataset.day==='today'
+        ?today()
+        :dateKey(new Date(Date.now()+86400000));
+
+    renderSchedules();
+  };
+});
+
+document.querySelectorAll('.day-status').forEach(b=>{
+  b.onclick=()=>{
+    const d=dailyFor(scheduleViewDay);
+
+    d.status=b.dataset.status;
+
+    state.daily[scheduleViewDay]=d;
+
+    if(scheduleViewDay!==today()){
+      state.tomorrow=d.status;
+    }
+
+    save();
+    renderSchedules();
+    renderToday();
+  };
+});
+
+document.getElementById('saveDailySchedule').onclick=()=>{
+  const d=dailyFor(scheduleViewDay);
+
+  d.wake=document.getElementById('dailyWake').value;
+
+  d.workStart=
+    document.getElementById('dailyWorkStart').value ||
+    state.settings.workStart;
+
+  d.workEnd=
+    document.getElementById('dailyWorkEnd').value ||
+    state.settings.workEnd;
+
+  state.daily[scheduleViewDay]=d;
+
+  if(scheduleViewDay!==today()){
+    state.tomorrow=d.status;
+  }
+
+  save();
+
+  renderSchedules();
+  renderToday();
+  renderWake();
+
+  toast('その日の予定を保存したよ🐘');
+};
+
+document.getElementById('leaveWorkNow').onclick=()=>{
+  const now=new Date();
+
+  const left=
+    `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  const mins=
+    now.getHours()*60+
+    now.getMinutes()+
+    Number(state.settings.commute||0);
+
+  const estimated=
+    `${String(Math.floor(mins/60)%24).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}ごろ`;
+
+  state.returnHome={
+    date:today(),
+    leftAt:left,
+    estimated
+  };
+
+  save();
+
+  renderToday();
+  renderSchedules();
+
+  document.getElementById('returnHomeStatus').textContent=
+    `${left}に出発 → ${estimated}`;
+
+  toast('今から帰宅として記録したよ🐘');
+};
+
+document.getElementById('clearReturnHome').onclick=()=>{
+  state.returnHome={
+    date:'',
+    leftAt:null,
+    estimated:''
+  };
+
+  save();
+
+  renderToday();
+  renderSchedules();
+
+  document.getElementById('returnHomeStatus').textContent=
+    '仕事終了＋通勤時間から目安を出します。';
+
+  toast('帰宅予定を通常表示に戻したよ');
+};
+
+renderToday();
+renderInput();
+renderHabits();
+renderSchedules();
+renderSettings();
+renderWake();
+</script>
+
+</body>
+</html>
